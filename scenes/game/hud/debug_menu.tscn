@@ -1,0 +1,67 @@
+[gd_scene load_steps=5 format=3 uid="uid://eomrg3xc2jq4"]
+
+[ext_resource type="Script" uid="uid://bvmq1oalosavg" path="res://scripts/hud/debug/debug_character.gd" id="1_0faeu"]
+[ext_resource type="FontFile" uid="uid://bj022vx1alxl" path="res://assets/texts/fonts/SpaceMono-Regular.ttf" id="1_rrirc"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_0faeu"]
+line_spacing = 0.0
+font = ExtResource("1_rrirc")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eqhpr"]
+bg_color = Color(0, 0, 0, 0.243137)
+
+[node name="DebugMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_0faeu")
+
+[node name="AlwaysShownLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 173.0
+offset_bottom = 90.0
+theme_override_fonts/font = ExtResource("1_rrirc")
+text = "F1: OPEN DEBUG CONSOLE
+F2: RESET POSITION"
+label_settings = SubResource("LabelSettings_0faeu")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -627.0
+offset_bottom = -227.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="Panel" type="Panel" parent="MarginContainer"]
+clip_contents = true
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_eqhpr")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Panel/MarginContainer"]
+layout_mode = 2

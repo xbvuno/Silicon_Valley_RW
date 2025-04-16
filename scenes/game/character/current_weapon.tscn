@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://3euw0wojttkh"]
+
+[ext_resource type="PackedScene" uid="uid://xmmdx0i06cco" path="res://assets/models/handbrake0.blend" id="1_wwl6m"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="handbrake0" parent="." instance=ExtResource("1_wwl6m")]
+transform = Transform3D(-8.5952e-15, -2.16305e-07, 3.87216, 3.87216, -1.69258e-07, -3.32198e-15, 1.69258e-07, 3.87216, 2.16305e-07, 0, 0, 0)

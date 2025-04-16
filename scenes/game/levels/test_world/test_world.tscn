@@ -1,0 +1,155 @@
+[gd_scene load_steps=14 format=3 uid="uid://h6vc166hsiyc"]
+
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_edcox"]
+ground_color = Color(0.160784, 0.815686, 0.905882, 1)
+
+[sub_resource type="Sky" id="Sky_2iust"]
+sky_material = SubResource("PhysicalSkyMaterial_edcox")
+
+[sub_resource type="Environment" id="Environment_20rw3"]
+background_mode = 2
+sky = SubResource("Sky_2iust")
+tonemap_mode = 1
+ssao_enabled = true
+
+[sub_resource type="Gradient" id="Gradient_ur0vy"]
+colors = PackedColorArray(0, 0.476245, 0.0193456, 1, 0.360494, 0.612721, 0.119744, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_jd3pw"]
+frequency = 0.0027
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7akuf"]
+width = 1024
+height = 1024
+in_3d_space = true
+seamless = true
+color_ramp = SubResource("Gradient_ur0vy")
+noise = SubResource("FastNoiseLite_jd3pw")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_67ysu"]
+albedo_texture = SubResource("NoiseTexture2D_7akuf")
+uv1_scale = Vector3(0.1, 0.1, 0.1)
+uv1_triplanar = true
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ogw7v"]
+load_path = "res://.godot/imported/dark.png-b5c6e3b3bc047060e225b2d4842c8160.s3tc.ctex"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gomnb"]
+albedo_texture = SubResource("CompressedTexture2D_ogw7v")
+metallic = 0.81
+metallic_specular = 0.2
+roughness = 0.5
+uv1_triplanar = true
+uv1_triplanar_sharpness = 0.000850145
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_yqxmo"]
+load_path = "res://.godot/imported/green.png-ff5b0ad42fb1f43b6ccfdfa62c09bb7c.s3tc.ctex"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u0sbk"]
+albedo_texture = SubResource("CompressedTexture2D_yqxmo")
+metallic = 0.81
+metallic_specular = 0.2
+roughness = 0.5
+uv1_triplanar = true
+uv1_triplanar_sharpness = 0.000850145
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_1ax23"]
+load_path = "res://.godot/imported/orange.png-cae5ed6b8f3a27f1c03f9bd9f597bf5b.s3tc.ctex"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7j4uu"]
+albedo_texture = SubResource("CompressedTexture2D_1ax23")
+metallic = 0.81
+metallic_specular = 0.2
+roughness = 0.5
+uv1_triplanar = true
+uv1_triplanar_sharpness = 0.000850145
+
+[node name="test_world" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_20rw3")
+
+[node name="sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.87959, -0.436605, 0.188936, 0, 0.397148, 0.917755, -0.475732, -0.807248, 0.349328, 0, 0, 0)
+light_energy = 2.0
+shadow_enabled = true
+
+[node name="terrain" type="Node3D" parent="."]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, -0.5, 10)
+use_collision = true
+size = Vector3(30, 1, 30)
+material = SubResource("StandardMaterial3D_67ysu")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -10)
+use_collision = true
+size = Vector3(10, 1, 10)
+material = SubResource("StandardMaterial3D_gomnb")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 1.8, -13)
+use_collision = true
+size = Vector3(4, 0.5, 4)
+material = SubResource("StandardMaterial3D_gomnb")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="terrain"]
+transform = Transform3D(0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 0, 0, 1, -9.5, 1.2, -10)
+use_collision = true
+size = Vector3(10, 1, 10)
+material = SubResource("StandardMaterial3D_u0sbk")
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 3, -15.5)
+use_collision = true
+size = Vector3(19, 8, 1)
+material = SubResource("StandardMaterial3D_7j4uu")
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -71.6214, -0.559259, 9.7684)
+use_collision = true
+size = Vector3(133, 1, 30)
+material = SubResource("StandardMaterial3D_gomnb")
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="terrain"]
+transform = Transform3D(0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0, 1, -18.2427, -1.11852, 28.5368)
+use_collision = true
+size = Vector3(133, 1, 30)
+material = SubResource("StandardMaterial3D_gomnb")
+
+[node name="CSGBox3D8" type="CSGBox3D" parent="terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 21.5, -33.5)
+use_collision = true
+size = Vector3(9, 5, 6)
+material = SubResource("StandardMaterial3D_7j4uu")
+
+[node name="CSGBox3D8" type="CSGBox3D" parent="terrain/CSGBox3D8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 5, 0.5)
+use_collision = true
+size = Vector3(4, 6, 4)
+material = SubResource("StandardMaterial3D_7j4uu")
+
+[node name="CSGBox3D8" type="CSGBox3D" parent="terrain/CSGBox3D8/CSGBox3D8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 3.5, 0.5)
+use_collision = true
+size = Vector3(4, 3, 4)
+material = SubResource("StandardMaterial3D_7j4uu")
+
+[node name="CSGBox3D8" type="CSGBox3D" parent="terrain/CSGBox3D8/CSGBox3D8/CSGBox3D8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, -0.5, 0.5)
+use_collision = true
+size = Vector3(4, 1, 4)
+material = SubResource("StandardMaterial3D_7j4uu")
+
+[node name="CSGBox3D8" type="CSGBox3D" parent="terrain/CSGBox3D8/CSGBox3D8/CSGBox3D8/CSGBox3D8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5, -13.5, 0.5)
+use_collision = true
+size = Vector3(4, 1, 4)
+material = SubResource("StandardMaterial3D_7j4uu")
+
+[node name="CSGBox3D8" type="CSGBox3D" parent="terrain/CSGBox3D8/CSGBox3D8/CSGBox3D8/CSGBox3D8/CSGBox3D8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5, -0.5, -7.5)
+use_collision = true
+size = Vector3(4, 1, 4)
+material = SubResource("StandardMaterial3D_7j4uu")
