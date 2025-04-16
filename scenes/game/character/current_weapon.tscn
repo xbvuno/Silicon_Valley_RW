@@ -1,8 +1,134 @@
-[gd_scene load_steps=2 format=3 uid="uid://3euw0wojttkh"]
+[gd_scene load_steps=8 format=3 uid="uid://3euw0wojttkh"]
 
+[ext_resource type="Script" uid="uid://chfykahwcqmi7" path="res://scripts/character/weapon/current_weapon.gd" id="1_howxv"]
 [ext_resource type="PackedScene" uid="uid://xmmdx0i06cco" path="res://assets/models/handbrake0.blend" id="1_wwl6m"]
 
-[node name="Node3D" type="Node3D"]
+[sub_resource type="Animation" id="Animation_wwl6m"]
+resource_name = "attack"
+length = 0.16
+step = 0.02
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Area3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.06, 0.16),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.64, 0.22, -0.41), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Area3D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.06, 0.16),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-1.33169, 0.584685, 0), Vector3(0, 0, 0)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.16),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"to_idle"
+}]
+}
 
-[node name="handbrake0" parent="." instance=ExtResource("1_wwl6m")]
+[sub_resource type="Animation" id="Animation_howxv"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Area3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Area3D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_nj1jv"]
+resource_name = "defend"
+length = 0.06
+step = 0.002
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Area3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.06),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.56, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Area3D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.06),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-1.33169, 1.5708, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nj1jv"]
+_data = {
+&"RESET": SubResource("Animation_howxv"),
+&"attack": SubResource("Animation_wwl6m"),
+&"defend": SubResource("Animation_nj1jv")
+}
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_eoyty"]
+size = Vector3(0.0706787, 0.969238, 0.169403)
+
+[node name="Weapon" type="Node3D"]
+script = ExtResource("1_howxv")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_nj1jv")
+}
+
+[node name="ParryTimer" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
+
+[node name="Area3D" type="Area3D" parent="." groups=["weapons"]]
+
+[node name="handbrake0" parent="Area3D" instance=ExtResource("1_wwl6m")]
 transform = Transform3D(-8.5952e-15, -2.16305e-07, 3.87216, 3.87216, -1.69258e-07, -3.32198e-15, 1.69258e-07, 3.87216, 2.16305e-07, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00189209, -0.0153809, -0.00368309)
+shape = SubResource("BoxShape3D_eoyty")

@@ -14,7 +14,9 @@ func _ready():
 		'scale': func(): return RETICLE.scale, # funzione lambda
 		'alpha': func(): return RETICLE.modulate.a, # funzione lambda
 		'pos': func(): return RETICLE.position,
-		'size': func(): return RETICLE.size
+		'size': func(): return RETICLE.size,
+		'offset': func(): return RETICLE.anchor_offset
+		
 		})
 	
 	super()

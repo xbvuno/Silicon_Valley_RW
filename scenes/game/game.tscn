@@ -1,9 +1,50 @@
-[gd_scene load_steps=5 format=3 uid="uid://daucglrwc2ahf"]
+[gd_scene load_steps=11 format=3 uid="uid://daucglrwc2ahf"]
 
 [ext_resource type="PackedScene" uid="uid://eomrg3xc2jq4" path="res://scenes/game/hud/debug_menu.tscn" id="1_0sr1o"]
 [ext_resource type="PackedScene" uid="uid://h6vc166hsiyc" path="res://scenes/game/levels/test_world/test_world.tscn" id="1_sul5r"]
+[ext_resource type="PackedScene" uid="uid://wnllrngtfcsq" path="res://scenes/game/enemies/enemy.tscn" id="2_5i0tg"]
 [ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://scenes/game/character/character.tscn" id="2_7h61r"]
+[ext_resource type="PackedScene" uid="uid://3euw0wojttkh" path="res://scenes/game/character/current_weapon.tscn" id="3_bdhmt"]
 [ext_resource type="PackedScene" uid="uid://cjgyp6y6m3ui6" path="res://scenes/game/hud/reticle.tscn" id="4_kelw5"]
+[ext_resource type="Script" uid="uid://6kudhcg23lvx" path="res://scripts/hud/debug/debug_reticle.gd" id="4_lfrn8"]
+
+[sub_resource type="Animation" id="Animation_87uf6"]
+resource_name = "rotate"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-6.28319, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_2a8rs"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4j704"]
+_data = {
+&"RESET": SubResource("Animation_2a8rs"),
+&"rotate": SubResource("Animation_87uf6")
+}
 
 [node name="Game" type="Control"]
 layout_mode = 3
@@ -25,6 +66,21 @@ size = Vector2i(1152, 648)
 render_target_update_mode = 4
 
 [node name="test_world" parent="SubViewportContainer/SubViewport" instance=ExtResource("1_sul5r")]
+
+[node name="Enemy" parent="SubViewportContainer/SubViewport/test_world" instance=ExtResource("2_5i0tg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.93415, 4.81035)
+
+[node name="Node3D" type="Node3D" parent="SubViewportContainer/SubViewport/test_world/Enemy"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.851525, 0, 0)
+
+[node name="Weapon" parent="SubViewportContainer/SubViewport/test_world/Enemy/Node3D" instance=ExtResource("3_bdhmt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.38391, 0, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="SubViewportContainer/SubViewport/test_world/Enemy/Node3D"]
+libraries = {
+&"": SubResource("AnimationLibrary_4j704")
+}
+autoplay = "rotate"
 
 [node name="Character" parent="SubViewportContainer/SubViewport" instance=ExtResource("2_7h61r")]
 editor_description = ""
@@ -49,11 +105,12 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="DebugMenu" parent="HUD" node_paths=PackedStringArray("CHARACTER") instance=ExtResource("1_0sr1o")]
+[node name="DebugMenu" parent="HUD" node_paths=PackedStringArray("RETICLE", "CHARACTER") instance=ExtResource("1_0sr1o")]
 layout_mode = 1
+script = ExtResource("4_lfrn8")
+RETICLE = NodePath("../Reticle")
 CHARACTER = NodePath("../../SubViewportContainer/SubViewport/Character")
 
 [node name="Reticle" parent="HUD" node_paths=PackedStringArray("CHARACTER") instance=ExtResource("4_kelw5")]
 layout_mode = 1
-anchors_preset = 8
 CHARACTER = NodePath("../../SubViewportContainer/SubViewport/Character")

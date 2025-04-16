@@ -10,6 +10,7 @@ const SCALE_TARGETS = {
 }
 
 const IN_AIR_SCALE_MULTIPLY = 1.5
+const DASH_SCALE_MULTIPLY = 3
 
 var current_scale_target = SCALE_TARGETS['normal']
 
@@ -24,6 +25,8 @@ const ALPHA_COLOR_TARGETS = {
 var current_alpha_target: float = ALPHA_COLOR_TARGETS['normal'];
 
 var anchor_offset: float;
+
+@onready var target_fov: float = CHARACTER.CAMERA.fov;
 
 func _ready():
 	if CHARACTER == null:
@@ -42,14 +45,23 @@ func _process(delta: float) -> void:
 	
 	var scale_multiplier = 1
 	if not(CHARACTER.is_on_floor()):
-		scale_multiplier = IN_AIR_SCALE_MULTIPLY
+		scale_multiplier *= IN_AIR_SCALE_MULTIPLY
+	if CHARACTER.is_dashing:
+		scale_multiplier *= DASH_SCALE_MULTIPLY
 	
-	var lerp_step = (round(delta * 100) / 100) * LERP_SPEED
-	anchor_offset = lerp(anchor_offset, current_scale_target * scale_multiplier, lerp_step)
+	var lerp_step: float = (round(delta * 100) / 100) * LERP_SPEED
+	
+	anchor_offset = lerp(anchor_offset, clamp(current_scale_target * scale_multiplier * 0.8, 1, 128.), lerp_step)
+	
+	target_fov = lerp(target_fov, anchor_offset * 0.95, lerp_step)
+	
+	CHARACTER.CAMERA.fov = max(CHARACTER.CAMERA.fov,target_fov)
+	
 	offset_left = -anchor_offset
 	offset_top = -anchor_offset
 	offset_right = anchor_offset
 	offset_bottom = anchor_offset
+	
 	modulate.a = lerp(modulate.a, current_alpha_target,lerp_step)
 	
 	

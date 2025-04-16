@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://cc1m2a1obsyn4"]
+[gd_scene load_steps=21 format=3 uid="uid://cc1m2a1obsyn4"]
 
 [ext_resource type="Script" uid="uid://cyxqkrxevii8f" path="res://scripts/libs/character_movement_controller.gd" id="1_0t4e8"]
 [ext_resource type="PackedScene" uid="uid://3euw0wojttkh" path="res://scenes/game/character/current_weapon.tscn" id="2_qloyw"]
@@ -371,24 +371,31 @@ _data = {
 &"land_right": SubResource("Animation_vsknp")
 }
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_qloyw"]
+size = Vector3(1, 1.60107, 0.261597)
+
 [sub_resource type="SphereShape3D" id="SphereShape3D_k4wwl"]
 
-[node name="Character" type="CharacterBody3D" node_paths=PackedStringArray("HEAD", "CAMERA", "HEADBOB_ANIMATION", "JUMP_ANIMATION", "CROUCH_ANIMATION", "COLLISION_MESH", "DASH_COOLDOWN", "DOUBLE_TAP_TIMER")]
+[node name="Character" type="CharacterBody3D" node_paths=PackedStringArray("HEAD", "CAMERA", "HEADBOB_ANIMATION", "JUMP_ANIMATION", "CROUCH_ANIMATION", "COLLISION_MESH", "DOUBLE_TAP_TIMER", "DASH_COOLDOWN", "WEAPON", "DEFEND_ZONE")]
 editor_description = "removed reticle control"
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
 script = ExtResource("1_0t4e8")
+jump_velocity = 8.0
 HEAD = NodePath("Head")
 CAMERA = NodePath("Head/Camera")
 HEADBOB_ANIMATION = NodePath("Head/HeadbobAnimation")
 JUMP_ANIMATION = NodePath("Head/JumpAnimation")
 CROUCH_ANIMATION = NodePath("CrouchAnimation")
 COLLISION_MESH = NodePath("Collision")
+in_air_momentum = false
 continuous_jumping = false
 DOUBLE_JUMP_ENABLED = true
 DASH_ENABLED = true
 DASH_SPEED = 32.0
-DASH_COOLDOWN = NodePath("DashTimer")
 DOUBLE_TAP_TIMER = NodePath("DoubleTapTimer")
+DASH_COOLDOWN = NodePath("DashCooldownTimer")
+WEAPON = NodePath("Head/Weapon")
+DEFEND_ZONE = NodePath("Head/DefendZone")
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -420,15 +427,21 @@ libraries = {
 }
 speed_scale = 4.0
 
-[node name="Node3D" parent="Head" instance=ExtResource("2_qloyw")]
+[node name="Weapon" parent="Head" instance=ExtResource("2_qloyw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.555606, -0.396442, -0.776575)
+
+[node name="DefendZone" type="Area3D" parent="Head"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Head/DefendZone"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.32621e-08, -0.300537, -0.573492)
+shape = SubResource("BoxShape3D_qloyw")
 
 [node name="CrouchCeilingDetection" type="ShapeCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("SphereShape3D_k4wwl")
 target_position = Vector3(0, 0.5, 0)
 
-[node name="DashTimer" type="Timer" parent="."]
+[node name="DashCooldownTimer" type="Timer" parent="."]
 one_shot = true
 
 [node name="DoubleTapTimer" type="Timer" parent="."]

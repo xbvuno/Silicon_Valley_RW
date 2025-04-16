@@ -21,10 +21,8 @@ func _ready():
 		'state': func(): return CHARACTER.state, # funzione lambda
 		'in air': func(): return not(CHARACTER.is_on_floor()), # funzione lambda
 		'velocity': func(): return CHARACTER.velocity,
-		'double_tap_s': func(): return CHARACTER.DOUBLE_TAP_TIMER.time_left,
-		'dash_cooldown': func(): return CHARACTER.DASH_COOLDOWN.time_left,
-		'dash_multiply': func(): return CHARACTER.dash_multiply,
-		'speed': func(): return CHARACTER.speed
+		'weapon state': func(): return CHARACTER.WEAPON.state,
+		'defend zone visibile': func(): return CHARACTER.DEFEND_ZONE.visible
 		})
 	
 	super()

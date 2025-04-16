@@ -123,17 +123,21 @@ class_name CharacterMovementController
 #region Custom Settings Export Group
 
 @export var DOUBLE_JUMP_ENABLED: bool = false
-
 @export var DASH_ENABLED: bool = false
-
 @export var DASH_SPEED: float = 10
+@export var DASH_DURATION_SEC: float = 0.3
+@export var MAX_VELOCITY: float = 20
+
+@export var DOUBLE_JUMP_BOOST: float = 1.2
 
 #endregion
 
 #region Custon Node Export Group
 
-@export var DASH_COOLDOWN : Timer
 @export var DOUBLE_TAP_TIMER: Timer
+@export var DASH_COOLDOWN : Timer
+@export var WEAPON: Node3D
+@export var DEFEND_ZONE: Area3D
 
 #endregion
 
@@ -163,10 +167,22 @@ var mouseInput : Vector2 = Vector2(0,0)
 
 #region Main Control Flow
 
+var DASH_DURATION: Timer 
+
 func _ready():
 	#It is safe to comment this line if your game doesn't start with the mouse captured
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
+	
+	DASH_DURATION = Timer.new()
+	DASH_DURATION.wait_time = DASH_DURATION_SEC
+	DASH_DURATION.one_shot = true
+	DASH_DURATION.timeout.connect((func(): is_dashing = false).call)
+	add_child(DASH_DURATION)
+	
+	DEFEND_ZONE.area_entered.connect(on_frontal_attack)
+	
+	
 	# If the controller is rotated in a certain direction for game design purposes, redirect this rotation into the head.
 	HEAD.rotation.y = rotation.y
 	rotation.y = 0
@@ -180,11 +196,28 @@ func _process(_delta):
 	if pausing_enabled:
 		handle_pausing()
 
+func on_frontal_attack(area: Area3D):
+	if not area.is_in_group("weapons"): # se non è un arma esci
+		return
+	
+	var weapon_attacking = area.get_parent()
+	if weapon_attacking == WEAPON: # se è la mia stessa arma a colpirmi esci
+		return
+
+	if WEAPON.state == 'defend':
+		print('hai subito danno mentre difendevi')
+		if WEAPON.can_parry:
+			print('hai fatto un parry!')
+	else:
+		print('hai preso tutto il danno')
+		
+		
+
 func _physics_process(delta): # Most things happen here.
 	# Gravity
 	if dynamic_gravity:
 		gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
-	if not is_on_floor() and gravity and gravity_enabled:
+	if not is_on_floor() and gravity and gravity_enabled and not is_dashing:
 		velocity.y -= gravity * delta
 
 	handle_jumping()
@@ -213,6 +246,9 @@ func _physics_process(delta): # Most things happen here.
 
 	if jump_animation:
 		play_jump_animation()
+		
+	WEAPON.handle_input()
+		
 
 	was_on_floor = is_on_floor() # This must always be at the end of physics_process
 
@@ -222,13 +258,33 @@ func _physics_process(delta): # Most things happen here.
 
 var dash_multiply: float = 1
 
+var is_dashing: bool = false;
+
+
 func dash(action):
-	dash_multiply = DASH_SPEED * 3
+	var front = -CAMERA.get_global_transform().basis.z.normalized()
+	var right = front.cross(Vector3.UP).normalized()
+	
+	var directions = {
+		controls.FORWARD: front,
+		controls.LEFT: -right,
+		controls.BACKWARD: -front,
+		controls.RIGHT: right
+	}
+	
+	var direction = directions[action]
+	direction.y = 0
+	var tw: Tween = get_tree().create_tween()
+	tw.tween_property(self, "velocity", direction * DASH_SPEED, DASH_DURATION_SEC)
 	DASH_COOLDOWN.start()
+	DASH_DURATION.start()
+	is_dashing = true;
 
 
 var last_direction_tap: String = ''
 func handle_double_tap():
+	if state == 'crouching':
+		return
 	for m_action in [last_direction_tap, controls.FORWARD, controls.LEFT,  controls.BACKWARD, controls.RIGHT]: # tutti le possibili action di movimento, dando priorità a quella già premuta c[]
 		if m_action and Input.is_action_just_pressed(m_action):
 			if DOUBLE_TAP_TIMER.is_stopped() or last_direction_tap != m_action: # Se il tempo per attivare il double tap è finito oppure se 
@@ -250,11 +306,16 @@ func handle_jumping():
 				velocity.y += jump_velocity # Adding instead of setting so jumping on slopes works properly
 		else:
 			if Input.is_action_just_pressed(controls.JUMP) and (is_on_floor() or (DOUBLE_JUMP_ENABLED and can_do_another_jump)) and !low_ceiling:
+				var multiply = 1
 				if can_do_another_jump:
+					multiply = DOUBLE_JUMP_BOOST
 					can_do_another_jump = false;
+					
 				if jump_animation:
 					JUMP_ANIMATION.play("jump", 0.25)
-				velocity.y += jump_velocity
+				#velocity.y += jump_velocity
+				var tw: Tween = get_tree().create_tween()
+				tw.tween_property(self, "velocity", Vector3.UP * jump_velocity * multiply, 0.01) #####
 	
 	if is_on_floor():
 		can_do_another_jump = true; ## da fare update con un timer, ora mi scoccia ;b
@@ -265,30 +326,21 @@ func handle_movement(delta, input_dir):
 	var direction = input_dir.rotated(-HEAD.rotation.y)
 	direction = Vector3(direction.x, 0, direction.y)
 	
-	var is_dashing: bool = dash_multiply > 3
-	
 	move_and_slide()
-
-	if is_dashing:
-		dash_multiply = lerp(dash_multiply, 1., delta * 10)
 
 	var target_velocity = direction * max(speed, dash_multiply)
 
-	if in_air_momentum and not(is_on_floor()):
-		target_velocity *= 0.02
-		if is_dashing:
-			velocity.x += target_velocity.x
-			velocity.z += target_velocity.z
+	if in_air_momentum and not(is_on_floor()): # air momentum attivo e in aria
 		return
-	
 
-	
-	if motion_smoothing:
+	if motion_smoothing and not is_dashing:
 		velocity.x = lerp(velocity.x, target_velocity.x, acceleration * delta)
 		velocity.z = lerp(velocity.z, target_velocity.z, acceleration * delta)
 	else:
 		velocity.x = target_velocity.x
 		velocity.z = target_velocity.y
+		
+	velocity = velocity.clamp(Vector3.ONE * -MAX_VELOCITY, Vector3.ONE * MAX_VELOCITY)
 
 
 func handle_head_rotation():
