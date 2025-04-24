@@ -1,4 +1,4 @@
-extends "res://scripts/hud/debug/debug_menu.gd"
+extends "./debug_menu.gd"
 
 # FOGLIO UTILIZZABILE COME DEMO PER ESTENDERE IL MENU DI DEBUG
 # 1 ) IN EXTEND NON METTERE LO STESSO RIFERIMENTO, FAI RIFERIMENTO A QUESTO FOGLIO E CONTINUA A CASCATA
@@ -9,7 +9,7 @@ extends "res://scripts/hud/debug/debug_menu.gd"
 # 6 ) ABBI FEDE NELLE PAPERE
 
 ## Reference to the char where you want to take the data
-@export var CHARACTER: CharacterMovementController;
+@export var CHARACTER: CharacterBody3D;
 
 func _ready():
 	if CHARACTER == null:
@@ -22,7 +22,16 @@ func _ready():
 		'in air': func(): return not(CHARACTER.is_on_floor()), # funzione lambda
 		'velocity': func(): return CHARACTER.velocity,
 		'weapon state': func(): return CHARACTER.WEAPON.state,
-		'defend zone visibile': func(): return CHARACTER.DEFEND_ZONE.visible
+		'DASH': null,
+		'DASH COOLDOWN': func(): return CHARACTER.DASH.COOLDOWN_TIMER.time_left,
+		'DASH COOLDOWN TIME': func(): return CHARACTER.DASH.COOLDOWN_TIMER.wait_time,
+		'AIR DASHES': func(): return CHARACTER.DASH.air_dashes,
+		'CAN DASH': func(): return CHARACTER.DASH.can_dash(),
+		'AIR JUMP': null,
+		'air jumps': func(): return CHARACTER.AIR_JUMP.air_jumps,
+		'air jump cooldown': func(): return CHARACTER.AIR_JUMP.COOLDOWN_TIMER.time_left
+			
+		
 		})
 	
 	super()

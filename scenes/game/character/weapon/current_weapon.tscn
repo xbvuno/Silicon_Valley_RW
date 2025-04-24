@@ -1,7 +1,39 @@
-[gd_scene load_steps=8 format=3 uid="uid://3euw0wojttkh"]
+[gd_scene load_steps=13 format=3 uid="uid://3euw0wojttkh"]
 
-[ext_resource type="Script" uid="uid://chfykahwcqmi7" path="res://scripts/character/weapon/current_weapon.gd" id="1_howxv"]
+[ext_resource type="Script" uid="uid://chfykahwcqmi7" path="res://scenes/game/character/weapon/current_weapon.gd" id="1_howxv"]
 [ext_resource type="PackedScene" uid="uid://xmmdx0i06cco" path="res://assets/models/handbrake0.blend" id="1_wwl6m"]
+[ext_resource type="AudioStream" uid="uid://c4j2jngbex7tu" path="res://scenes/game/character/weapon/temp_audio/failed_parry.ogg" id="3_62pn2"]
+[ext_resource type="AudioStream" uid="uid://bgmsd54b4o6tx" path="res://scenes/game/character/weapon/temp_audio/good_parry.ogg" id="4_pe1gy"]
+[ext_resource type="AudioStream" uid="uid://dk2frq3714tb4" path="res://scenes/game/character/weapon/temp_audio/parry.ogg" id="5_lyaey"]
+[ext_resource type="AudioStream" uid="uid://ybdsievcqptd" path="res://scenes/game/character/weapon/temp_audio/attack.ogg" id="6_dbady"]
+[ext_resource type="AudioStream" uid="uid://bwrivraebik28" path="res://scenes/game/character/weapon/temp_audio/can_parry.ogg" id="7_dxh6y"]
+
+[sub_resource type="Animation" id="Animation_howxv"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Area3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Area3D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_wwl6m"]
 resource_name = "attack"
@@ -44,33 +76,6 @@ tracks/2/keys = {
 "args": [],
 "method": &"to_idle"
 }]
-}
-
-[sub_resource type="Animation" id="Animation_howxv"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Area3D:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Area3D:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_nj1jv"]
@@ -120,10 +125,6 @@ libraries = {
 &"": SubResource("AnimationLibrary_nj1jv")
 }
 
-[node name="ParryTimer" type="Timer" parent="."]
-wait_time = 0.3
-one_shot = true
-
 [node name="Area3D" type="Area3D" parent="." groups=["weapons"]]
 
 [node name="handbrake0" parent="Area3D" instance=ExtResource("1_wwl6m")]
@@ -132,3 +133,20 @@ transform = Transform3D(-8.5952e-15, -2.16305e-07, 3.87216, 3.87216, -1.69258e-0
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00189209, -0.0153809, -0.00368309)
 shape = SubResource("BoxShape3D_eoyty")
+
+[node name="Audio" type="Node" parent="."]
+
+[node name="FailedParry" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("3_62pn2")
+
+[node name="GoodParry" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("4_pe1gy")
+
+[node name="Defend" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("5_lyaey")
+
+[node name="Attack" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("6_dbady")
+
+[node name="CanDefend" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("7_dxh6y")

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cjgyp6y6m3ui6"]
 
-[ext_resource type="Script" uid="uid://btqwr7eqrwloe" path="res://scripts/hud/reticle.gd" id="1_20dsc"]
+[ext_resource type="Script" uid="uid://btqwr7eqrwloe" path="res://scenes/game/hud/reticle/reticle.gd" id="1_20dsc"]
 
 [node name="Reticle" type="Control"]
 layout_mode = 3

@@ -10,6 +10,20 @@ class_name Enemy
 @export var MAX_HEALTH = 20
 @onready var health = MAX_HEALTH
 
+func pause():
+	process_mode = Node.PROCESS_MODE_DISABLED
+	$MeshInstance3D.mesh.material.albedo_color = Color(1, 0, 0, 1)
+	
+func unpause():
+	process_mode = Node.PROCESS_MODE_INHERIT
+	$MeshInstance3D.mesh.material.albedo_color = Color(0, 1, 0, 1)
+
+func _ready():
+	$FreezeTimer.timeout.connect(unpause)
+
+func got_parried():
+	$FreezeTimer.start()
+	pause()
 
 func take_damage(damage):
 	health -= damage

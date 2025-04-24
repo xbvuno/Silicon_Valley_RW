@@ -1,7 +1,7 @@
 extends Control
 
 ## Enlarge reticle based on player speed
-@export var CHARACTER: CharacterMovementController
+@export var CHARACTER: CharacterBody3D
 
 const SCALE_TARGETS = {
 	'normal': 32.,
@@ -44,9 +44,9 @@ func _process(delta: float) -> void:
 		return 
 	
 	var scale_multiplier = 1
-	if not(CHARACTER.is_on_floor()):
-		scale_multiplier *= IN_AIR_SCALE_MULTIPLY
-	if CHARACTER.is_dashing:
+	if CHARACTER.is_in_air():
+		scale_multiplier *= IN_AIR_SCALE_MULTIPLY * (1 + CHARACTER.AIR_JUMP.air_jumps * 0.4)
+	if CHARACTER.DASH.is_dashing():
 		scale_multiplier *= DASH_SCALE_MULTIPLY
 	
 	var lerp_step: float = (round(delta * 100) / 100) * LERP_SPEED

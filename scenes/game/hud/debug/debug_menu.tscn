@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://eomrg3xc2jq4"]
 
-[ext_resource type="Script" uid="uid://bvmq1oalosavg" path="res://scripts/hud/debug/debug_character.gd" id="1_0faeu"]
+[ext_resource type="Script" uid="uid://bvmq1oalosavg" path="res://scenes/game/hud/debug/debug_character.gd" id="1_0faeu"]
 [ext_resource type="FontFile" uid="uid://bj022vx1alxl" path="res://assets/texts/fonts/SpaceMono-Regular.ttf" id="1_rrirc"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_0faeu"]

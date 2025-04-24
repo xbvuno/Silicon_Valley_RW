@@ -1,10 +1,5 @@
 extends Control
 
-# NON TOCCARE, CHIEDERE PRIMA
-# Per aggiungere valori alla finestra di debug guardare il funzionamento di debug_character.gd
-#  
-
-
 ## Control che rimarrà in vista mentre il DebugMenu è chiuso
 @onready var ALWAYS_SHOWN: Control = $AlwaysShownLabel;
 ## Control che verrà mostrato
