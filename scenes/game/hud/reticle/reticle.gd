@@ -3,20 +3,20 @@ extends Control
 ## Enlarge reticle based on player speed
 @export var CHARACTER: CharacterBody3D
 
-const SCALE_TARGETS = {
+const SCALE_TARGETS: Dictionary[String, float] = {
 	'normal': 32.,
 	'sprinting': 64.,
 	'crouching': 32.
 }
 
-const IN_AIR_SCALE_MULTIPLY = 1.5
-const DASH_SCALE_MULTIPLY = 3
+const IN_AIR_SCALE_MULTIPLY: float = 1.5
+const DASH_SCALE_MULTIPLY: float = 3
 
-var current_scale_target = SCALE_TARGETS['normal']
+var current_scale_target: float = SCALE_TARGETS['normal']
 
-const LERP_SPEED = 10.
+const LERP_SPEED: float = 10.
 
-const ALPHA_COLOR_TARGETS = {
+const ALPHA_COLOR_TARGETS: Dictionary[String, float] = {
 	'normal': 1.,
 	'sprinting': 1.,
 	'crouching': 0.2
@@ -28,22 +28,22 @@ var anchor_offset: float;
 
 @onready var target_fov: float = CHARACTER.CAMERA.fov;
 
-func _ready():
+func _ready() -> void:
 	if CHARACTER == null:
 		return
 	
 	CHARACTER.state_changed.connect(on_state_change)
 	
-func on_state_change(_old_state, new_state):
+func on_state_change(_old_state: String, new_state: String) -> void:
 	current_scale_target = SCALE_TARGETS[new_state]
 	current_alpha_target = ALPHA_COLOR_TARGETS[new_state]
 		
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if CHARACTER == null:
 		return 
 	
-	var scale_multiplier = 1
+	var scale_multiplier: float = 1
 	if CHARACTER.is_in_air():
 		scale_multiplier *= IN_AIR_SCALE_MULTIPLY * (1 + CHARACTER.AIR_JUMP.air_jumps * 0.4)
 	if CHARACTER.DASH.is_dashing():

@@ -21,7 +21,7 @@ func _ready() -> void:
 	COOLDOWN_TIMER = Utils.timer_from_time(COOLDOWN_SEC, true, self)
 
 func can_air_jump() -> bool:
-	if not ENABLED:
+	if !ENABLED:
 		return false
 
 	elif air_jumps >= MAX_AIR_JUMPS:
@@ -29,14 +29,14 @@ func can_air_jump() -> bool:
 		
 	return COOLDOWN_TIMER.is_stopped()
 
-func get_multiply():
+func get_multiply() -> int:
 	air_jumps += 1
 	COOLDOWN_TIMER.start()
-	return JUMP_BOOST * air_jumps
+	return int(JUMP_BOOST) * air_jumps
 
-func start_timer():
+func start_timer() -> void:
 	COOLDOWN_TIMER.start()
 	
 
-func reset():
+func reset() -> void:
 	air_jumps = 0

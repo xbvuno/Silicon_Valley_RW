@@ -12,15 +12,15 @@ extends Node
 ##  `on_timeout`: The function to call when the timer times out (leave empty if none required)
 func timer_from_time(
 		time_sec: float,
-		one_shot, 
-		add_child_to: Variant = null, 
+		one_shot: bool,
+		add_child_to: Variant = null,
 		on_timeout: Callable = Callable()
 	) -> Timer:
-		
-	var timer = Timer.new()
+	
+	var timer: Timer = Timer.new()
 	timer.wait_time = time_sec
 	timer.one_shot = one_shot
-	if not (on_timeout.is_null()):
+	if !on_timeout.is_null():
 		timer.timeout.connect(on_timeout)
 	
 	if add_child_to != null:

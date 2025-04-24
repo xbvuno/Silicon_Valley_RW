@@ -30,7 +30,7 @@ func _ready() -> void:
 	COOLDOWN_TIMER = Utils.timer_from_time(COOLDOWN_SEC, true, self)
 
 func can_dash() -> bool:
-	if not ENABLED:
+	if !ENABLED:
 		return false
 		
 	if CHARACTER.is_on_floor():
@@ -38,16 +38,16 @@ func can_dash() -> bool:
 	elif air_dashes >= MAX_AIR_DASHES:
 		return false
 		
-	return not dashing and COOLDOWN_TIMER.is_stopped()
+	return !dashing && COOLDOWN_TIMER.is_stopped()
 
-func end_dash():
+func end_dash() -> void:
 	last_action_tap = ''
 	dashing = false
 	COOLDOWN_TIMER.start()
 
 func did_double_tap() -> bool:
-	for k_action in CHARACTER.MOVIMENT_CONTROLS: # tutti le possibili action di movimento
-		var action = CHARACTER.MOVIMENT_CONTROLS[k_action]
+	for k_action: String in CHARACTER.MOVIMENT_CONTROLS: # tutti le possibili action di movimento
+		var action: String = CHARACTER.MOVIMENT_CONTROLS[k_action]
 		if Input.is_action_just_pressed(action):
 			if DOUBLE_TAP_TIMER.is_stopped() or last_action_tap != action: # Se il tempo per attivare il double tap è finito oppure se
 				last_action_tap = action
@@ -58,7 +58,7 @@ func did_double_tap() -> bool:
 
 
 func direction_from_facing(facing_direction: Vector3) -> Dictionary:
-	var right = facing_direction.cross(Vector3.UP).normalized()
+	var right: Vector3 = facing_direction.cross(Vector3.UP).normalized()
 	return {
 		CHARACTER.MOVIMENT_CONTROLS.LEFT: - right,
 		CHARACTER.MOVIMENT_CONTROLS.RIGHT: right,
@@ -67,7 +67,7 @@ func direction_from_facing(facing_direction: Vector3) -> Dictionary:
 	}
 
 func do_dash(facing_direction: Vector3) -> void:
-	var direction = direction_from_facing(facing_direction)[last_action_tap]
+	var direction: Vector3 = direction_from_facing(facing_direction)[last_action_tap]
 	direction.y = 0
 	var tw: Tween = CHARACTER.get_tree().create_tween()
 	tw.tween_property(CHARACTER, "velocity", direction * SPEED, DURATION_SEC)
