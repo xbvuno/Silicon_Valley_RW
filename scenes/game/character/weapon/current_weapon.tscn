@@ -135,6 +135,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00189209, -0.0153809, -0.0
 shape = SubResource("BoxShape3D_eoyty")
 
 [node name="Audio" type="Node" parent="."]
+unique_name_in_owner = true
 
 [node name="FailedParry" type="AudioStreamPlayer" parent="Audio"]
 stream = ExtResource("3_62pn2")
@@ -150,3 +151,13 @@ stream = ExtResource("6_dbady")
 
 [node name="CanDefend" type="AudioStreamPlayer" parent="Audio"]
 stream = ExtResource("7_dxh6y")
+
+[node name="missedAttack" type="AudioStreamPlayer" parent="Audio"]
+
+[node name="enemyWasHit" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("7_dxh6y")
+
+[node name="collidedWithElse" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("7_dxh6y")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

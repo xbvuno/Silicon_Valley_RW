@@ -30,7 +30,7 @@ func take_damage(damage):
 	print(self, ' AUCH [HP: ', health, ']')
 	if health <= 0:
 		queue_free()
-		
+	
 
 func _on_area_3d_area_entered(area: Area3D) -> void:
 	if area.is_in_group('weapons'):

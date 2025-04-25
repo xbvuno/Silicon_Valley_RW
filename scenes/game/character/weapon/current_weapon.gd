@@ -12,8 +12,9 @@ extends Node3D
 var PARRY_TIMER: Timer
 var PARRY_COOLDOWN_TIMER: Timer
 
-var state = 'idle'
-var did_defend = false;
+var state: String = 'idle'
+var did_defend: bool = false;
+var attack_started_or_ended: bool = false
 
 func on_parry_enabled():
 	print('parry riabilitato')
@@ -56,5 +57,9 @@ func to_idle():
 	state = 'idle'
 	did_defend = false
 
-	
-	
+
+func _on_area_3d_body_entered(body: Node3D) -> void:
+	if body is Enemy:
+		$Audio/enemyWasHit.play()
+	else:
+		$Audio/collidedWithElse.play()
