@@ -16,6 +16,3 @@ mono_crash.*.json
 
 /android/
 .vscode
-
-# Custom
-addons/autotyper
