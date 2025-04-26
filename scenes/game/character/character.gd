@@ -5,6 +5,11 @@
 #    ( ._> /    TOCCA LA PAPERELLA E LA PRENDO SUL PERSONALE >:|
 
 extends CharacterBody3D
+class_name Character
+
+#region State Machine Export
+@export_category("State Machine")
+@export var state_machine: StateMachine
 
 #region Character Export
 
@@ -95,12 +100,29 @@ extends CharacterBody3D
 
 @export_group("Custom Settings")
 @export var DOUBLE_JUMP_ENABLED: bool = false
-
 @export var MAX_VELOCITY: float = 20
-
 @export var DOUBLE_JUMP_BOOST: float = 1.4
 
 #endregion
+
+#region Dash Settings
+
+@export_group("Dash Settings")
+## Dash enabled.
+@export var ENABLED: bool = true
+## Speed of the dash.
+@export var SPEED: float = 20
+## Duration of the dash in seconds: How fast the dash will be.
+@export var DURATION_SEC: float = 0.3
+## Cooldown of the dash in seconds: How long until the dash can be used again.
+@export var COOLDOWN_SEC: float = 1.0
+## Double tap time in seconds: The arc of time in which the dash can be activated by double tapping.
+@export var DOUBLE_TAP_SEC: float = 0.2
+## Max number of dashes in air you can do before touching ground
+@export var MAX_AIR_DASHES: int =  1
+
+#endregion
+
 
 #region Custon Node Export Group
 
@@ -112,9 +134,6 @@ extends CharacterBody3D
 #endregion
 
 #region Member Variable Initialization
-
-signal state_changed(old_state, new_state)
-
 # These are variables used in this script that don't need to be exposed in the editor.
 var speed : float = BASE_SPEED
 var current_speed : float = 0.0
@@ -127,8 +146,11 @@ var was_on_floor : bool = true # Was the player on the floor last frame (for lan
 var GRAVITY : float = ProjectSettings.get_setting("physics/3d/default_gravity") # Don't set this as a const, see the gravity section in _physics_process
 
 # Stores mouse input for rotating the camera in the physics process
-var mouseInput : Vector2 = Vector2(0,0)
-
+var mouseInput : Vector2 = Vector2.ZERO
+var input_dir : Vector2 = Vector2.ZERO
+var DOUBLE_TAP_TIMER: Timer
+var last_action_tap: String = ''
+var is_double_tap: bool = false
 #endregion
 
 #region Main Control Flow
@@ -140,13 +162,13 @@ var mouseInput : Vector2 = Vector2(0,0)
 	BACKWARD = CONTROLS.BACKWARD,
 }
 
-@onready var DASH: Node = $Dash
-@onready var AIR_JUMP: Node = $AirJump
+@onready var DASH: Node = $StateMachine/DashState
+
 
 func _ready():
 	#It is safe to comment this line if your game doesn't start with the mouse captured
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	
+	DOUBLE_TAP_TIMER = Utils.timer_from_time(DOUBLE_TAP_SEC, true, self)
 	DEFEND_ZONE.area_entered.connect(on_frontal_attack)
 	
 	# If the controller is rotated in a certain direction for game design purposes, redirect this rotation into the head.
@@ -155,11 +177,9 @@ func _ready():
 	
 	set_floor_max_angle(PI / 6)
 	initialize_animations()
-	enter_normal_state()
+	speed = BASE_SPEED
 
 	
-
-
 func _process(_delta):
 	if PAUSING_ENABLED:
 		handle_pausing()
@@ -185,38 +205,24 @@ func _physics_process(delta): # Most things happen here.
 	if GRAVITY and not DASH.is_dashing():
 		velocity.y -= GRAVITY * delta
 
-	handle_jumping()
 
-	var input_dir = Vector2.ZERO
+	input_dir = Vector2.ZERO
 
 	if not IMMOBILE:
 		input_dir = Input.get_vector(CONTROLS.LEFT, CONTROLS.RIGHT, CONTROLS.FORWARD, CONTROLS.BACKWARD)
-		
+
+	is_double_tap = double_tapped()
+
 	handle_movement(delta, input_dir)
-
-	if state != "crouching" and DASH.can_dash() and DASH.did_double_tap():
-		DASH.do_dash(get_facing_direction())
 	
-	
-				
-
-
 	handle_head_rotation()
 
 	# The player is not able to stand up if the ceiling is too low
 	low_ceiling = $CrouchCeilingDetection.is_colliding()
 
-	handle_state(input_dir)
-	if dynamic_fov: # This may be changed to an AnimationPlayer
-		update_camera_fov()
-
 	if view_bobbing:
 		play_headbob_animation(input_dir)
 
-	
-	if !was_on_floor and is_on_floor(): # The player just landed
-		play_jump_animation()
-		
 	WEAPON.handle_input()
 		
 
@@ -230,24 +236,6 @@ func get_facing_direction() -> Vector3:
 	return -CAMERA.get_global_transform().basis.z.normalized()
 
 var can_do_another_jump: bool = true;
-
-func handle_jumping():
-	if not Input.is_action_just_pressed(CONTROLS.JUMP) and !low_ceiling:
-		return
-		
-	var multiply = 1
-	if is_in_air():
-		if AIR_JUMP.can_air_jump():
-			multiply = AIR_JUMP.get_multiply()
-		else:
-			return
-	else:
-		AIR_JUMP.start_timer()
-		AIR_JUMP.reset()
-	
-	JUMP_ANIMATION.play("jump", 0.25)
-	velocity.y += JUMP_VELOCITY * multiply
-
 
 func handle_movement(delta, input_dir):
 	var direction = input_dir.rotated(-HEAD.rotation.y)
@@ -284,73 +272,8 @@ func handle_head_rotation():
 
 #region State Handling
 
-func handle_state(moving):
-	if sprint_enabled:
-		if sprint_mode == 0:
-			if Input.is_action_pressed(CONTROLS.SPRINT) and state != "crouching":
-				if moving:
-					if state != "sprinting":
-						enter_sprint_state()
-				else:
-					if state == "sprinting":
-						enter_normal_state()
-			elif state == "sprinting":
-				enter_normal_state()
-		elif sprint_mode == 1:
-			if moving:
-				# If the player is holding sprint before moving, handle that scenario
-				if Input.is_action_pressed(CONTROLS.SPRINT) and state == "normal":
-					enter_sprint_state()
-				if Input.is_action_just_pressed(CONTROLS.SPRINT):
-					match state:
-						"normal":
-							enter_sprint_state()
-						"sprinting":
-							enter_normal_state()
-			elif state == "sprinting":
-				enter_normal_state()
-
-	if crouch_enabled:
-		if crouch_mode == 0:
-			if Input.is_action_pressed(CONTROLS.CROUCH) and state != "sprinting" and is_on_floor():
-				if state != "crouching":
-					enter_crouch_state()
-			elif state == "crouching" and !$CrouchCeilingDetection.is_colliding():
-				enter_normal_state()
-		elif crouch_mode == 1:
-			if Input.is_action_just_pressed(CONTROLS.CROUCH):
-				match state:
-					"normal":
-						enter_crouch_state()
-					"crouching":
-						if !$CrouchCeilingDetection.is_colliding():
-							enter_normal_state()
 
 # Any enter state function should only be called once when you want to enter that state, not every frame.
-func enter_normal_state():
-	#print("entering normal state")
-	var prev_state = state
-	if prev_state == "crouching":
-		CROUCH_ANIMATION.play_backwards("crouch")
-	state = "normal"
-	speed = BASE_SPEED
-	state_changed.emit(prev_state, state)
-
-func enter_crouch_state():
-	#print("entering crouch state")
-	state_changed.emit(state, "crouching")
-	state = "crouching"
-	speed = CROUCH_SPEED
-	CROUCH_ANIMATION.play("crouch")
-
-func enter_sprint_state():
-	#print("entering sprint state")
-	var prev_state = state
-	if prev_state == "crouching":
-		CROUCH_ANIMATION.play_backwards("crouch")
-	state = "sprinting"
-	speed = SPRINT_SPEED
-	state_changed.emit(prev_state, state)
 
 #endregion
 
@@ -390,27 +313,10 @@ func play_headbob_animation(moving):
 			HEADBOB_ANIMATION.speed_scale = 1
 			HEADBOB_ANIMATION.play("RESET", 1)
 
-func play_jump_animation():
-	var facing_direction : Vector3 = CAMERA.get_global_transform().basis.x
-	var facing_direction_2D : Vector2 = Vector2(facing_direction.x, facing_direction.z).normalized()
-	var velocity_2D : Vector2 = Vector2(velocity.x, velocity.z).normalized()
-
-	# Compares velocity direction against the camera direction (via dot product) to determine which landing animation to play.
-	var side_landed : int = round(velocity_2D.dot(facing_direction_2D))
-
-	if side_landed > 0:
-		JUMP_ANIMATION.play("land_right", 0.25)
-	elif side_landed < 0:
-		JUMP_ANIMATION.play("land_left", 0.25)
-	else:
-		JUMP_ANIMATION.play("land_center", 0.25)
 
 #endregion
 
 #region Debug Menu
-
-
-
 func _unhandled_input(event : InputEvent):
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		mouseInput.x += event.relative.x
@@ -422,13 +328,6 @@ func _unhandled_input(event : InputEvent):
 #endregion
 
 #region Misc Functions
-
-func update_camera_fov():
-	if state == "sprinting":
-		CAMERA.fov = lerp(CAMERA.fov, 85.0, 0.3)
-	else:
-		CAMERA.fov = lerp(CAMERA.fov, 75.0, 0.3)
-
 func handle_pausing():
 	if Input.is_action_just_pressed(CONTROLS.PAUSE):
 		# You may want another node to handle pausing, because this player may get paused too.
@@ -440,8 +339,18 @@ func handle_pausing():
 				Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 				#get_tree().paused = false
 
-
 func is_in_air(): # Funzione inutile, solo per leggibilità, abbiate la stessa filosofia :D
 	return not is_on_floor()
+
+func double_tapped():
+	for k_action in MOVIMENT_CONTROLS: # tutti le possibili action di movimento
+		var action = MOVIMENT_CONTROLS[k_action]
+		if Input.is_action_just_pressed(action):
+			if DOUBLE_TAP_TIMER.is_stopped() or last_action_tap != action: # Se il tempo per attivare il double tap è finito oppure se
+				last_action_tap = action
+				DOUBLE_TAP_TIMER.start()
+			else:
+				return true
+	return false
 
 #endregion

@@ -1,4 +1,5 @@
-extends Node
+extends State
+class_name CharacterAirJumpState
 
 ## Air Jump enabled.
 @export var ENABLED: bool = true
@@ -9,16 +10,14 @@ extends Node
 ## Max number of dashes in air you can do before touching ground
 @export var MAX_AIR_JUMPS: int =  1
 
-# solo per controllare se is_on_floor
-@onready var CHARACTER: CharacterBody3D = $'../' 
-
 var COOLDOWN_TIMER: Timer
-
 var air_jumping: bool = false
 var air_jumps: int = 0
 
 func _ready() -> void:
+	super()
 	COOLDOWN_TIMER = Utils.timer_from_time(COOLDOWN_SEC, true, self)
+	state_name = States.States.AIR_JUMP
 
 func can_air_jump() -> bool:
 	if not ENABLED:
@@ -26,7 +25,8 @@ func can_air_jump() -> bool:
 
 	elif air_jumps >= MAX_AIR_JUMPS:
 		return false
-			return COOLDOWN_TIMER.is_stopped()
+		
+	return COOLDOWN_TIMER.is_stopped()
 
 func get_multiply():
 	air_jumps += 1
@@ -36,6 +36,14 @@ func get_multiply():
 func start_timer():
 	COOLDOWN_TIMER.start()
 	
-
 func reset():
 	air_jumps = 0
+
+func _physics_process(delta: float) -> void:
+	character_node.state_machine.switch_movement_state(States.States.JUMPING)
+
+func enter_state():
+	character_node.velocity.y *= get_multiply()
+	
+func exit_state():
+	pass

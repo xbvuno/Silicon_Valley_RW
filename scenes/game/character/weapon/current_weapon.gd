@@ -1,4 +1,5 @@
 extends Node3D
+class_name Weapon
 
 @onready var ANIM_PLAYER = $AnimationPlayer
 
@@ -26,6 +27,7 @@ func _ready():
 	pass
 
 func handle_input():
+	return
 	if state == 'idle':
 		if Input.is_action_just_pressed("a_attack"):
 			attack()

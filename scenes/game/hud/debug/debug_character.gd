@@ -18,7 +18,8 @@ func _ready():
 		
 	properties_to_display.merge({
 		'CHARACTER': null, # SARÀ SEMPRE FERMO E COLORATO DI GIALLO, IN QUESTO CASO UTILIZZATO COME TITOLO
-		'state': func(): return CHARACTER.state, # funzione lambda
+		'state_movement': func(): return CHARACTER.state_machine.current_movement, # funzione lambda
+		'state_action': func(): return CHARACTER.state_machine.current_action,
 		'in air': func(): return not(CHARACTER.is_on_floor()), # funzione lambda
 		'velocity': func(): return CHARACTER.velocity,
 		'weapon state': func(): return CHARACTER.WEAPON.state,
@@ -28,8 +29,9 @@ func _ready():
 		'AIR DASHES': func(): return CHARACTER.DASH.air_dashes,
 		'CAN DASH': func(): return CHARACTER.DASH.can_dash(),
 		'AIR JUMP': null,
-		'air jumps': func(): return CHARACTER.AIR_JUMP.air_jumps,
-		'air jump cooldown': func(): return CHARACTER.AIR_JUMP.COOLDOWN_TIMER.time_left
+		'FOV': func(): return CHARACTER.CAMERA.fov
+		#'air jumps': func(): return CHARACTER.AIR_JUMP.air_jumps,
+		#'air jump cooldown': func(): return CHARACTER.AIR_JUMP.COOLDOWN_TIMER.time_left
 			
 		
 		})
