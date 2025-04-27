@@ -1,4 +1,5 @@
 extends Node3D
+class_name Weapon
 
 @onready var ANIM_PLAYER: AnimationPlayer = $AnimationPlayer
 
@@ -23,7 +24,7 @@ func on_parry_enabled() -> void:
 func _ready() -> void:
 	PARRY_TIMER = Utils.timer_from_time(PARRY_SEC, true, self, to_idle)
 	PARRY_COOLDOWN_TIMER = Utils.timer_from_time(PARRY_COOLDOWN_SEC, true, self, on_parry_enabled)
-
+ 
 func handle_input() -> void:
 	if state == 'idle':
 		if Input.is_action_just_pressed("a_attack"):
