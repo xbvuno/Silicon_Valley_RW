@@ -1,14 +1,12 @@
-[gd_scene load_steps=16 format=3 uid="uid://3euw0wojttkh"]
+[gd_scene load_steps=14 format=3 uid="uid://3euw0wojttkh"]
 
 [ext_resource type="Script" uid="uid://chfykahwcqmi7" path="res://scenes/game/character/weapon/current_weapon.gd" id="1_howxv"]
 [ext_resource type="PackedScene" uid="uid://xmmdx0i06cco" path="res://assets/models/handbrake0.blend" id="1_wwl6m"]
 [ext_resource type="AudioStream" uid="uid://c4j2jngbex7tu" path="res://scenes/game/character/weapon/temp_audio/failed_parry.ogg" id="3_62pn2"]
 [ext_resource type="AudioStream" uid="uid://bgmsd54b4o6tx" path="res://scenes/game/character/weapon/temp_audio/good_parry.ogg" id="4_pe1gy"]
 [ext_resource type="AudioStream" uid="uid://dk2frq3714tb4" path="res://scenes/game/character/weapon/temp_audio/parry.ogg" id="5_lyaey"]
+[ext_resource type="AudioStream" uid="uid://ybdsievcqptd" path="res://scenes/game/character/weapon/temp_audio/attack.ogg" id="6_dbady"]
 [ext_resource type="AudioStream" uid="uid://bwrivraebik28" path="res://scenes/game/character/weapon/temp_audio/can_parry.ogg" id="7_dxh6y"]
-[ext_resource type="AudioStream" uid="uid://b6b700ftnsx5a" path="res://scenes/game/character/weapon/temp_audio/slash-pixabay.mp3" id="8_dbady"]
-[ext_resource type="AudioStream" uid="uid://bpp26htsi1gyg" path="res://scenes/game/character/weapon/temp_audio/slash-enemy-hit.mp3" id="9_dxh6y"]
-[ext_resource type="AudioStream" uid="uid://bllu6bp1d7f55" path="res://scenes/game/character/weapon/temp_audio/slash-muro.mp3" id="10_raxhb"]
 
 [sub_resource type="Animation" id="Animation_howxv"]
 length = 0.001
@@ -126,20 +124,22 @@ script/source = "extends Node
 @export var attack_started_or_ended: bool = false
 @export var has_collided: bool = false
 
-@onready var airSFX_Node: AudioStreamPlayer = $\"../Audio/airSFX\"
-
 var prev_state: String = \"idle\"
 
 func _on_area_3d_body_entered(body: Node3D) -> void:
 	has_collided = true
 	
-	if airSFX_Node.playing:
-		airSFX_Node.stop()
-	
 	if body is Enemy:
 		$\"../Audio/enemyWasHit\".play()
 	else:
 		$\"../Audio/collidedWithElse\".play()
+
+
+func _on_weapon_state_changed(state: String) -> void:
+	print(state)
+	if prev_state == \"attack\":
+		print(\"AAAAA\")
+ate	prev_state = st
 "
 
 [node name="Weapon" type="Node3D"]
@@ -161,6 +161,8 @@ shape = SubResource("BoxShape3D_eoyty")
 
 [node name="CollisionManager" type="Node" parent="."]
 script = SubResource("GDScript_62pn2")
+attack_started_or_ended = null
+has_collided = null
 
 [node name="Audio" type="Node" parent="."]
 unique_name_in_owner = true
@@ -175,17 +177,18 @@ stream = ExtResource("4_pe1gy")
 stream = ExtResource("5_lyaey")
 
 [node name="Attack" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("6_dbady")
 
 [node name="CanDefend" type="AudioStreamPlayer" parent="Audio"]
 stream = ExtResource("7_dxh6y")
 
-[node name="airSFX" type="AudioStreamPlayer" parent="Audio"]
-stream = ExtResource("8_dbady")
+[node name="missedAttack" type="AudioStreamPlayer" parent="Audio"]
 
 [node name="enemyWasHit" type="AudioStreamPlayer" parent="Audio"]
-stream = ExtResource("9_dxh6y")
+stream = ExtResource("7_dxh6y")
 
 [node name="collidedWithElse" type="AudioStreamPlayer" parent="Audio"]
-stream = ExtResource("10_raxhb")
+stream = ExtResource("7_dxh6y")
 
+[connection signal="state_changed" from="." to="CollisionManager" method="_on_weapon_state_changed"]
 [connection signal="body_entered" from="Area3D" to="CollisionManager" method="_on_area_3d_body_entered"]
