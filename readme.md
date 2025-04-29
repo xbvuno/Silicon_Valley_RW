@@ -1,6 +1,6 @@
 # Silicon Valley
 
-📈 DASHBOARD: app.hacknplan.com/p/221046
+📈 DASHBOARD: https://app.hacknplan.com/p/221046
 
 📦 REPO ARCHIVIO:  https://github.com/xShader1374/Silicon-Valley
 
