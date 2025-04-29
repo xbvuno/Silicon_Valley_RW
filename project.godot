@@ -20,6 +20,11 @@ config/icon="res://icon.svg"
 Utils="*res://scenes/globals/utils.gd"
 States="*res://scenes/globals/states_enum.gd"
 
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+
 [global_group]
 
 weapons=""

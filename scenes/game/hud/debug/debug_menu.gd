@@ -23,6 +23,7 @@ func toggle_shown():
 	DEBUG_PANEL.visible = shown
 
 func _ready():
+	DEBUG_PANEL.mouse_filter =Control.MOUSE_FILTER_IGNORE
 	for prop in properties_to_display:
 		var value = properties_to_display[prop]
 		var label = Label.new()
