@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://h6vc166hsiyc"]
+[gd_scene load_steps=19 format=3 uid="uid://h6vc166hsiyc"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_edcox"]
 ground_color = Color(0.160784, 0.815686, 0.905882, 1)
@@ -32,7 +32,6 @@ uv1_scale = Vector3(0.1, 0.1, 0.1)
 uv1_triplanar = true
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ogw7v"]
-load_path = "res://.godot/imported/dark.png-b5c6e3b3bc047060e225b2d4842c8160.s3tc.ctex"
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gomnb"]
 albedo_texture = SubResource("CompressedTexture2D_ogw7v")
@@ -42,8 +41,55 @@ roughness = 0.5
 uv1_triplanar = true
 uv1_triplanar_sharpness = 0.000850145
 
+[sub_resource type="Curve3D" id="Curve3D_v05oa"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tgof3"]
+size = Vector3(3.99011, 0.547424, 4.07858)
+
+[sub_resource type="Animation" id="Animation_v05oa"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PathFollow3D:progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_tgof3"]
+resource_name = "movable_platform"
+length = 2.0
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PathFollow3D:progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 10.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1wdor"]
+_data = {
+&"RESET": SubResource("Animation_v05oa"),
+&"movable_platform": SubResource("Animation_tgof3")
+}
+
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_yqxmo"]
-load_path = "res://.godot/imported/green.png-ff5b0ad42fb1f43b6ccfdfa62c09bb7c.s3tc.ctex"
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u0sbk"]
 albedo_texture = SubResource("CompressedTexture2D_yqxmo")
@@ -54,7 +100,6 @@ uv1_triplanar = true
 uv1_triplanar_sharpness = 0.000850145
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_1ax23"]
-load_path = "res://.godot/imported/orange.png-cae5ed6b8f3a27f1c03f9bd9f597bf5b.s3tc.ctex"
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7j4uu"]
 albedo_texture = SubResource("CompressedTexture2D_1ax23")
@@ -88,50 +133,107 @@ use_collision = true
 size = Vector3(10, 1, 10)
 material = SubResource("StandardMaterial3D_gomnb")
 
-[node name="CSGBox3D3" type="CSGBox3D" parent="terrain"]
+[node name="CSGBox3D3" type="CSGBox3D" parent="terrain" groups=["movable"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 1.8, -13)
 use_collision = true
 size = Vector3(4, 0.5, 4)
 material = SubResource("StandardMaterial3D_gomnb")
 
-[node name="CSGBox3D9" type="CSGBox3D" parent="terrain"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 1.8, -13)
+[node name="Path3D" type="Path3D" parent="terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.83442, 1.8, 0.812352)
+curve = SubResource("Curve3D_v05oa")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="terrain/Path3D"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="terrain/Path3D/PathFollow3D"]
+remote_path = NodePath("../AnimatableBody3D2")
+
+[node name="AnimatableBody3D2" type="AnimatableBody3D" parent="terrain/Path3D/PathFollow3D"]
+
+[node name="CSGBox3D9" type="CSGBox3D" parent="terrain/Path3D/PathFollow3D/AnimatableBody3D2"]
 use_collision = true
 size = Vector3(4, 0.5, 4)
 material = SubResource("StandardMaterial3D_gomnb")
 
+[node name="CollisionShape3D" type="CollisionShape3D" parent="terrain/Path3D/PathFollow3D/AnimatableBody3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0267944, 0.0154724, -0.0491791)
+shape = SubResource("BoxShape3D_tgof3")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="terrain/Path3D"]
+libraries = {
+&"": SubResource("AnimationLibrary_1wdor")
+}
+autoplay = "movable_platform"
+
 [node name="CSGBox3D10" type="CSGBox3D" parent="terrain"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39, 4.8, -9)
+transform = Transform3D(-0.997505, 0, 0.0705922, 0, 1, 0, -0.0705922, 0, -0.997505, 30.1893, 4.8, -13.7184)
 use_collision = true
 size = Vector3(4, 0.5, 4)
 material = SubResource("StandardMaterial3D_gomnb")
 
 [node name="CSGBox3D11" type="CSGBox3D" parent="terrain"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 6.8, -13)
+transform = Transform3D(-0.997505, 0, 0.0705922, 0, 1, 0, -0.0705922, 0, -0.997505, 18.9343, 6.8, -10.5049)
 use_collision = true
 size = Vector3(4, 0.5, 4)
 material = SubResource("StandardMaterial3D_gomnb")
 
 [node name="CSGBox3D12" type="CSGBox3D" parent="terrain"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 57, 8.8, -2)
+transform = Transform3D(-0.997505, 0, 0.0705922, 0, 1, 0, -0.0705922, 0, -0.997505, 12.7283, 8.8, -21.9716)
 use_collision = true
 size = Vector3(4, 0.5, 4)
 material = SubResource("StandardMaterial3D_gomnb")
 
 [node name="CSGBox3D13" type="CSGBox3D" parent="terrain"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47, 10.8, 9)
+transform = Transform3D(-0.997505, 0, 0.0705922, 0, 1, 0, -0.0705922, 0, -0.997505, 23.4799, 10.8, -32.2382)
 use_collision = true
 size = Vector3(4, 0.5, 4)
 material = SubResource("StandardMaterial3D_gomnb")
 
 [node name="CSGBox3D14" type="CSGBox3D" parent="terrain"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 13.8, 20)
+transform = Transform3D(-0.997505, 0, 0.0705922, 0, 1, 0, -0.0705922, 0, -0.997505, 31.2389, 13.8, -42.7167)
 use_collision = true
 size = Vector3(4, 0.5, 4)
 material = SubResource("StandardMaterial3D_gomnb")
 
 [node name="CSGBox3D15" type="CSGBox3D" parent="terrain"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 13.8, 20)
+transform = Transform3D(-0.997505, 0, 0.0705922, 0, 1, 0, -0.0705922, 0, -0.997505, 31.2389, 13.8, -42.7167)
+use_collision = true
+size = Vector3(4, 0.5, 4)
+material = SubResource("StandardMaterial3D_gomnb")
+
+[node name="CSGBox3D18" type="CSGBox3D" parent="terrain"]
+transform = Transform3D(-0.316328, 0, -0.94865, 0, 1, 0, 0.94865, 0, -0.316328, 15.7859, 15.6787, -44.5476)
+use_collision = true
+size = Vector3(4, 0.5, 4)
+material = SubResource("StandardMaterial3D_gomnb")
+
+[node name="CSGBox3D19" type="CSGBox3D" parent="terrain"]
+transform = Transform3D(-0.316328, 0, -0.94865, 0, 1, 0, 0.94865, 0, -0.316328, 16.1009, 17.6787, -32.8472)
+use_collision = true
+size = Vector3(4, 0.5, 4)
+material = SubResource("StandardMaterial3D_gomnb")
+
+[node name="CSGBox3D20" type="CSGBox3D" parent="terrain"]
+transform = Transform3D(-0.316328, 0, -0.94865, 0, 1, 0, 0.94865, 0, -0.316328, 3.45146, 19.6787, -29.6862)
+use_collision = true
+size = Vector3(4, 0.5, 4)
+material = SubResource("StandardMaterial3D_gomnb")
+
+[node name="CSGBox3D21" type="CSGBox3D" parent="terrain"]
+transform = Transform3D(-0.316328, 0, -0.94865, 0, 1, 0, 0.94865, 0, -0.316328, -3.82042, 21.6787, -42.6523)
+use_collision = true
+size = Vector3(4, 0.5, 4)
+material = SubResource("StandardMaterial3D_gomnb")
+
+[node name="CSGBox3D22" type="CSGBox3D" parent="terrain"]
+transform = Transform3D(-0.316328, 0, -0.94865, 0, 1, 0, 0.94865, 0, -0.316328, -12.0413, 24.6787, -52.7725)
+use_collision = true
+size = Vector3(4, 0.5, 4)
+material = SubResource("StandardMaterial3D_gomnb")
+
+[node name="CSGBox3D23" type="CSGBox3D" parent="terrain"]
+transform = Transform3D(-0.316328, 0, -0.94865, 0, 1, 0, 0.94865, 0, -0.316328, -12.0413, 24.6787, -52.7725)
 use_collision = true
 size = Vector3(4, 0.5, 4)
 material = SubResource("StandardMaterial3D_gomnb")
@@ -207,3 +309,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5, -0.5, -7.5)
 use_collision = true
 size = Vector3(4, 1, 4)
 material = SubResource("StandardMaterial3D_7j4uu")
+
+[node name="Node" type="Node" parent="terrain"]

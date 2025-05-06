@@ -4,7 +4,7 @@ class_name CharacterDashState
 ## Dash enabled.
 @export var ENABLED: bool = true
 ## Speed of the dash.
-@export var SPEED: float = 20
+@export var SPEED: float = 30
 ## Duration of the dash in seconds: How fast the dash will be.
 @export var DURATION_SEC: float = 0.3
 ## Cooldown of the dash in seconds: How long until the dash can be used again.

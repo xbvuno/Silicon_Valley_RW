@@ -8,5 +8,6 @@ enum States{
 	AIR_JUMP,
 	NONE,
 	ATTACK,
-	PARRY
+	PARRY,
+	FALLING
 }

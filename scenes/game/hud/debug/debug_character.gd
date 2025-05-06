@@ -29,11 +29,11 @@ func _ready():
 		'AIR DASHES': func(): return CHARACTER.DASH.air_dashes,
 		'CAN DASH': func(): return CHARACTER.DASH.can_dash(),
 		'AIR JUMP': null,
-		'FOV': func(): return CHARACTER.CAMERA.fov
+		'FOV': func(): return CHARACTER.CAMERA.fov,
 		#'air jumps': func(): return CHARACTER.AIR_JUMP.air_jumps,
 		#'air jump cooldown': func(): return CHARACTER.AIR_JUMP.COOLDOWN_TIMER.time_left
-			
-		
+		'CAN AIR JUMP': func(): return %Character/StateMachine/AirJumpState.can_air_jump(),
+		'AIR JUMPS ': func(): return %Character/StateMachine/AirJumpState.air_jumps
 		})
 	
 	super()

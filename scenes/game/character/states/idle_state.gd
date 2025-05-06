@@ -7,11 +7,15 @@ func _ready() -> void:
 
 func _physics_process(_delta: float) -> void:
 	# TODO: Pensare a un modo migliore che non implichi l'uso del dollaro.
+	if character_node.velocity.y<0.0:
+		character_node.state_machine.switch_movement_state(States.States.FALLING)
 	if character_node.is_double_tap and $"../DashState".can_dash():
 		character_node.state_machine.switch_movement_state(States.States.DASHING)
 	
 	if character_node.is_on_floor() and character_node.input_dir != Vector2.ZERO:
 		character_node.state_machine.switch_movement_state(States.States.WALKING)
+	if character_node.velocity.y<0:
+		character_node.state_machine.switch_movement_state(States.States.FALLING)
 
 	
 func _input(event: InputEvent) -> void:
