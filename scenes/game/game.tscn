@@ -87,6 +87,7 @@ libraries = {
 autoplay = "rotate"
 
 [node name="Character" parent="SubViewportContainer/SubViewport" instance=ExtResource("2_7h61r")]
+unique_name_in_owner = true
 editor_description = ""
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 

@@ -16,13 +16,13 @@ class_name Character
 ## The settings for the character's movement and feel.
 @export_category("Character")
 ## The speed that the character moves at without crouching or sprinting.
-@export var BASE_SPEED : float = 3.0
+@export var BASE_SPEED : float = 6.0
 ## The speed that the character moves at when sprinting.
-@export var SPRINT_SPEED : float = 6.0
+@export var SPRINT_SPEED : float = 9.0
 ## The speed that the character moves at when crouching.
-@export var CROUCH_SPEED : float = 1.0
+@export var CROUCH_SPEED : float = 3.0
 ## How high the player jumps.
-@export var JUMP_VELOCITY : float = 8.0
+@export var JUMP_VELOCITY : float = 10.0
 ## How fast the character speeds up and slows down when Motion Smoothing is on.
 @export var ACCELLERATION : float = 10.0
 
@@ -99,7 +99,7 @@ class_name Character
 #region Custom Settings Export Group
 
 @export_group("Custom Settings")
-@export var DOUBLE_JUMP_ENABLED: bool = false
+@export var DOUBLE_JUMP_ENABLED: bool = true
 @export var MAX_VELOCITY: float = 20
 @export var DOUBLE_JUMP_BOOST: float = 1.4
 

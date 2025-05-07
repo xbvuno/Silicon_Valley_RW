@@ -6,7 +6,7 @@ class_name CharacterAirJumpState
 ## Cumulative Jump Boost Multiplier.
 @export var JUMP_BOOST: float = 1.4
 ## Time to wait from a jump to another
-@export var COOLDOWN_SEC: float = 1.0
+@export var COOLDOWN_SEC: float = .1
 ## Max number of dashes in air you can do before touching ground
 @export var MAX_AIR_JUMPS: int =  1
 
@@ -25,8 +25,7 @@ func can_air_jump() -> bool:
 
 	elif air_jumps >= MAX_AIR_JUMPS:
 		return false
-		
-	return COOLDOWN_TIMER.is_stopped()
+	return COOLDOWN_TIMER.is_stopped() and character_node.is_in_air()
 
 func get_multiply():
 	air_jumps += 1
@@ -43,6 +42,7 @@ func _physics_process(delta: float) -> void:
 	character_node.state_machine.switch_movement_state(States.States.JUMPING)
 
 func enter_state():
+	character_node.JUMP_ANIMATION.play("jump", 0.25)
 	character_node.velocity.y *= get_multiply()
 	
 func exit_state():

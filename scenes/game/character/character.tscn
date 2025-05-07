@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://cc1m2a1obsyn4"]
+[gd_scene load_steps=33 format=3 uid="uid://cc1m2a1obsyn4"]
 
 [ext_resource type="Script" uid="uid://cvqbknf1c8dgx" path="res://scenes/game/character/character.gd" id="1_0t4e8"]
 [ext_resource type="PackedScene" uid="uid://3euw0wojttkh" path="res://scenes/game/character/weapon/current_weapon.tscn" id="2_qloyw"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" uid="uid://bxn8is75brufp" path="res://scenes/game/character/states/none_state.gd" id="9_56jte"]
 [ext_resource type="Script" uid="uid://2fhnr5jmi4hk" path="res://scenes/game/character/states/attack_state.gd" id="10_wet2r"]
 [ext_resource type="Script" uid="uid://dsidw5ixsxbnf" path="res://scenes/game/character/states/parry_state.gd" id="11_mqr5i"]
+[ext_resource type="Script" uid="uid://disftlo8loprj" path="res://scenes/game/character/states/fall_state.gd" id="13_mqr5i"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kp17n"]
 albedo_color = Color(0.909804, 0.596078, 0, 1)
@@ -392,20 +393,18 @@ editor_description = "removed reticle control"
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
 script = ExtResource("1_0t4e8")
 state_machine = NodePath("StateMachine")
-JUMP_VELOCITY = 12.0
 HEAD = NodePath("Head")
 CAMERA = NodePath("Head/Camera")
 HEADBOB_ANIMATION = NodePath("Head/HeadbobAnimation")
 JUMP_ANIMATION = NodePath("Head/JumpAnimation")
 CROUCH_ANIMATION = NodePath("CrouchAnimation")
 COLLISION_MESH = NodePath("Collision")
-DOUBLE_JUMP_ENABLED = true
 WEAPON = NodePath("Head/Weapon")
 DEFEND_ZONE = NodePath("Head/DefendZone")
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("movement_states", "action_states", "current_movement", "current_action")]
 script = ExtResource("2_xxa1y")
-movement_states = [NodePath("DashState"), NodePath("IdleState"), NodePath("WalkState"), NodePath("CrouchState"), NodePath("JumpState"), NodePath("AirJumpState"), NodePath("SprintState")]
+movement_states = [NodePath("DashState"), NodePath("IdleState"), NodePath("WalkState"), NodePath("CrouchState"), NodePath("JumpState"), NodePath("AirJumpState"), NodePath("SprintState"), NodePath("FallState")]
 action_states = [NodePath("NoneState"), NodePath("AttackState"), NodePath("ParryState")]
 current_movement = NodePath("IdleState")
 current_action = NodePath("NoneState")
@@ -427,10 +426,6 @@ script = ExtResource("7_gagoa")
 
 [node name="AirJumpState" type="Node" parent="StateMachine"]
 script = ExtResource("8_2rqis")
-ENABLED = null
-JUMP_BOOST = null
-COOLDOWN_SEC = 0.1
-MAX_AIR_JUMPS = null
 
 [node name="SprintState" type="Node" parent="StateMachine"]
 script = ExtResource("8_mqr5i")
@@ -446,6 +441,9 @@ weapon = NodePath("../../Head/Weapon")
 [node name="ParryState" type="Node" parent="StateMachine" node_paths=PackedStringArray("weapon")]
 script = ExtResource("11_mqr5i")
 weapon = NodePath("../../Head/Weapon")
+
+[node name="FallState" type="Node" parent="StateMachine"]
+script = ExtResource("13_mqr5i")
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

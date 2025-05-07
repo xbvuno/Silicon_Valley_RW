@@ -30,6 +30,7 @@ window/stretch/aspect="expand"
 [global_group]
 
 weapons=""
+movable=""
 
 [gui]
 

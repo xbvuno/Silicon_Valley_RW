@@ -5,7 +5,6 @@ class_name CharacterNoneState
 
 var attack_blocked_by: Array[States.States] = [
 	States.States.DASHING,
-	States.States.JUMPING,
 	States.States.AIR_JUMP,
 ]
 
@@ -15,6 +14,7 @@ var parry_blocked_by: Array[States.States] = [
 	States.States.DASHING,
 	States.States.JUMPING,
 	States.States.AIR_JUMP,
+	States.States.FALLING,
 ]
 
 func _ready() -> void:

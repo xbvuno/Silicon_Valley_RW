@@ -6,6 +6,8 @@ func _ready() -> void:
 	state_name = States.States.WALKING
 
 func _physics_process(_delta: float) -> void:
+	if character_node.velocity.y<0.0:
+		character_node.state_machine.switch_movement_state(States.States.FALLING)
 	if character_node.sprint_enabled:
 		if character_node.sprint_mode == 0:
 			if character_node.is_on_floor() and character_node.input_dir == Vector2.ZERO:
