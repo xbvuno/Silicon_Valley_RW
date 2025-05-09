@@ -1,9 +1,13 @@
-[gd_scene load_steps=13 format=3 uid="uid://3euw0wojttkh"]
+[gd_scene load_steps=17 format=3 uid="uid://3euw0wojttkh"]
 
 [ext_resource type="Script" uid="uid://chfykahwcqmi7" path="res://scenes/game/character/weapon/current_weapon.gd" id="1_howxv"]
 [ext_resource type="PackedScene" uid="uid://xmmdx0i06cco" path="res://assets/models/handbrake0.blend" id="1_wwl6m"]
+[ext_resource type="Script" uid="uid://bm6svjcbhc4h3" path="res://scenes/game/character/weapon/weapon_sm.gd" id="2_pe1gy"]
 [ext_resource type="AudioStream" uid="uid://c4j2jngbex7tu" path="res://scenes/game/character/weapon/temp_audio/failed_parry.ogg" id="3_62pn2"]
+[ext_resource type="Script" uid="uid://dplx757crvnms" path="res://scenes/game/character/weapon/states/weap_idle_state.gd" id="3_lyaey"]
+[ext_resource type="Script" uid="uid://vxf7q722x2ng" path="res://scenes/game/character/weapon/states/weap_attack_state.gd" id="4_dbady"]
 [ext_resource type="AudioStream" uid="uid://bgmsd54b4o6tx" path="res://scenes/game/character/weapon/temp_audio/good_parry.ogg" id="4_pe1gy"]
+[ext_resource type="Script" uid="uid://bimhe35iajj6s" path="res://scenes/game/character/weapon/states/weap_parry_state.gd" id="5_dxh6y"]
 [ext_resource type="AudioStream" uid="uid://dk2frq3714tb4" path="res://scenes/game/character/weapon/temp_audio/parry.ogg" id="5_lyaey"]
 [ext_resource type="AudioStream" uid="uid://ybdsievcqptd" path="res://scenes/game/character/weapon/temp_audio/attack.ogg" id="6_dbady"]
 [ext_resource type="AudioStream" uid="uid://bwrivraebik28" path="res://scenes/game/character/weapon/temp_audio/can_parry.ogg" id="7_dxh6y"]
@@ -66,7 +70,7 @@ tracks/1/keys = {
 tracks/2/type = "method"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath(".")
+tracks/2/path = NodePath("StateMachine/Attacking")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -117,8 +121,20 @@ _data = {
 [sub_resource type="BoxShape3D" id="BoxShape3D_eoyty"]
 size = Vector3(0.0706787, 0.969238, 0.169403)
 
-[node name="Weapon" type="Node3D"]
+[node name="CurrentWeapon" type="Node3D"]
 script = ExtResource("1_howxv")
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("2_pe1gy")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("3_lyaey")
+
+[node name="Attacking" type="Node" parent="StateMachine"]
+script = ExtResource("4_dbady")
+
+[node name="Parrying" type="Node" parent="StateMachine"]
+script = ExtResource("5_dxh6y")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

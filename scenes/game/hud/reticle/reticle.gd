@@ -1,47 +1,43 @@
 extends Control
-
-## Enlarge reticle based on player speed
+#
+### Enlarge reticle based on player speed
 @export var CHARACTER: CharacterBody3D
-
-# TODO: Da spostare
+#
+## TODO: Da spostare
 var DEFAULT_FOV: float = 75.0
 var current_fov: float
 
 const SCALE_TARGETS = {
-	States.States.IDLE: 32.,
-	States.States.WALKING: 48.,
-	States.States.JUMPING: 92.,
-	States.States.SPRINTING: 64.,
-	States.States.CROUCHING: 32.,
-	States.States.AIR_JUMP: 92.,
+	SM_Character.States.IDLE: 32.,
+	SM_Character.States.WALK: 48.,
+	SM_Character.States.SPRINT: 64.,
+	SM_Character.States.CROUCH: 32.,
+	SM_Character.States.IN_AIR: 64.,
 }
 
 const TARGET_FOVS = {
-	States.States.IDLE: 75.0,
-	States.States.JUMPING: 85.0,
-	States.States.AIR_JUMP: 100.0,
-	States.States.WALKING: 80.0,
-	States.States.SPRINTING: 85.0,
-	States.States.DASHING: 100.0,
+	SM_Character.States.IDLE: 75.0,
+	SM_Character.States.WALK: 80.0,
+	SM_Character.States.SPRINT: 85.0,
+	SM_Character.States.DASH: 100.0,
+	SM_Character.States.IN_AIR: 85.,
 }
 
 const IN_AIR_SCALE_MULTIPLY = 1.5
 const DASH_SCALE_MULTIPLY = 3
 
-var current_scale_target = SCALE_TARGETS[States.States.IDLE]
+var current_scale_target = SCALE_TARGETS[SM_Character.States.IDLE]
 
 const LERP_SPEED = 10.
 
 const ALPHA_COLOR_TARGETS = {
-	States.States.IDLE: 1.,
-	States.States.WALKING: 1.,
-	States.States.SPRINTING: 1.,
-	States.States.CROUCHING: 0.2,
-	States.States.JUMPING: 1.,
-	States.States.AIR_JUMP: 1.,
+	SM_Character.States.IDLE: 1.,
+	SM_Character.States.WALK: 1.,
+	SM_Character.States.SPRINT: 1.,
+	SM_Character.States.CROUCH: 0.2,
 }
 
-var current_alpha_target: float = ALPHA_COLOR_TARGETS[States.States.IDLE];
+var current_alpha_target: float = ALPHA_COLOR_TARGETS[SM_Character.States.IDLE];
 
 var anchor_offset: float;
 
@@ -52,23 +48,23 @@ func _ready():
 	if CHARACTER == null:
 		return
 	
-	CHARACTER.state_machine.state_changed.connect(on_state_change)
+	CHARACTER.SM.state_changed.connect(on_state_change)
 	
 func on_state_change(_old_state, new_state):
-	if new_state.state_name in SCALE_TARGETS:
-		current_scale_target = SCALE_TARGETS[new_state.state_name]
+	if new_state in SCALE_TARGETS:
+		current_scale_target = SCALE_TARGETS[new_state]
 	else:
-		current_scale_target = SCALE_TARGETS[States.States.IDLE]
+		current_scale_target = SCALE_TARGETS[SM_Character.States.IDLE]
 	
-	if new_state.state_name in ALPHA_COLOR_TARGETS:
-		current_alpha_target = ALPHA_COLOR_TARGETS[new_state.state_name]
+	if new_state in ALPHA_COLOR_TARGETS:
+		current_alpha_target = ALPHA_COLOR_TARGETS[new_state]
 	else:
-		current_alpha_target = ALPHA_COLOR_TARGETS[States.States.IDLE]
+		current_alpha_target = ALPHA_COLOR_TARGETS[SM_Character.States.IDLE]
 	
-	if new_state.state_name in TARGET_FOVS:
-		current_fov = TARGET_FOVS[new_state.state_name]
+	if new_state in TARGET_FOVS:
+		current_fov = TARGET_FOVS[new_state]
 	else:
-		current_fov = TARGET_FOVS[States.States.IDLE]
+		current_fov = TARGET_FOVS[SM_Character.States.IDLE]
 
 		
 
@@ -81,8 +77,8 @@ func _process(delta: float) -> void:
 		pass
 		# TODO: Trovare un modo per scommentare questa parte. Dipendente da air_jumps 
 		# scale_multiplier *= IN_AIR_SCALE_MULTIPLY * (1 + CHARACTER.AIR_JUMP.air_jumps * 0.4)
-	if CHARACTER.DASH.is_dashing():
-		scale_multiplier *= DASH_SCALE_MULTIPLY
+	#if CHARACTER.DASH.is_dashing():
+		#scale_multiplier *= DASH_SCALE_MULTIPLY
 	
 	var lerp_step: float = (round(delta * 100) / 100) * LERP_SPEED
 	

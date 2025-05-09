@@ -33,6 +33,7 @@ func take_damage(damage):
 		
 
 func _on_area_3d_area_entered(area: Area3D) -> void:
+	return
 	if area.is_in_group('weapons'):
 		var target = area.get_parent()
 		if target.state == 'attack':
