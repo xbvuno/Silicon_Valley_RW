@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://daucglrwc2ahf"]
+[gd_scene load_steps=8 format=3 uid="uid://daucglrwc2ahf"]
 
 [ext_resource type="PackedScene" uid="uid://eomrg3xc2jq4" path="res://scenes/game/hud/debug/debug_menu.tscn" id="1_0sr1o"]
 [ext_resource type="PackedScene" uid="uid://h6vc166hsiyc" path="res://scenes/game/levels/test_world/test_world.tscn" id="1_sul5r"]
 [ext_resource type="PackedScene" uid="uid://wnllrngtfcsq" path="res://scenes/game/enemies/enemy.tscn" id="2_5i0tg"]
 [ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://scenes/game/character/character.tscn" id="2_7h61r"]
+[ext_resource type="PackedScene" uid="uid://dln6fmmhpm84g" path="res://scenes/game/hud/pause_menu/pause_menu.tscn" id="4_5i0tg"]
+[ext_resource type="Script" uid="uid://c3r3kse25qh2v" path="res://scenes/game/hud.gd" id="4_bdhmt"]
 [ext_resource type="PackedScene" uid="uid://cjgyp6y6m3ui6" path="res://scenes/game/hud/reticle/reticle.tscn" id="4_kelw5"]
 
 [node name="Game" type="Control"]
@@ -31,6 +33,7 @@ size = Vector2i(960, 540)
 render_target_update_mode = 4
 
 [node name="test_world" parent="SubViewportContainer/SubViewport" instance=ExtResource("1_sul5r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0725985, 0, 0.02948)
 
 [node name="Enemy" parent="SubViewportContainer/SubViewport/test_world" instance=ExtResource("2_5i0tg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.93415, 4.81035)
@@ -38,9 +41,34 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.93415, 4.81035)
 [node name="Character" parent="SubViewportContainer/SubViewport" instance=ExtResource("2_7h61r")]
 unique_name_in_owner = true
 editor_description = ""
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
-[node name="HUD" type="Control" parent="."]
+[node name="HUD" type="Control" parent="." node_paths=PackedStringArray("PAUSE_MENU", "DEBUG_MENU", "RETICLE")]
+process_mode = 3
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("4_bdhmt")
+PAUSE_MENU = NodePath("PauseMenu")
+DEBUG_MENU = NodePath("DebugMenu")
+RETICLE = NodePath("Reticle")
+
+[node name="Reticle" parent="HUD" node_paths=PackedStringArray("CHARACTER") instance=ExtResource("4_kelw5")]
+layout_mode = 1
+CHARACTER = NodePath("../../SubViewportContainer/SubViewport/Character")
+
+[node name="PauseMenu" parent="HUD" instance=ExtResource("4_5i0tg")]
+visible = false
+layout_mode = 1
+
+[node name="DebugMenu" parent="HUD" instance=ExtResource("1_0sr1o")]
+layout_mode = 1
+
+[node name="Overlay" type="Control" parent="HUD"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -49,9 +77,12 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="DebugMenu" parent="HUD" instance=ExtResource("1_0sr1o")]
-layout_mode = 1
+[node name="Label" type="Label" parent="HUD/Overlay"]
+layout_mode = 0
+offset_left = 1670.0
+offset_top = 1052.0
+offset_right = 1915.0
+offset_bottom = 1074.33
+text = "Silicon Valley Tech Demo - v0.01"
 
-[node name="Reticle" parent="HUD" node_paths=PackedStringArray("CHARACTER") instance=ExtResource("4_kelw5")]
-layout_mode = 1
-CHARACTER = NodePath("../../SubViewportContainer/SubViewport/Character")
+[connection signal="riprendi" from="HUD/PauseMenu" to="HUD" method="_on_pause_menu_riprendi"]

@@ -1,0 +1,213 @@
+[gd_scene load_steps=12 format=3 uid="uid://dln6fmmhpm84g"]
+
+[ext_resource type="Script" uid="uid://cptgvsdwcpmdr" path="res://scenes/game/hud/pause_menu/pause_menu.gd" id="1_rmrdv"]
+[ext_resource type="PackedScene" uid="uid://c6hoggoja1fao" path="res://scenes/game/hud/pause_menu/option_menu.tscn" id="2_0wyp3"]
+[ext_resource type="FontFile" uid="uid://bj022vx1alxl" path="res://assets/texts/fonts/SpaceMono-Regular.ttf" id="2_d1l6u"]
+[ext_resource type="Texture2D" uid="uid://buo4ntxw1vofu" path="res://assets/ui/input_icons/keyboard/w.png" id="2_oqoxs"]
+[ext_resource type="Texture2D" uid="uid://yakqusko3p3h" path="res://assets/ui/input_icons/keyboard/a.png" id="3_d1l6u"]
+[ext_resource type="Texture2D" uid="uid://bwhf0tx67yj7a" path="res://assets/ui/input_icons/keyboard/s.png" id="4_irj3c"]
+[ext_resource type="Texture2D" uid="uid://b0kuadlp4jw6j" path="res://assets/ui/input_icons/keyboard/d.png" id="5_o44eh"]
+[ext_resource type="Texture2D" uid="uid://bkdxv2b3bqdu8" path="res://assets/ui/input_icons/keyboard/space.png" id="6_wgtd1"]
+[ext_resource type="Texture2D" uid="uid://bexwbmh0e7s1" path="res://assets/ui/input_icons/keyboard/shift.png" id="7_1v07c"]
+[ext_resource type="Texture2D" uid="uid://bp2btmbc2q2io" path="res://assets/ui/input_icons/keyboard/ctrl.png" id="8_mj25w"]
+[ext_resource type="Texture2D" uid="uid://dw4bnrd874e24" path="res://assets/ui/input_icons/keyboard/c.png" id="10_irj3c"]
+
+[node name="PauseMenu" type="Control" node_paths=PackedStringArray("OPTION_MENU", "MAIN_MENU", "RIPRENDI_BUTTON", "OPTIONS_BUTTON", "ESCI_BUTTON", "COMANDI_MENU")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_rmrdv")
+OPTION_MENU = NodePath("MarginContainer/PanelContainer/OptionMenu")
+MAIN_MENU = NodePath("MarginContainer/PanelContainer/MainMenu")
+RIPRENDI_BUTTON = NodePath("MarginContainer/PanelContainer/MainMenu/Main Menu/Riprendi")
+OPTIONS_BUTTON = NodePath("MarginContainer/PanelContainer/MainMenu/Main Menu/Opzioni")
+ESCI_BUTTON = NodePath("MarginContainer/PanelContainer/MainMenu/Main Menu/Esci")
+COMANDI_MENU = NodePath("MarginContainer/PanelContainer/Comandi")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Comandi" type="Control" parent="MarginContainer/PanelContainer"]
+visible = false
+layout_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer/PanelContainer/Comandi"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/PanelContainer/Comandi/CenterContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/Comandi/CenterContainer/GridContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/Comandi/CenterContainer/GridContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("2_d1l6u")
+theme_override_font_sizes/font_size = 30
+text = "Movimento:  "
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/PanelContainer/Comandi/CenterContainer/GridContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+texture = ExtResource("2_oqoxs")
+
+[node name="TextureRect2" type="TextureRect" parent="MarginContainer/PanelContainer/Comandi/CenterContainer/GridContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+texture = ExtResource("3_d1l6u")
+
+[node name="TextureRect3" type="TextureRect" parent="MarginContainer/PanelContainer/Comandi/CenterContainer/GridContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+texture = ExtResource("4_irj3c")
+
+[node name="TextureRect4" type="TextureRect" parent="MarginContainer/PanelContainer/Comandi/CenterContainer/GridContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+texture = ExtResource("5_o44eh")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/PanelContainer/Comandi/CenterContainer/GridContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/Comandi/CenterContainer/GridContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("2_d1l6u")
+theme_override_font_sizes/font_size = 30
+text = "Salto"
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/PanelContainer/Comandi/CenterContainer/GridContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+texture = ExtResource("6_wgtd1")
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/PanelContainer/Comandi/CenterContainer/GridContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/Comandi/CenterContainer/GridContainer/HBoxContainer3"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_d1l6u")
+theme_override_font_sizes/font_size = 30
+text = "Corsa"
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/PanelContainer/Comandi/CenterContainer/GridContainer/HBoxContainer3"]
+custom_minimum_size = Vector2(180, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+texture = ExtResource("7_1v07c")
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="MarginContainer/PanelContainer/Comandi/CenterContainer/GridContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/Comandi/CenterContainer/GridContainer/HBoxContainer4"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_d1l6u")
+theme_override_font_sizes/font_size = 30
+text = "Dash"
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/PanelContainer/Comandi/CenterContainer/GridContainer/HBoxContainer4"]
+custom_minimum_size = Vector2(130, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+texture = ExtResource("8_mj25w")
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="MarginContainer/PanelContainer/Comandi/CenterContainer/GridContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/Comandi/CenterContainer/GridContainer/HBoxContainer5"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_d1l6u")
+theme_override_font_sizes/font_size = 30
+text = "Crouch"
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/PanelContainer/Comandi/CenterContainer/GridContainer/HBoxContainer5"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+texture = ExtResource("10_irj3c")
+
+[node name="indietro" type="Button" parent="MarginContainer/PanelContainer/Comandi/CenterContainer/GridContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_d1l6u")
+theme_override_font_sizes/font_size = 30
+text = "indietro"
+
+[node name="MainMenu" type="CenterContainer" parent="MarginContainer/PanelContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Main Menu" type="GridContainer" parent="MarginContainer/PanelContainer/MainMenu"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Riprendi" type="Button" parent="MarginContainer/PanelContainer/MainMenu/Main Menu"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_fonts/font = ExtResource("2_d1l6u")
+theme_override_font_sizes/font_size = 40
+text = "Riprendi"
+
+[node name="Comandi" type="Button" parent="MarginContainer/PanelContainer/MainMenu/Main Menu"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_fonts/font = ExtResource("2_d1l6u")
+theme_override_font_sizes/font_size = 40
+text = "Comandi"
+
+[node name="Opzioni" type="Button" parent="MarginContainer/PanelContainer/MainMenu/Main Menu"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_fonts/font = ExtResource("2_d1l6u")
+theme_override_font_sizes/font_size = 40
+text = "Opzioni"
+
+[node name="Esci" type="Button" parent="MarginContainer/PanelContainer/MainMenu/Main Menu"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_fonts/font = ExtResource("2_d1l6u")
+theme_override_font_sizes/font_size = 40
+text = "Esci"
+
+[node name="OptionMenu" parent="MarginContainer/PanelContainer" instance=ExtResource("2_0wyp3")]
+visible = false
+layout_mode = 2
+
+[connection signal="pressed" from="MarginContainer/PanelContainer/Comandi/CenterContainer/GridContainer/indietro" to="." method="_on_indietro_pressed"]
+[connection signal="button_down" from="MarginContainer/PanelContainer/MainMenu/Main Menu/Riprendi" to="." method="_on_riprendi_button_down"]
+[connection signal="pressed" from="MarginContainer/PanelContainer/MainMenu/Main Menu/Riprendi" to="." method="_on_riprendi_pressed"]
+[connection signal="pressed" from="MarginContainer/PanelContainer/MainMenu/Main Menu/Comandi" to="." method="_on_comandi_pressed"]
+[connection signal="pressed" from="MarginContainer/PanelContainer/MainMenu/Main Menu/Opzioni" to="." method="_on_opzioni_pressed"]
+[connection signal="pressed" from="MarginContainer/PanelContainer/MainMenu/Main Menu/Esci" to="." method="_on_esci_pressed"]
+[connection signal="back_clicked" from="MarginContainer/PanelContainer/OptionMenu" to="." method="_on_option_menu_back_clicked"]

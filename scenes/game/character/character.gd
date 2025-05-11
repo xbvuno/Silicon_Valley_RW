@@ -132,6 +132,10 @@ var last_direction: String = ''
 
 
 func _ready():
+	MOUSE_SENSIBILITY = Settings.mouse_sensitivity
+	Settings.mouse_sensitivity_changed.connect(
+		func(): MOUSE_SENSIBILITY = Settings.mouse_sensitivity
+	)
 	#It is safe to comment this line if your game doesn't start with the mouse captured
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	DEFEND_ZONE.area_entered.connect(on_frontal_attack)
