@@ -1,0 +1,105 @@
+[gd_scene load_steps=9 format=3 uid="uid://cywhlrpqd50bh"]
+
+[ext_resource type="FontFile" uid="uid://bj022vx1alxl" path="res://assets/texts/fonts/SpaceMono-Regular.ttf" id="1_4w7na"]
+[ext_resource type="Texture2D" uid="uid://buo4ntxw1vofu" path="res://assets/ui/input_icons/keyboard/w.png" id="2_hbpni"]
+[ext_resource type="Texture2D" uid="uid://yakqusko3p3h" path="res://assets/ui/input_icons/keyboard/a.png" id="3_x07ci"]
+[ext_resource type="Texture2D" uid="uid://bwhf0tx67yj7a" path="res://assets/ui/input_icons/keyboard/s.png" id="4_i2xl1"]
+[ext_resource type="Texture2D" uid="uid://b0kuadlp4jw6j" path="res://assets/ui/input_icons/keyboard/d.png" id="5_51aps"]
+[ext_resource type="Texture2D" uid="uid://bkdxv2b3bqdu8" path="res://assets/ui/input_icons/keyboard/space.png" id="6_4ihor"]
+[ext_resource type="Texture2D" uid="uid://bp2btmbc2q2io" path="res://assets/ui/input_icons/keyboard/ctrl.png" id="7_r12og"]
+[ext_resource type="Texture2D" uid="uid://dw4bnrd874e24" path="res://assets/ui/input_icons/keyboard/c.png" id="8_almpi"]
+
+[node name="Controlli" type="GridContainer"]
+offset_right = 326.0
+offset_bottom = 224.0
+theme_override_constants/h_separation = 16
+theme_override_constants/v_separation = 8
+columns = 2
+
+[node name="Label2" type="Label" parent="."]
+layout_mode = 2
+theme_override_constants/line_spacing = -6
+theme_override_fonts/font = ExtResource("1_4w7na")
+text = "MOVIMENTO"
+horizontal_alignment = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer2"]
+layout_mode = 2
+texture = ExtResource("2_hbpni")
+expand_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="HBoxContainer2"]
+layout_mode = 2
+texture = ExtResource("3_x07ci")
+expand_mode = 2
+
+[node name="TextureRect3" type="TextureRect" parent="HBoxContainer2"]
+layout_mode = 2
+texture = ExtResource("4_i2xl1")
+expand_mode = 2
+
+[node name="TextureRect4" type="TextureRect" parent="HBoxContainer2"]
+layout_mode = 2
+texture = ExtResource("5_51aps")
+expand_mode = 2
+
+[node name="Label3" type="Label" parent="."]
+layout_mode = 2
+theme_override_constants/line_spacing = -6
+theme_override_fonts/font = ExtResource("1_4w7na")
+text = "SALTO /
+DOPPIO SALTO"
+horizontal_alignment = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer3"]
+layout_mode = 2
+texture = ExtResource("6_4ihor")
+expand_mode = 3
+
+[node name="Label4" type="Label" parent="."]
+layout_mode = 2
+theme_override_constants/line_spacing = -6
+theme_override_fonts/font = ExtResource("1_4w7na")
+text = "DASH"
+horizontal_alignment = 2
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer4"]
+layout_mode = 2
+texture = ExtResource("7_r12og")
+expand_mode = 3
+
+[node name="Label5" type="Label" parent="."]
+layout_mode = 2
+theme_override_constants/line_spacing = -6
+theme_override_fonts/font = ExtResource("1_4w7na")
+text = "CROUCH 
+(TOGGLE)"
+horizontal_alignment = 2
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer5"]
+layout_mode = 2
+texture = ExtResource("8_almpi")
+expand_mode = 3
+
+[node name="Controlli" type="Control" parent="."]
+layout_mode = 2

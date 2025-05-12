@@ -27,8 +27,9 @@ offset_top = 16.0
 offset_right = 173.0
 offset_bottom = 90.0
 theme_override_fonts/font = ExtResource("1_rrirc")
-text = "F1: OPEN DEBUG CONSOLE
-F2: RESET POSITION"
+text = "ESC: PAUSA / MOSTRA COMANDI
+F1: APRI DEBUG
+F2: RESETTA POSIZIONE"
 label_settings = SubResource("LabelSettings_0faeu")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]

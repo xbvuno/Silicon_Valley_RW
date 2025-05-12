@@ -1,11 +1,27 @@
-[gd_scene load_steps=29 format=3 uid="uid://h6vc166hsiyc"]
+[gd_scene load_steps=35 format=3 uid="uid://h6vc166hsiyc"]
 
+[ext_resource type="PackedScene" uid="uid://cywhlrpqd50bh" path="res://scenes/game/hud/pause_menu/controls_info.tscn" id="1_dlfxh"]
 [ext_resource type="Texture2D" uid="uid://c62n3mfuh8wpy" path="res://assets/models/textures/prototype_materials/black.png" id="1_ey3qx"]
+[ext_resource type="FontFile" uid="uid://bj022vx1alxl" path="res://assets/texts/fonts/SpaceMono-Regular.ttf" id="1_nuymw"]
 [ext_resource type="Texture2D" uid="uid://c2piu777bj6oy" path="res://assets/models/textures/prototype_materials/orange.png" id="2_wbbo5"]
-[ext_resource type="PackedScene" uid="uid://bxur5vqmpqwps" path="res://scenes/game/interactive_props/death_box/death_box.tscn" id="3_dlfxh"]
+[ext_resource type="PackedScene" uid="uid://bxur5vqmpqwps" path="res://scenes/game/levels/test_world/death_box/death_box.tscn" id="3_dlfxh"]
 [ext_resource type="Texture2D" uid="uid://beemuc5ys21gi" path="res://assets/models/textures/prototype_materials/green.png" id="3_vp0cd"]
 [ext_resource type="Texture2D" uid="uid://cvqp4ari3xxut" path="res://assets/models/textures/prototype_materials/purple.png" id="4_dlfxh"]
-[ext_resource type="PackedScene" uid="uid://besu4igo3u6n3" path="res://assets/models/Spacciapproved.blend" id="5_wbbo5"]
+
+[sub_resource type="Theme" id="Theme_dlfxh"]
+Label/constants/outline_size = 8
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_vp0cd"]
+viewport_path = NodePath("Keybindings info/SubViewport")
+
+[sub_resource type="LabelSettings" id="LabelSettings_dlfxh"]
+line_spacing = 0.0
+font = ExtResource("1_nuymw")
+outline_size = 15
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_dlfxh"]
+viewport_path = NodePath("Parkour info/SubViewport")
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_edcox"]
 ground_color = Color(0.160784, 0.815686, 0.905882, 1)
@@ -41,6 +57,9 @@ uv1_triplanar = true
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lwchj"]
 albedo_texture = ExtResource("1_ey3qx")
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_elnbr"]
+viewport_path = NodePath("terrain/Parkour info3/SubViewport")
+
 [sub_resource type="Curve3D" id="Curve3D_v05oa"]
 _data = {
 "points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0),
@@ -50,6 +69,9 @@ point_count = 2
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_elnbr"]
 albedo_texture = ExtResource("2_wbbo5")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_lwchj"]
+viewport_path = NodePath("terrain/Path3D/PathFollow3D/AnimatableBody3D2/Parkour info2/SubViewport")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_tgof3"]
 size = Vector3(3.99011, 0.520884, 3.91348)
@@ -96,7 +118,7 @@ _data = {
 albedo_texture = ExtResource("2_wbbo5")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ey3qx"]
-size = Vector3(3.94916, 6.74023, 3.92426)
+size = Vector3(4, 6.76172, 4)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gomnb"]
 albedo_texture = ExtResource("3_vp0cd")
@@ -117,17 +139,63 @@ albedo_texture = ExtResource("4_dlfxh")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7j4uu"]
 albedo_texture = ExtResource("3_vp0cd")
-metallic = 0.81
 metallic_specular = 0.2
 roughness = 0.5
 uv1_triplanar = true
 uv1_triplanar_sharpness = 0.000850145
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_wbbo5"]
-height = 4.71899
-radius = 0.0869141
-
 [node name="test_world" type="Node3D"]
+
+[node name="Keybindings info" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.49864, 2.03494, -14.8344)
+
+[node name="SubViewport" type="SubViewport" parent="Keybindings info"]
+transparent_bg = true
+size = Vector2i(572, 512)
+
+[node name="Controlli" parent="Keybindings info/SubViewport" instance=ExtResource("1_dlfxh")]
+texture_filter = 3
+offset_left = 8.515
+offset_top = 28.975
+offset_right = 334.515
+offset_bottom = 252.975
+scale = Vector2(1.42, 1.42)
+theme = SubResource("Theme_dlfxh")
+
+[node name="Sprite3D" type="Sprite3D" parent="Keybindings info"]
+texture_filter = 0
+texture = SubResource("ViewportTexture_vp0cd")
+
+[node name="Parkour info" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.27257, 1.06909, -6.50525)
+
+[node name="SubViewport" type="SubViewport" parent="Parkour info"]
+transparent_bg = true
+size = Vector2i(432, 232)
+
+[node name="AlwaysShownLabel2" type="Label" parent="Parkour info/SubViewport"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("1_nuymw")
+text = "PER IL PARKOUR:
+IL TIMER INIZIERÀ APPENA TI MUOVI
+RAGGIUNGI LA BANDIERA NEL MINOR TEMPO
+POSSIBILE
+RESET CON F2 O CADENDO NEL VUOTO
+
+REGISTRA IL TUO TENTATIVO
+MIGLIORE E MANDALO SUL 
+NOSTRO DISCORD!"
+label_settings = SubResource("LabelSettings_dlfxh")
+horizontal_alignment = 1
+
+[node name="Sprite3D" type="Sprite3D" parent="Parkour info"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.394725, 0.275602, -0.116567)
+billboard = 1
+texture = SubResource("ViewportTexture_dlfxh")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_20rw3")
@@ -157,6 +225,30 @@ use_collision = true
 size = Vector3(4, 0.5, 4)
 material = SubResource("StandardMaterial3D_lwchj")
 
+[node name="Parkour info3" type="Node3D" parent="terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.1341, 10.7728, -21.8198)
+
+[node name="SubViewport" type="SubViewport" parent="terrain/Parkour info3"]
+transparent_bg = true
+size = Vector2i(467, 152)
+
+[node name="AlwaysShownLabel2" type="Label" parent="terrain/Parkour info3/SubViewport"]
+offset_left = 32.0
+offset_top = 40.0
+offset_right = 434.0
+offset_bottom = 112.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("1_nuymw")
+text = "PREMI SPAZIO, CTRL E W
+PER EFFETTUARE UN
+DASH"
+label_settings = SubResource("LabelSettings_dlfxh")
+horizontal_alignment = 1
+
+[node name="Sprite3D" type="Sprite3D" parent="terrain/Parkour info3"]
+texture = SubResource("ViewportTexture_elnbr")
+
 [node name="Path3D" type="Path3D" parent="terrain"]
 transform = Transform3D(1, 0, 0, 0, 13.6814, 0, 0, 0, 1, 9.83442, -0.300706, -8.27148)
 curve = SubResource("Curve3D_v05oa")
@@ -173,6 +265,28 @@ remote_path = NodePath("../AnimatableBody3D2")
 use_collision = true
 size = Vector3(4, 0.5, 4)
 material = SubResource("StandardMaterial3D_elnbr")
+
+[node name="Parkour info2" type="Node3D" parent="terrain/Path3D/PathFollow3D/AnimatableBody3D2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 0.0730919, 0, -1, 0, -4.37114e-08, 2.443, 0.09, 0)
+
+[node name="SubViewport" type="SubViewport" parent="terrain/Path3D/PathFollow3D/AnimatableBody3D2/Parkour info2"]
+transparent_bg = true
+size = Vector2i(467, 152)
+
+[node name="AlwaysShownLabel2" type="Label" parent="terrain/Path3D/PathFollow3D/AnimatableBody3D2/Parkour info2/SubViewport"]
+offset_left = 32.0
+offset_top = 40.0
+offset_right = 434.0
+offset_bottom = 112.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("1_nuymw")
+text = "PREMI SPAZIO DUE VOLTE"
+label_settings = SubResource("LabelSettings_dlfxh")
+horizontal_alignment = 1
+
+[node name="Sprite3D" type="Sprite3D" parent="terrain/Path3D/PathFollow3D/AnimatableBody3D2/Parkour info2"]
+texture = SubResource("ViewportTexture_lwchj")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="terrain/Path3D/PathFollow3D/AnimatableBody3D2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0267944, 0.0154724, -0.0491791)
@@ -212,7 +326,7 @@ libraries = {
 autoplay = "movable_platform"
 
 [node name="Path3D11" type="Path3D" parent="terrain"]
-transform = Transform3D(-1, 0, -2.98023e-08, 0, 13.6814, 0, 2.98023e-08, 0, -1, -9.75826, 53.4387, -3.78694)
+transform = Transform3D(-1, 0, -2.98023e-08, 0, 13.6814, 0, 2.98023e-08, 0, -1, -9.81142, 53.5875, -3.8228)
 curve = SubResource("Curve3D_v05oa")
 
 [node name="PathFollow3D" type="PathFollow3D" parent="terrain/Path3D11"]
@@ -370,7 +484,7 @@ size = Vector3(4, 6.76172, 4)
 material = SubResource("StandardMaterial3D_c8b2p")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="terrain/Path3D9/PathFollow3D/AnimatableBody3D2"]
-transform = Transform3D(0.99993, 0, -2.10479e-07, 0, 1, 0, 2.10479e-07, 0, 0.99993, -0.0504436, 3.13401, -0.00459099)
+transform = Transform3D(1, 0, -2.1141e-07, 0, 1, 0, 2.1141e-07, 0, 1, 0.0467701, 3.3408, -0.637578)
 shape = SubResource("BoxShape3D_ey3qx")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="terrain/Path3D9"]
@@ -558,30 +672,6 @@ use_collision = true
 size = Vector3(19, 8, 1)
 material = SubResource("StandardMaterial3D_lwchj")
 
-[node name="CSGBox3D6" type="CSGBox3D" parent="terrain"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -71.6214, -0.559259, 9.7684)
-use_collision = true
-size = Vector3(133, 1, 30)
-material = SubResource("StandardMaterial3D_lwchj")
-
-[node name="CSGBox3D7" type="CSGBox3D" parent="terrain"]
-transform = Transform3D(0.258819, 0.965926, 0, -0.965926, 0.258819, 0, 0, 0, 1, -18.2427, -1.11852, 18.0368)
-use_collision = true
-size = Vector3(133, 1, 9)
-material = SubResource("StandardMaterial3D_lwchj")
-
-[node name="CSGBox3D16" type="CSGBox3D" parent="terrain"]
-transform = Transform3D(0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0, 1, -18.2427, -1.11852, 8.0368)
-use_collision = true
-size = Vector3(133, 1, 9)
-material = SubResource("StandardMaterial3D_lwchj")
-
-[node name="CSGBox3D17" type="CSGBox3D" parent="terrain"]
-transform = Transform3D(0.707106, 0.707107, 0, -0.707107, 0.707106, 0, 0, 0, 1, -18.2427, -1.11852, -0.9632)
-use_collision = true
-size = Vector3(133, 1, 9)
-material = SubResource("StandardMaterial3D_lwchj")
-
 [node name="CSGBox3D8" type="CSGBox3D" parent="terrain"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.0887, 60.2005, 14.1705)
 use_collision = true
@@ -617,15 +707,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5, -0.5, -7.5)
 use_collision = true
 size = Vector3(4, 1, 4)
 material = SubResource("StandardMaterial3D_7j4uu")
-
-[node name="Node" type="Node" parent="terrain"]
-
-[node name="Spacciapproved" parent="." instance=ExtResource("5_wbbo5")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 28.2698, 70.2005, 14.3366)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Spacciapproved"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3595, 0)
-shape = SubResource("CylinderShape3D_wbbo5")
 
 [node name="DeathBox" parent="." instance=ExtResource("3_dlfxh")]
 transform = Transform3D(4984.37, 0, 0, 0, 10, 0, 0, 0, 2991.32, 6.69445, -21.1579, 8.85582)

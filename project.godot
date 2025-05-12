@@ -13,18 +13,20 @@ config_version=5
 config/name="silicon_valley"
 run/main_scene="uid://daucglrwc2ahf"
 config/features=PackedStringArray("4.4", "Forward Plus")
-config/icon="uid://opk853bfcyb1"
+boot_splash/bg_color=Color(0, 0, 0, 1)
+boot_splash/image="uid://gi7d3n7yy6yr"
+config/icon="uid://dp67j1c606660"
 
 [autoload]
 
 Utils="*res://scripts/globals/utils.gd"
 Settings="*res://scripts/globals/settings.gd"
+ParkourTimer="*res://scenes/game/levels/test_world/parkour_timer.gd"
 
 [display]
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
-window/size/mode=2
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 

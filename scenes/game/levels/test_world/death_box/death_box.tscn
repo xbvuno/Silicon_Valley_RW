@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bxur5vqmpqwps"]
 
-[ext_resource type="Script" uid="uid://bcbovyh513bdi" path="res://scenes/game/interactive_props/death_box/death_box.gd" id="1_8p3q5"]
+[ext_resource type="Script" uid="uid://bcbovyh513bdi" path="res://scenes/game/levels/test_world/death_box/death_box.gd" id="1_8p3q5"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_64sug"]
 
