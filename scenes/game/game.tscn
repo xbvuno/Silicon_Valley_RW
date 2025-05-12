@@ -1,10 +1,25 @@
-[gd_scene load_steps=6 format=3 uid="uid://daucglrwc2ahf"]
+[gd_scene load_steps=15 format=3 uid="uid://daucglrwc2ahf"]
 
 [ext_resource type="PackedScene" uid="uid://eomrg3xc2jq4" path="res://scenes/game/hud/debug/debug_menu.tscn" id="1_0sr1o"]
 [ext_resource type="PackedScene" uid="uid://h6vc166hsiyc" path="res://scenes/game/levels/test_world/test_world.tscn" id="1_sul5r"]
 [ext_resource type="PackedScene" uid="uid://wnllrngtfcsq" path="res://scenes/game/enemies/enemy.tscn" id="2_5i0tg"]
 [ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://scenes/game/character/character.tscn" id="2_7h61r"]
+[ext_resource type="PackedScene" uid="uid://besu4igo3u6n3" path="res://assets/models/Spacciapproved.blend" id="3_4j704"]
+[ext_resource type="PackedScene" uid="uid://dln6fmmhpm84g" path="res://scenes/game/hud/pause_menu/pause_menu.tscn" id="4_5i0tg"]
+[ext_resource type="Script" uid="uid://c3r3kse25qh2v" path="res://scenes/game/hud.gd" id="4_bdhmt"]
 [ext_resource type="PackedScene" uid="uid://cjgyp6y6m3ui6" path="res://scenes/game/hud/reticle/reticle.tscn" id="4_kelw5"]
+[ext_resource type="Script" uid="uid://dfg3bn8luv1ep" path="res://scenes/game/levels/test_world/flag_touch.gd" id="4_kp23o"]
+[ext_resource type="AudioStream" uid="uid://3syibd6xyhfw" path="res://assets/sounds/confetti-pop-sound.mp3" id="5_5jirj"]
+[ext_resource type="FontFile" uid="uid://bj022vx1alxl" path="res://assets/texts/fonts/SpaceMono-Regular.ttf" id="8_87uf6"]
+[ext_resource type="Script" uid="uid://d4khii2xiicy7" path="res://scenes/game/parkour_timer_labels.gd" id="10_4j704"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_kp23o"]
+height = 4.71899
+radius = 0.0869141
+
+[sub_resource type="LabelSettings" id="LabelSettings_2a8rs"]
+line_spacing = 0.0
+font = ExtResource("8_87uf6")
 
 [node name="Game" type="Control"]
 layout_mode = 3
@@ -27,20 +42,40 @@ stretch_shrink = 2
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
 handle_input_locally = false
+audio_listener_enable_2d = true
+audio_listener_enable_3d = true
 size = Vector2i(960, 540)
 render_target_update_mode = 4
 
 [node name="test_world" parent="SubViewportContainer/SubViewport" instance=ExtResource("1_sul5r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0725985, 0, 0.02948)
 
 [node name="Enemy" parent="SubViewportContainer/SubViewport/test_world" instance=ExtResource("2_5i0tg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.93415, 4.81035)
 
+[node name="SpacciFlag" parent="SubViewportContainer/SubViewport/test_world" instance=ExtResource("3_4j704")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 27.4668, 69.4581, 13.0984)
+
+[node name="FlagTouch" type="Area3D" parent="SubViewportContainer/SubViewport/test_world/SpacciFlag"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.331627, 0)
+script = ExtResource("4_kp23o")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SubViewportContainer/SubViewport/test_world/SpacciFlag/FlagTouch"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.02787, 0)
+shape = SubResource("CylinderShape3D_kp23o")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="SubViewportContainer/SubViewport/test_world/SpacciFlag/FlagTouch"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.0574646, -0.0973663, 0.0479736)
+stream = ExtResource("5_5jirj")
+volume_db = 40.0
+
 [node name="Character" parent="SubViewportContainer/SubViewport" instance=ExtResource("2_7h61r")]
 unique_name_in_owner = true
 editor_description = ""
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
-[node name="HUD" type="Control" parent="."]
+[node name="HUD" type="Control" parent="." node_paths=PackedStringArray("PAUSE_MENU", "DEBUG_MENU", "RETICLE")]
+process_mode = 3
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -48,10 +83,90 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-
-[node name="DebugMenu" parent="HUD" instance=ExtResource("1_0sr1o")]
-layout_mode = 1
+script = ExtResource("4_bdhmt")
+PAUSE_MENU = NodePath("PauseMenu")
+DEBUG_MENU = NodePath("DebugMenu")
+RETICLE = NodePath("Reticle")
 
 [node name="Reticle" parent="HUD" node_paths=PackedStringArray("CHARACTER") instance=ExtResource("4_kelw5")]
 layout_mode = 1
 CHARACTER = NodePath("../../SubViewportContainer/SubViewport/Character")
+
+[node name="PauseMenu" parent="HUD" instance=ExtResource("4_5i0tg")]
+visible = false
+layout_mode = 1
+
+[node name="DebugMenu" parent="HUD" instance=ExtResource("1_0sr1o")]
+layout_mode = 1
+
+[node name="Overlay" type="Control" parent="HUD"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -10.0
+offset_top = 6.0
+offset_right = -10.0
+offset_bottom = 6.0
+grow_horizontal = 0
+mouse_filter = 2
+
+[node name="AlwaysShownLabel" type="Label" parent="HUD/Overlay"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -287.0
+offset_top = 4.0
+offset_right = -2.0
+offset_bottom = 78.0
+grow_horizontal = 0
+theme_override_fonts/font = ExtResource("8_87uf6")
+text = "SILICON VALLEY v0.1.0
+MOVEMENT TECH DEMO"
+label_settings = SubResource("LabelSettings_2a8rs")
+horizontal_alignment = 2
+
+[node name="ParkourTimer" type="GridContainer" parent="HUD/Overlay"]
+layout_direction = 2
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -175.0
+offset_top = 109.0
+offset_right = -3.0
+offset_bottom = 161.0
+grow_horizontal = 0
+columns = 2
+script = ExtResource("10_4j704")
+
+[node name="ConstCurrentTime" type="Label" parent="HUD/Overlay/ParkourTimer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("8_87uf6")
+text = "CURRENT:"
+label_settings = SubResource("LabelSettings_2a8rs")
+horizontal_alignment = 2
+
+[node name="VarCurrentTime" type="Label" parent="HUD/Overlay/ParkourTimer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("8_87uf6")
+text = "00:00.000"
+label_settings = SubResource("LabelSettings_2a8rs")
+horizontal_alignment = 2
+
+[node name="ConstBestTime" type="Label" parent="HUD/Overlay/ParkourTimer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("8_87uf6")
+text = "BEST:"
+label_settings = SubResource("LabelSettings_2a8rs")
+horizontal_alignment = 2
+
+[node name="VarBestTime" type="Label" parent="HUD/Overlay/ParkourTimer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("8_87uf6")
+text = "--:--.---"
+label_settings = SubResource("LabelSettings_2a8rs")
+horizontal_alignment = 2
+
+[connection signal="riprendi" from="HUD/PauseMenu" to="HUD" method="_on_pause_menu_riprendi"]

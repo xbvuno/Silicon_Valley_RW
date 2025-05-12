@@ -7,7 +7,7 @@ var SM: SM_Weapon
 var sm_name: SM_Weapon.States
 var readable_name: String
 
-func _input(event: InputEvent) -> void:
+func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("a_attack") and SM.STATES[SM.S_ATTACK].can():
 		SM.switch(SM.S_ATTACK)
 			

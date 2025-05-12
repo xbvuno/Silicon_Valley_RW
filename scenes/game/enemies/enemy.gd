@@ -45,3 +45,7 @@ func _physics_process(delta: float) -> void:
 		velocity.y -= GRAVITY * delta
 	move_and_slide()
 	
+
+
+func _on_pause_menu_riprendi() -> void:
+	pass # Replace with function body.

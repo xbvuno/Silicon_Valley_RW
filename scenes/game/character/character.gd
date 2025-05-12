@@ -132,6 +132,10 @@ var last_direction: String = ''
 
 
 func _ready():
+	MOUSE_SENSIBILITY = Settings.mouse_sensitivity
+	Settings.mouse_sensitivity_changed.connect(
+		func(): MOUSE_SENSIBILITY = Settings.mouse_sensitivity
+	)
 	#It is safe to comment this line if your game doesn't start with the mouse captured
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	DEFEND_ZONE.area_entered.connect(on_frontal_attack)
@@ -159,7 +163,7 @@ func _physics_process(delta): # Most things happen here.
 	if not IMMOBILE:
 		input_map = Input.get_vector(CONTROLS.LEFT, CONTROLS.RIGHT, CONTROLS.FORWARD, CONTROLS.BACKWARD)
 	
-	handle_movement(delta, input_map)
+	handle_movement(delta)
 	
 	handle_head_rotation()
 
@@ -176,7 +180,7 @@ func get_facing_direction() -> Vector3:
 	return -CAMERA.get_global_transform().basis.z.normalized()
 
 var direction: Vector3
-func handle_movement(delta, input_map):
+func handle_movement(delta):
 	direction = calc_input_direction()
 	
 	
@@ -233,6 +237,7 @@ func _unhandled_input(event: InputEvent):
 	if event is InputEventKey and event.pressed and not event.echo:
 		if event.keycode == KEY_F2:
 			global_position = Vector3.ZERO
+			ParkourTimer.reset()
 
 #endregion
 
@@ -250,15 +255,6 @@ func handle_pausing():
 
 func is_in_air(): # Funzione inutile, solo per leggibilità, abbiate la stessa filosofia :D
 	return not is_on_floor()
-
-func is_dash_just_pressed():
-	if Input.is_action_just_pressed("m_dash"):
-		for k_action: String in MOVIMENT_CONTROLS:
-			var action = MOVIMENT_CONTROLS[k_action]
-			if Input.is_action_pressed(action):
-				last_direction = action
-				return true
-	return false
 
 #endregion
 

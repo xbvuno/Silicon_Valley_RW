@@ -1,0 +1,117 @@
+[gd_scene load_steps=3 format=3 uid="uid://c6hoggoja1fao"]
+
+[ext_resource type="Script" uid="uid://dqlj6x6dynjx7" path="res://scenes/game/hud/pause_menu/option_menu.gd" id="1_jldbf"]
+[ext_resource type="FontFile" uid="uid://bj022vx1alxl" path="res://assets/texts/fonts/SpaceMono-Regular.ttf" id="2_sg8w4"]
+
+[node name="OptionMenu" type="Control" node_paths=PackedStringArray("AUDIO_SLIDER", "AUDIO_PERCENTILE_LABEL", "RESOLUTION_OPTION_BUTTON", "MOUSE_SENSITIVITY_LABEL", "MOUSE_SENSITIVITY_SLIDER")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_jldbf")
+AUDIO_SLIDER = NodePath("CenterContainer/GridContainer/VolumeContainer/RisoluzioneContainer/HSlider")
+AUDIO_PERCENTILE_LABEL = NodePath("CenterContainer/GridContainer/VolumeContainer/RisoluzioneContainer/AudioPercentile")
+RESOLUTION_OPTION_BUTTON = NodePath("CenterContainer/GridContainer/RisoluzioneContainer/OptionButton")
+MOUSE_SENSITIVITY_LABEL = NodePath("CenterContainer/GridContainer/MouseSensivityContainer/HBoxContainer/Label")
+MOUSE_SENSITIVITY_SLIDER = NodePath("CenterContainer/GridContainer/MouseSensivityContainer/HBoxContainer/SensitivitySlider")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="GridContainer" type="GridContainer" parent="CenterContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="MouseSensivityContainer" type="VBoxContainer" parent="CenterContainer/GridContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/GridContainer/MouseSensivityContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_sg8w4")
+theme_override_font_sizes/font_size = 40
+text = "Mouse Sensitivity:"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/GridContainer/MouseSensivityContainer"]
+layout_mode = 2
+
+[node name="SensitivitySlider" type="HSlider" parent="CenterContainer/GridContainer/MouseSensivityContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 0.5
+step = 0.001
+
+[node name="Label" type="Label" parent="CenterContainer/GridContainer/MouseSensivityContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+text = "100%"
+horizontal_alignment = 2
+
+[node name="RisoluzioneContainer" type="HBoxContainer" parent="CenterContainer/GridContainer"]
+visible = false
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+
+[node name="Risoluzione" type="Label" parent="CenterContainer/GridContainer/RisoluzioneContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_sg8w4")
+theme_override_font_sizes/font_size = 40
+text = "Risoluzione"
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/GridContainer/RisoluzioneContainer"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+
+[node name="OptionButton" type="OptionButton" parent="CenterContainer/GridContainer/RisoluzioneContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="VolumeContainer" type="VBoxContainer" parent="CenterContainer/GridContainer"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Volume" type="Label" parent="CenterContainer/GridContainer/VolumeContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_sg8w4")
+theme_override_font_sizes/font_size = 40
+text = "Volume:"
+horizontal_alignment = 1
+
+[node name="RisoluzioneContainer" type="HBoxContainer" parent="CenterContainer/GridContainer/VolumeContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="HSlider" type="HSlider" parent="CenterContainer/GridContainer/VolumeContainer/RisoluzioneContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.001
+
+[node name="AudioPercentile" type="Label" parent="CenterContainer/GridContainer/VolumeContainer/RisoluzioneContainer"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+text = "0%"
+horizontal_alignment = 2
+
+[node name="Indietro" type="Button" parent="CenterContainer/GridContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_sg8w4")
+theme_override_font_sizes/font_size = 40
+text = "indietro"
+
+[connection signal="value_changed" from="CenterContainer/GridContainer/MouseSensivityContainer/HBoxContainer/SensitivitySlider" to="." method="_on_sensitivity_slider_value_changed"]
+[connection signal="item_selected" from="CenterContainer/GridContainer/RisoluzioneContainer/OptionButton" to="." method="_on_option_button_item_selected"]
+[connection signal="value_changed" from="CenterContainer/GridContainer/VolumeContainer/RisoluzioneContainer/HSlider" to="." method="_on_h_slider_value_changed"]
+[connection signal="pressed" from="CenterContainer/GridContainer/Indietro" to="." method="_on_indietro_pressed"]
