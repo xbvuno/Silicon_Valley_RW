@@ -12,7 +12,7 @@ var LABELS: ParkourTimerLabels
 func _input(_input):
 	if not resetted or not stopped:
 		return
-	if ["m_left", "m_right", "m_forward", "m_backward"].any(Input.is_action_just_pressed):
+	if ["m_left", "m_right", "m_forward", "m_backward"].any(Input.is_action_pressed):
 		stopped = false
 		time_elapsed = 0
 				
