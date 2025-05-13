@@ -61,7 +61,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0725985, 0, 0.02948)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.93415, 4.81035)
 
 [node name="SpacciFlag" parent="SubViewportContainer/SubViewport/test_world" instance=ExtResource("3_4j704")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 27.4668, 69.4581, 13.0984)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 27.4668, 68.9773, 14.8385)
 
 [node name="FlagTouch" type="Area3D" parent="SubViewportContainer/SubViewport/test_world/SpacciFlag"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.331627, 0)
@@ -129,7 +129,7 @@ offset_right = -2.0
 offset_bottom = 78.0
 grow_horizontal = 0
 theme_override_fonts/font = ExtResource("8_87uf6")
-text = "SILICON VALLEY __version__
+text = "SILICON VALLEY v__version__
 MOVEMENT TECH DEMO"
 label_settings = SubResource("LabelSettings_2a8rs")
 horizontal_alignment = 2
@@ -146,6 +146,7 @@ offset_top = 109.0
 offset_right = -3.0
 offset_bottom = 161.0
 grow_horizontal = 0
+mouse_filter = 2
 columns = 2
 script = ExtResource("10_4j704")
 
