@@ -12,12 +12,6 @@ signal riprendi()
 func _ready() -> void:
 	OPTION_MENU.visible = false
 	
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
-
 func _on_riprendi_pressed() -> void:
 	print("Riprendi")
 	riprendi.emit()

@@ -11,14 +11,14 @@ func _ready() -> void:
 	pass
 
 func _input(event: InputEvent) -> void:
-	if Input.is_action_just_pressed("ui_cancel"):
+	if event.is_action_pressed("ui_cancel"):
 		if in_pause:
 			start_game()
 			PAUSE_MENU.reset()
 		else:
 			stop_game()
 			
-func _unhandled_input(event: InputEvent) -> void:
+func _unhandled_input(_event: InputEvent) -> void:
 	if in_pause:
 		if Input.mouse_mode ==Input.MOUSE_MODE_CAPTURED:
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE

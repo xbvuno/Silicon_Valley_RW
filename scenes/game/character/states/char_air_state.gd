@@ -7,7 +7,7 @@ var sm_name: SM_Character.States
 var readable_name: String
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	
 	if OWNER.is_on_floor():
 		play_landing_animation()

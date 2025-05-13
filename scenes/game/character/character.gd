@@ -11,7 +11,6 @@ class_name Character
 @export_category("State Machine")
 @onready var SM: SM_Character = $"StateMachine"
 
-var last_frame_on_floor: int = 0
 
 #region Character Export
 
@@ -121,6 +120,7 @@ func use_accelleration(value: bool):
 var mouseInput: Vector2 = Vector2.ZERO
 var input_map: Vector2 = Vector2.ZERO
 var last_direction: String = ''
+var last_frame_on_floor: int = 0
 #endregion
 
 #region Main Control Flow

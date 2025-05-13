@@ -16,4 +16,5 @@ func set_current(time: float):
 func format_time(time: float) -> String:
 	var t = int(time)
 	var ms = int((time - t) * 1000)
+	@warning_ignore("integer_division")
 	return "%02d:%02d.%03d" % [t / 60, t % 60, ms]

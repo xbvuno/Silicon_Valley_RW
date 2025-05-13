@@ -11,7 +11,7 @@ func _physics_process(_delta: float) -> void:
 		SM.switch(SM.S_IN_AIR)
 
 func _input(event: InputEvent) -> void:
-	if Input.is_action_just_pressed(OWNER.CONTROLS.CROUCH):
+	if event.is_action_pressed(OWNER.CONTROLS.CROUCH):
 		SM.switch(SM.S_IDLE)
 		print('crouch0')
 

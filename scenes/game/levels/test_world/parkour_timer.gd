@@ -5,11 +5,9 @@ var time_elapsed: float = 0.0
 var best_time: float = 0.0
 var resetted: bool = true
 
-@onready var CHARACTER: Character = %Character
-
 var LABELS: ParkourTimerLabels
 
-func _input(_input):
+func _input(__input):
 	if not resetted or not stopped:
 		return
 	if ["m_left", "m_right", "m_forward", "m_backward"].any(Input.is_action_pressed):

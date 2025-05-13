@@ -27,18 +27,14 @@ func _ready() -> void:
 	RESOLUTION_OPTION_BUTTON.select(1)
 	audio_volume = db_to_linear(AudioServer.get_bus_volume_db(_bus))
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
 
 func _on_h_slider_value_changed(value: float) -> void:
 	update_audio_label(value)
 	AudioServer.set_bus_volume_db(_bus, linear_to_db(value))
 	print(linear_to_db(value))
 
-func update_audio_label(audio_volume):
-	AUDIO_PERCENTILE_LABEL.text= str(audio_volume*100)+"%"
+func update_audio_label(aux_volume):
+	AUDIO_PERCENTILE_LABEL.text= str(aux_volume*100)+"%"
 	
 	
 ##TODO Non funziona

@@ -17,12 +17,16 @@ var SM: SM_Character
 var AIR_JUMP_COOLDOWN_TIMER: Timer
 var air_jumps: int = 0
 
+
+func should_considered_on_floor() -> bool:
+	return OWNER.last_frame_on_floor < MAX_FRAMES_STILL_ON_FLOOR
+
 func _ready():
 	AIR_JUMP_COOLDOWN_TIMER = Utils.timer_from_time(AIR_JUMP_COOLDOWN_SEC, true, self)
 	
 
 func can_jump(in_air: bool = false) -> bool:
-	if in_air and OWNER.last_frame_on_floor >= MAX_FRAMES_STILL_ON_FLOOR:
+	if in_air and not should_considered_on_floor():
 		if not AIR_JUMP_ENABLED:
 			return false
 		if air_jumps >= MAX_AIR_JUMPS:
@@ -36,15 +40,14 @@ func can_jump(in_air: bool = false) -> bool:
 
 func do_jump(in_air: bool = false):
 	var multiply: float = 1
-	if in_air and OWNER.last_frame_on_floor >= MAX_FRAMES_STILL_ON_FLOOR:
+	if in_air and not should_considered_on_floor():
 		multiply = AIR_JUMP_BOOST
 		air_jumps += 1
 		AIR_JUMP_COOLDOWN_TIMER.start()
-	else:
+	elif not in_air:
 		SM.switch(SM.S_IN_AIR)
 	OWNER.velocity.y = OWNER.JUMP_VELOCITY * multiply
 	OWNER.JUMP_ANIMATION.play("jump", 0.25)
-	print(OWNER.last_frame_on_floor)
 
 func reset():
 	air_jumps = 0
