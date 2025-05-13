@@ -11,6 +11,8 @@ class_name Character
 @export_category("State Machine")
 @onready var SM: SM_Character = $"StateMachine"
 
+var last_frame_on_floor: int = 0
+
 #region Character Export
 
 ## The settings for the character's movement and feel.
@@ -171,6 +173,11 @@ func _physics_process(delta): # Most things happen here.
 	low_ceiling = $CrouchCeilingDetection.is_colliding()
 
 	was_on_floor = is_on_floor() # This must always be at the end of physics_process
+	
+	if was_on_floor:
+		last_frame_on_floor = 0
+	else:
+		last_frame_on_floor += 1
 
 #endregion
 

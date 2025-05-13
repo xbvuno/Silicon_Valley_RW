@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://daucglrwc2ahf"]
+[gd_scene load_steps=16 format=3 uid="uid://daucglrwc2ahf"]
 
 [ext_resource type="PackedScene" uid="uid://eomrg3xc2jq4" path="res://scenes/game/hud/debug/debug_menu.tscn" id="1_0sr1o"]
 [ext_resource type="PackedScene" uid="uid://h6vc166hsiyc" path="res://scenes/game/levels/test_world/test_world.tscn" id="1_sul5r"]
@@ -20,6 +20,13 @@ radius = 0.0869141
 [sub_resource type="LabelSettings" id="LabelSettings_2a8rs"]
 line_spacing = 0.0
 font = ExtResource("8_87uf6")
+
+[sub_resource type="GDScript" id="GDScript_5jirj"]
+script/source = "extends Label
+
+func _ready():
+	text = text.replace(\"__version__\", ProjectSettings.get_setting(\"application/config/version\"))
+"
 
 [node name="Game" type="Control"]
 layout_mode = 3
@@ -122,10 +129,11 @@ offset_right = -2.0
 offset_bottom = 78.0
 grow_horizontal = 0
 theme_override_fonts/font = ExtResource("8_87uf6")
-text = "SILICON VALLEY v0.1.0
+text = "SILICON VALLEY __version__
 MOVEMENT TECH DEMO"
 label_settings = SubResource("LabelSettings_2a8rs")
 horizontal_alignment = 2
+script = SubResource("GDScript_5jirj")
 
 [node name="ParkourTimer" type="GridContainer" parent="HUD/Overlay"]
 layout_direction = 2
