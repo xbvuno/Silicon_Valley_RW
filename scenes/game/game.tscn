@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://daucglrwc2ahf"]
+[gd_scene load_steps=35 format=3 uid="uid://daucglrwc2ahf"]
 
 [ext_resource type="PackedScene" uid="uid://eomrg3xc2jq4" path="res://scenes/game/hud/debug/debug_menu.tscn" id="1_0sr1o"]
 [ext_resource type="PackedScene" uid="uid://h6vc166hsiyc" path="res://scenes/game/levels/test_world/test_world.tscn" id="1_sul5r"]
@@ -19,6 +19,13 @@
 [ext_resource type="Script" uid="uid://sj4d7vsxad6p" path="res://scenes/game/hud/scripts/state_machine/states/hud_pause_state.gd" id="15_10c2w"]
 [ext_resource type="Script" uid="uid://byliw42ws6ed2" path="res://scenes/game/hud/scripts/state_machine/states/hud_controls_state.gd" id="16_pg2xm"]
 [ext_resource type="Script" uid="uid://bb4ecabk07lm4" path="res://scenes/game/hud/scripts/state_machine/states/hud_ingame_state.gd" id="17_gc57s"]
+[ext_resource type="Script" uid="uid://3nbik2oc403n" path="res://scripts/globals/SoundManager/audio_manager.gd" id="20_pg2xm"]
+[ext_resource type="Script" uid="uid://byijpvc8muqrn" path="res://scripts/globals/SoundManager/sound_effect.gd" id="21_8b66f"]
+[ext_resource type="AudioStream" uid="uid://cjihkah076e6g" path="res://assets/audio/sfx/character/DashSFX.mp3" id="22_3jaai"]
+[ext_resource type="AudioStream" uid="uid://cj8tcvywlppiu" path="res://assets/audio/sfx/character/Step.mp3" id="23_wdnak"]
+[ext_resource type="AudioStream" uid="uid://bwrivraebik28" path="res://scenes/game/character/weapon/temp_audio/can_parry.ogg" id="24_1iff4"]
+[ext_resource type="AudioStream" uid="uid://dk2frq3714tb4" path="res://scenes/game/character/weapon/temp_audio/parry.ogg" id="25_4vuph"]
+[ext_resource type="AudioStream" uid="uid://c4j2jngbex7tu" path="res://scenes/game/character/weapon/temp_audio/failed_parry.ogg" id="26_wdnak"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_kp23o"]
 height = 4.71899
@@ -34,6 +41,56 @@ script/source = "extends Label
 func _ready():
 	text = text.replace(\"__version__\", ProjectSettings.get_setting(\"application/config/version\"))
 "
+
+[sub_resource type="Resource" id="Resource_1iff4"]
+script = ExtResource("21_8b66f")
+limit = 2
+type = 0
+sound_effect = ExtResource("22_3jaai")
+volume = 0.0
+pitch_scale = 1.0
+pitch_randomness = 0.01
+metadata/_custom_type_script = "uid://byijpvc8muqrn"
+
+[sub_resource type="Resource" id="Resource_4vuph"]
+script = ExtResource("21_8b66f")
+limit = 5
+type = 1
+sound_effect = ExtResource("23_wdnak")
+volume = 10.0
+pitch_scale = 1.0
+pitch_randomness = 0.1
+metadata/_custom_type_script = "uid://byijpvc8muqrn"
+
+[sub_resource type="Resource" id="Resource_wdnak"]
+script = ExtResource("21_8b66f")
+limit = 5
+type = 2
+sound_effect = ExtResource("24_1iff4")
+volume = 0.0
+pitch_scale = 1.0
+pitch_randomness = 0.0
+metadata/_custom_type_script = "uid://byijpvc8muqrn"
+
+[sub_resource type="Resource" id="Resource_h48ew"]
+script = ExtResource("21_8b66f")
+limit = 5
+type = 6
+sound_effect = ExtResource("25_4vuph")
+volume = 0.0
+pitch_scale = 1.0
+pitch_randomness = 0.1
+metadata/_custom_type_script = "uid://byijpvc8muqrn"
+
+[sub_resource type="Resource" id="Resource_fty5b"]
+script = ExtResource("21_8b66f")
+limit = 5
+type = 7
+sound_effect = ExtResource("26_wdnak")
+volume = 0.0
+pitch_scale = 1.0
+pitch_randomness = 0.1
+metadata/_custom_type_script = "uid://byijpvc8muqrn"
 
 [node name="Game" type="Control"]
 layout_mode = 3
@@ -83,10 +140,11 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.0574
 stream = ExtResource("5_5jirj")
 volume_db = 40.0
 
-[node name="Character" parent="SubViewportContainer/SubViewport" instance=ExtResource("2_7h61r")]
+[node name="Character" parent="SubViewportContainer/SubViewport" node_paths=PackedStringArray("AUDIO_MANAGER") instance=ExtResource("2_7h61r")]
 unique_name_in_owner = true
 editor_description = ""
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+AUDIO_MANAGER = NodePath("../../../Audio")
 
 [node name="HUD" type="Control" parent="." node_paths=PackedStringArray("PAUSE_MENU", "DEBUG_MENU", "RETICLE", "SM")]
 process_mode = 3
@@ -420,6 +478,10 @@ script = ExtResource("16_pg2xm")
 
 [node name="In Game" type="Node" parent="HUD/HudStateMachine"]
 script = ExtResource("17_gc57s")
+
+[node name="Audio" type="Node3D" parent="."]
+script = ExtResource("20_pg2xm")
+sound_effects = Array[ExtResource("21_8b66f")]([SubResource("Resource_1iff4"), SubResource("Resource_4vuph"), SubResource("Resource_wdnak"), SubResource("Resource_h48ew"), SubResource("Resource_fty5b")])
 
 [connection signal="pressed" from="HUD/PauseMenu/MarginContainer/PanelContainer/Comandi/VBoxContainer/indietro" to="HUD/PauseMenu" method="_on_indietro_pressed"]
 [connection signal="button_down" from="HUD/PauseMenu/MarginContainer/PanelContainer/MainMenu/Main Menu/Riprendi" to="HUD/PauseMenu" method="_on_riprendi_button_down"]

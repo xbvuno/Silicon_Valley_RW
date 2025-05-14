@@ -55,7 +55,7 @@ class_name Character
 @export var CROUCH_ANIMATION: AnimationPlayer
 ## A reference to the the player's collision shape for use in the character script.
 @export var COLLISION_MESH: CollisionShape3D
-
+@export var AUDIO_MANAGER: AudioManager
 #endregion
 
 #region Controls Export
@@ -148,9 +148,11 @@ func _ready():
 	
 	set_floor_max_angle(PI / 6)
 	initialize_animations()
+	ParkourTimer.CHARACTER =  self
 
 	
 func _process(_delta):
+	camera_tilt()
 	if PAUSING_ENABLED:
 		handle_pausing()
 
@@ -292,3 +294,16 @@ func get_input_moviment() -> Vector2:
 
 func under_low_ceiling() -> bool:
 	return low_ceiling
+
+func camera_tilt():
+	var target_angle :float = 0
+	
+	
+	if input_map.x >0:
+		target_angle =2*abs(input_map.x)
+		
+		#tilt a sinistra
+	if input_map.x<0:
+		target_angle =-2*abs(input_map.x)
+		#titl a destra
+	CAMERA.rotation_degrees.z = lerp(CAMERA.rotation_degrees.z,target_angle,0.2)

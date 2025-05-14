@@ -8,7 +8,6 @@ var readable_name: String
 
 
 func _physics_process(_delta: float) -> void:
-	
 	if OWNER.is_on_floor():
 		play_landing_animation()
 		SM.ACTIONS[SM.A_JUMP].reset()

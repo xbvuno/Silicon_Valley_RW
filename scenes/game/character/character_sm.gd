@@ -70,6 +70,7 @@ func _ready() -> void:
 		state_node.SM = self
 		state_node.sm_name = state_name
 		state_node.readable_name = STATE_NAMES[state_name]
+		
 	
 	for action_name: Actions in ACTIONS:
 		var action_node: Node = ACTIONS[action_name]
@@ -86,7 +87,7 @@ func switch(sm_state: States) -> void:
 	var new_state_node = STATES[sm_state]
 	current_state.state_ended.emit()
 	state_changed.emit(current_state.sm_name, sm_state)
-	#print("[", _PRINT_PREFIX, "SM] ", current_state.readable_name, ' -> ', new_state_node.readable_name)
+	print("[", _PRINT_PREFIX, "SM] ", current_state.readable_name, ' -> ', new_state_node.readable_name)
 	current_state = new_state_node
 	new_state_node.state_started.emit()
 

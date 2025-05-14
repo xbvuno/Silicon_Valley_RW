@@ -411,9 +411,6 @@ script = ExtResource("3_q5mc8")
 [node name="Crouching" type="Node" parent="StateMachine"]
 script = ExtResource("5_1vggp")
 
-[node name="Walking" type="Node" parent="StateMachine"]
-script = ExtResource("4_xw4rn")
-
 [node name="Sprinting" type="Node" parent="StateMachine"]
 script = ExtResource("8_mqr5i")
 
@@ -424,6 +421,9 @@ COOLDOWN_SEC = 0.6
 
 [node name="InAir" type="Node" parent="StateMachine"]
 script = ExtResource("13_mqr5i")
+
+[node name="Walking" type="Node" parent="StateMachine"]
+script = ExtResource("4_xw4rn")
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
