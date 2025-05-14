@@ -5,7 +5,7 @@
 [ext_resource type="FontFile" uid="uid://bj022vx1alxl" path="res://assets/texts/fonts/SpaceMono-Regular.ttf" id="2_d1l6u"]
 [ext_resource type="PackedScene" uid="uid://cywhlrpqd50bh" path="res://scenes/game/hud/pause_menu/controls_info.tscn" id="3_scskg"]
 
-[node name="PauseMenu" type="Control" node_paths=PackedStringArray("OPTION_MENU", "MAIN_MENU", "RIPRENDI_BUTTON", "OPTIONS_BUTTON", "ESCI_BUTTON", "COMANDI_MENU")]
+[node name="PauseMenu" type="Control" node_paths=PackedStringArray("MAIN_MENU")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,12 +14,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_rmrdv")
-OPTION_MENU = NodePath("MarginContainer/PanelContainer/OptionMenu")
 MAIN_MENU = NodePath("MarginContainer/PanelContainer/MainMenu")
-RIPRENDI_BUTTON = NodePath("MarginContainer/PanelContainer/MainMenu/Main Menu/Riprendi")
-OPTIONS_BUTTON = NodePath("MarginContainer/PanelContainer/MainMenu/Main Menu/Opzioni")
-ESCI_BUTTON = NodePath("MarginContainer/PanelContainer/MainMenu/Main Menu/Esci")
-COMANDI_MENU = NodePath("MarginContainer/PanelContainer/Comandi")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1

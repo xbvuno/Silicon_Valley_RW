@@ -36,7 +36,6 @@ func _on_h_slider_value_changed(value: float) -> void:
 func update_audio_label(aux_volume):
 	AUDIO_PERCENTILE_LABEL.text= str(aux_volume*100)+"%"
 	
-	
 ##TODO Non funziona
 func change_resolution(resolution:String):
 	var resolution_vector : Vector2i = resolution_dictionary[resolution]
@@ -57,8 +56,6 @@ func change_resolution(resolution:String):
 
 
 
-
-
 func _on_option_button_item_selected(index: int) -> void:
 	var text = RESOLUTION_OPTION_BUTTON.get_item_text(index)
 	change_resolution(text)
@@ -66,13 +63,8 @@ func _on_option_button_item_selected(index: int) -> void:
 func toggle_visibility():
 	visible = !visible
 
-
 func _on_indietro_pressed() -> void:
 	back_clicked.emit()
-
-
-
-	
 
 
 func _on_sensitivity_slider_value_changed(value: float) -> void:
