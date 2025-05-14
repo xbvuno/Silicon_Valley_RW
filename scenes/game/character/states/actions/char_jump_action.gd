@@ -44,15 +44,10 @@ func do_jump(in_air: bool = false):
 		multiply = AIR_JUMP_BOOST
 		air_jumps += 1
 		AIR_JUMP_COOLDOWN_TIMER.start()
-		OWNER.AUDIO_MANAGER.create_3d_audio_at_location(OWNER,SoundEffect.SOUND_EFFECT_TYPE.CHARACTER_AIR_JUMP)
-	#elif not in_air or should_considered_on_floor():
-	else:
+	elif not in_air:
 		SM.switch(SM.S_IN_AIR)
-		OWNER.AUDIO_MANAGER.create_3d_audio_at_location(OWNER,SoundEffect.SOUND_EFFECT_TYPE.CHARACTER_JUMP)
-		
 	OWNER.velocity.y = OWNER.JUMP_VELOCITY * multiply
 	OWNER.JUMP_ANIMATION.play("jump", 0.25)
-	
 
 func reset():
 	air_jumps = 0

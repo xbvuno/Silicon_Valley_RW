@@ -6,7 +6,7 @@ var best_time: float = 0.0
 var resetted: bool = true
 
 var LABELS: ParkourTimerLabels
-var CHARACTER : Character
+
 func _input(__input):
 	if not resetted or not stopped:
 		return
@@ -27,7 +27,6 @@ func reached():
 		LABELS.set_best(best_time)
 
 func reset():
-	CHARACTER.AUDIO_MANAGER.create_3d_audio_at_location(CHARACTER,SoundEffect.SOUND_EFFECT_TYPE.CHARACTER_DEATH)
 	resetted = true
 	stopped = true
 	time_elapsed = 0

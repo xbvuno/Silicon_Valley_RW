@@ -2,21 +2,15 @@ extends State
 
 ## Sprint Enabled
 @export var SPRINT_ENABLED: bool = true
-@export var STEP_SOUND_DELAY : float = .4
+
 ## This value will be set by the state machine
 var OWNER: Character
 var SM: SM_Character
 var sm_name: SM_Character.States
 var readable_name: String
-var timer: Timer
-func _ready() -> void:
-	timer = Utils.timer_from_time(STEP_SOUND_DELAY,true,self)
-	super()
-	
+
 func _physics_process(_delta: float) -> void:
-	if timer.is_stopped():
-		OWNER.AUDIO_MANAGER.create_3d_audio_at_location(OWNER,SoundEffect.SOUND_EFFECT_TYPE.CHARACTER_STEP)
-		timer.start()
+	
 	if OWNER.is_in_air():
 		SM.switch(SM.S_IN_AIR)
 		return

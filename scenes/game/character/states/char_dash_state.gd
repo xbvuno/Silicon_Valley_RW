@@ -55,7 +55,6 @@ func do_dash() -> void:
 		air_dashes += 1
 	
 func enter_state():
-	OWNER.AUDIO_MANAGER.create_3d_audio_at_location(OWNER,SoundEffect.SOUND_EFFECT_TYPE.CHARACTER_DASH)
 	OWNER.use_gravity(false)
 	OWNER.use_accelleration(false)
 	do_dash()

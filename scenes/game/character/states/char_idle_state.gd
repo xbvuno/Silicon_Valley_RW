@@ -13,7 +13,6 @@ func _physics_process(_delta: float) -> void:
 		return
 	
 	if not OWNER.get_input_moviment().is_zero_approx(): # TODO: Verificare il funzionamento rispetto a (v != Vector2.ZERO)
-		print("Print")
 		SM.switch(SM.S_WALK)
 	
 	
