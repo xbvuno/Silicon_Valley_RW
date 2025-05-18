@@ -13,12 +13,13 @@ func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("ui_esc"):
 		SM.switch(SM.States.IN_GAME)
 
-func enter_state():
+func enter_state()-> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	get_tree().paused = true
 	SM.PAUSE_MENU.visible = true
-	SM.PAUSE_MENU.MAIN_MENU.visible =true
-	SM.PAUSE_MENU.OPTIONS_MENU.visible = false
-	SM.PAUSE_MENU.CONTROLS_MENU.visible = false
-func exit_state():
-	pass
+	OWNER.PAUSE_MENU.reset()
+
+func exit_state()-> void:
+	get_tree().paused = false
+	#Input.mouse_mode = Input.MOUSE_MODE_CAPTURED 	##non serve perchè è risolto in IN_GAME state
+	SM.PAUSE_MENU.visible = false

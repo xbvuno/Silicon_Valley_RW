@@ -1,5 +1,5 @@
 extends "./debug_menu.gd"
-
+@export var HUD : Control
 # FOGLIO UTILIZZABILE COME DEMO PER ESTENDERE IL MENU DI DEBUG
 # 1 ) IN EXTEND NON METTERE LO STESSO RIFERIMENTO, FAI RIFERIMENTO A QUESTO FOGLIO E CONTINUA A CASCATA
 # 2 ) USA IN EXPORT IL NODO DA CUI ESTRARRE I DATI E FAI UN CONTROLLO IN CASO SIA VUOTO
@@ -9,9 +9,9 @@ extends "./debug_menu.gd"
 # 6 ) ABBI FEDE NELLE PAPERE
 
 ## Reference to the char where you want to take the data
-@onready var CHARACTER: Character = %Character;
-@onready var C_SM: SM_Character = %Character/StateMachine
-@onready var W_SM: SM_Weapon = %Character/Head/CurrentWeapon/StateMachine
+@onready var CHARACTER: Character = HUD.CHARACTER
+@onready var C_SM: SM_Character = CHARACTER.SM
+@onready var W_SM: SM_Weapon = CHARACTER.WEAPON.SM
 
 func _ready():
 	if CHARACTER == null:

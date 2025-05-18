@@ -1,43 +1,44 @@
-## [spacci] State Machine del HUD 
+## [spacci] State Machine del PAUSE MENU 
 
 extends Node
-class_name SM_HUD
+class_name SM_PAUSE_MENU
 
 @export_group("Hud Nodes")
-@export var HUD_MAIN_NODE : Control
-@export var RETICLE : Control
-@export var PAUSE_MENU : Control
-@export var DEBUG_MENU: Control
-@export var OVERLAY : Control
+@export var PAUSE_MAIN_NODE : Control
+@export var SETTINGS : Control
+@export var CONTROLS : Control
 
 enum States {
-	IN_GAME,PAUSE
+	PAUSE,SETTINGS,CONTROLS
 }
 
 ## LEGGIBILITÀ: Alias per gli States, in modo da non dover chiamare ogni volta States.Papera
 const S_PAUSE: States = States.PAUSE
-const S_IN_GAME: States = States.IN_GAME
+const S_SETTINGS: States = States.SETTINGS
+const S_CONTROLS: States = States.CONTROLS
 
 
 
 const STATE_NAMES: Dictionary[States, String] = {
 	States.PAUSE: "Pause",
-	States.IN_GAME: "In Game"
+	States.SETTINGS: "Settings",
+	States.CONTROLS: "Controls"
 }
 
 @onready var STATES: Dictionary[States, State] = {
-	States.PAUSE:$Pause,
-	States.IN_GAME:$"In Game"
+	States.PAUSE:$Main,
+	States.SETTINGS:$Settings,
+	States.CONTROLS: $Controls
 }
 
 
 @onready var OWNER: Control = $".."
 
 func after_setup() -> void:
-	current_state = STATES[S_IN_GAME]
+	current_state = STATES[S_PAUSE]
 	current_state.state_started.emit()
 
-const _PRINT_PREFIX = "HUD_"
+const _PRINT_PREFIX = "PAUSE_"
 
 #region UnderTheHood
 

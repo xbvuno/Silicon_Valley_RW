@@ -4,31 +4,37 @@ extends Control
 @export var MAIN_MENU : Control
 @export var CONTROLS_MENU: Control
 @export var HUD : Control
-var SM : SM_HUD
+@export var STATE_MACHINE : SM_PAUSE_MENU
+@export var STATE_MACHINE_HUD : SM_HUD
+
 
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	SM = HUD.SM
+	pass
 	
 func _on_riprendi_pressed() -> void:
-	SM.switch(SM.States.IN_GAME)
+	STATE_MACHINE_HUD.switch(STATE_MACHINE_HUD.States.IN_GAME)
 
 func _on_opzioni_pressed() -> void:
-	SM.switch(SM.States.SETTINGS)
+	STATE_MACHINE.switch(STATE_MACHINE.States.SETTINGS)
 
 func _on_esci_pressed() -> void:
 	get_tree().quit()
 
 func _on_option_menu_back_clicked() -> void:
-	SM.switch(SM.States.PAUSE)
+	STATE_MACHINE.switch(STATE_MACHINE.States.PAUSE)
 
 
 
 func _on_comandi_pressed() -> void:
-	SM.switch(SM.States.CONTROLS)
+	STATE_MACHINE.switch(STATE_MACHINE.States.CONTROLS)
 
 #Comandi indietro
 func _on_indietro_pressed() -> void:
-	SM.switch(SM.States.PAUSE)
+	STATE_MACHINE.switch(STATE_MACHINE.States.PAUSE)
+
+
+func reset()->void:
+	STATE_MACHINE.switch(STATE_MACHINE.States.PAUSE)

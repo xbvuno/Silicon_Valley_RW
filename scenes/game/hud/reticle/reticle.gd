@@ -1,7 +1,8 @@
 extends Control
 #
 ### Enlarge reticle based on player speed
-@export var CHARACTER: CharacterBody3D
+@export var HUD : Control
+
 #
 ## TODO: Da spostare
 var DEFAULT_FOV: float = 75.0
@@ -40,7 +41,7 @@ const ALPHA_COLOR_TARGETS = {
 var current_alpha_target: float = ALPHA_COLOR_TARGETS[SM_Character.States.IDLE];
 
 var anchor_offset: float;
-
+@onready var CHARACTER: CharacterBody3D =  HUD.CHARACTER
 @onready var target_fov: float = CHARACTER.CAMERA.fov;
 
 func _ready():

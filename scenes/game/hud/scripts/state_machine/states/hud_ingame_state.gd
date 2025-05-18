@@ -15,11 +15,7 @@ func _input(event: InputEvent) -> void:
 		SM.switch(SM.States.PAUSE)
 
 func enter_state():
-	get_tree().paused = false
-	SM.RETICLE.visible = true
-	SM.PAUSE_MENU.visible = false
 	SM.DEBUG_MENU.visible = Settings.debug_mode
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	
+	SM.PAUSE_MENU.visible = false
 func exit_state():
-	pass
+	SM.PAUSE_MENU.visible = true
