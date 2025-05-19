@@ -365,7 +365,6 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 
 remote_path = NodePath("../AnimatableBody3D2")
 
 [node name="AnimatableBody3D2" type="AnimatableBody3D" parent="terrain/Path3D2/PathFollow3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="CSGBox3D9" type="CSGBox3D" parent="terrain/Path3D2/PathFollow3D/AnimatableBody3D2"]
 use_collision = true
@@ -393,7 +392,6 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 
 remote_path = NodePath("../AnimatableBody3D2")
 
 [node name="AnimatableBody3D2" type="AnimatableBody3D" parent="terrain/Path3D3/PathFollow3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="CSGBox3D9" type="CSGBox3D" parent="terrain/Path3D3/PathFollow3D/AnimatableBody3D2"]
 use_collision = true
@@ -475,7 +473,6 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 
 remote_path = NodePath("../AnimatableBody3D2")
 
 [node name="AnimatableBody3D2" type="AnimatableBody3D" parent="terrain/Path3D9/PathFollow3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="CSGBox3D9" type="CSGBox3D" parent="terrain/Path3D9/PathFollow3D/AnimatableBody3D2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.13086, 0)

@@ -1,0 +1,129 @@
+[gd_scene load_steps=12 format=3 uid="uid://cfy8g8m1djnb7"]
+
+[ext_resource type="Script" uid="uid://c3r3kse25qh2v" path="res://scenes/game/hud.gd" id="1_v52nr"]
+[ext_resource type="PackedScene" uid="uid://cjgyp6y6m3ui6" path="res://scenes/game/hud/reticle/reticle.tscn" id="2_qrmls"]
+[ext_resource type="FontFile" uid="uid://bj022vx1alxl" path="res://assets/texts/fonts/SpaceMono-Regular.ttf" id="5_t5j6h"]
+[ext_resource type="PackedScene" uid="uid://dln6fmmhpm84g" path="res://scenes/game/hud/pause_menu/pause_menu.tscn" id="5_xskmx"]
+[ext_resource type="PackedScene" uid="uid://eomrg3xc2jq4" path="res://scenes/game/hud/debug/debug_menu.tscn" id="7_53x7q"]
+[ext_resource type="Script" uid="uid://d4khii2xiicy7" path="res://scenes/game/parkour_timer_labels.gd" id="8_bg2e1"]
+[ext_resource type="Script" uid="uid://64e87l5s6mby" path="res://scenes/game/hud/scripts/state_machine/hud_state_machine.gd" id="9_lsn3o"]
+[ext_resource type="Script" uid="uid://sj4d7vsxad6p" path="res://scenes/game/hud/scripts/state_machine/states/hud_pause_state.gd" id="11_pq3fl"]
+[ext_resource type="Script" uid="uid://bb4ecabk07lm4" path="res://scenes/game/hud/scripts/state_machine/states/hud_ingame_state.gd" id="13_igqww"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_2a8rs"]
+line_spacing = 0.0
+font = ExtResource("5_t5j6h")
+
+[sub_resource type="GDScript" id="GDScript_5jirj"]
+script/source = "extends Label
+
+func _ready():
+	text = text.replace(\"__version__\", ProjectSettings.get_setting(\"application/config/version\"))
+"
+
+[node name="HUD" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_v52nr")
+
+[node name="HudStateMachine" type="Node" parent="." node_paths=PackedStringArray("HUD_MAIN_NODE", "RETICLE", "PAUSE_MENU", "DEBUG_MENU", "OVERLAY")]
+script = ExtResource("9_lsn3o")
+HUD_MAIN_NODE = NodePath("..")
+RETICLE = NodePath("In Game/Reticle")
+PAUSE_MENU = NodePath("Pause/PauseMenu")
+DEBUG_MENU = NodePath("In Game/DebugMenu")
+OVERLAY = NodePath("In Game/Overlay")
+
+[node name="In Game" type="Node" parent="HudStateMachine"]
+script = ExtResource("13_igqww")
+
+[node name="Reticle" parent="HudStateMachine/In Game" node_paths=PackedStringArray("HUD") instance=ExtResource("2_qrmls")]
+HUD = NodePath("../../..")
+
+[node name="Overlay" type="Control" parent="HudStateMachine/In Game"]
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -10.0
+offset_top = 6.0
+offset_right = -10.0
+offset_bottom = 6.0
+grow_horizontal = 0
+mouse_filter = 2
+
+[node name="AlwaysShownLabel" type="Label" parent="HudStateMachine/In Game/Overlay"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -287.0
+offset_top = 4.0
+offset_right = -2.0
+offset_bottom = 78.0
+grow_horizontal = 0
+theme_override_fonts/font = ExtResource("5_t5j6h")
+text = "SILICON VALLEY v__version__
+MOVEMENT TECH DEMO"
+label_settings = SubResource("LabelSettings_2a8rs")
+horizontal_alignment = 2
+script = SubResource("GDScript_5jirj")
+
+[node name="ParkourTimer" type="GridContainer" parent="HudStateMachine/In Game/Overlay"]
+layout_direction = 2
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -175.0
+offset_top = 109.0
+offset_right = -3.0
+offset_bottom = 161.0
+grow_horizontal = 0
+mouse_filter = 2
+columns = 2
+script = ExtResource("8_bg2e1")
+
+[node name="ConstCurrentTime" type="Label" parent="HudStateMachine/In Game/Overlay/ParkourTimer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_t5j6h")
+text = "CURRENT:"
+label_settings = SubResource("LabelSettings_2a8rs")
+horizontal_alignment = 2
+
+[node name="VarCurrentTime" type="Label" parent="HudStateMachine/In Game/Overlay/ParkourTimer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_t5j6h")
+text = "00:00.000"
+label_settings = SubResource("LabelSettings_2a8rs")
+horizontal_alignment = 2
+
+[node name="ConstBestTime" type="Label" parent="HudStateMachine/In Game/Overlay/ParkourTimer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_t5j6h")
+text = "BEST:"
+label_settings = SubResource("LabelSettings_2a8rs")
+horizontal_alignment = 2
+
+[node name="VarBestTime" type="Label" parent="HudStateMachine/In Game/Overlay/ParkourTimer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_t5j6h")
+text = "--:--.---"
+label_settings = SubResource("LabelSettings_2a8rs")
+horizontal_alignment = 2
+
+[node name="DebugMenu" parent="HudStateMachine/In Game" node_paths=PackedStringArray("HUD") instance=ExtResource("7_53x7q")]
+HUD = NodePath("../../..")
+
+[node name="Pause" type="Node" parent="HudStateMachine"]
+script = ExtResource("11_pq3fl")
+
+[node name="PauseMenu" parent="HudStateMachine/Pause" node_paths=PackedStringArray("HUD", "STATE_MACHINE_HUD") instance=ExtResource("5_xskmx")]
+HUD = NodePath("../../..")
+STATE_MACHINE_HUD = NodePath("../..")
