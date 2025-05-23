@@ -74,14 +74,13 @@ theme_override_fonts/font = ExtResource("2_d1l6u")
 theme_override_font_sizes/font_size = 40
 text = "Esci"
 
-[node name="OptionMenu" type="Control" parent="MarginContainer/PanelContainer" node_paths=PackedStringArray("AUDIO_SLIDER", "AUDIO_PERCENTILE_LABEL", "RESOLUTION_OPTION_BUTTON", "MOUSE_SENSITIVITY_LABEL", "MOUSE_SENSITIVITY_SLIDER")]
+[node name="OptionMenu" type="Control" parent="MarginContainer/PanelContainer" node_paths=PackedStringArray("AUDIO_SLIDER", "AUDIO_PERCENTILE_LABEL", "MOUSE_SENSITIVITY_LABEL", "MOUSE_SENSITIVITY_SLIDER")]
 visible = false
 layout_mode = 2
 mouse_filter = 2
 script = ExtResource("4_scskg")
 AUDIO_SLIDER = NodePath("CenterContainer/GridContainer/MasterVolumeContainer/RisoluzioneContainer/HSlider")
 AUDIO_PERCENTILE_LABEL = NodePath("CenterContainer/GridContainer/MasterVolumeContainer/RisoluzioneContainer/AudioPercentile")
-RESOLUTION_OPTION_BUTTON = NodePath("")
 MOUSE_SENSITIVITY_LABEL = NodePath("CenterContainer/GridContainer/MouseSensivityContainer/HBoxContainer/Label")
 MOUSE_SENSITIVITY_SLIDER = NodePath("CenterContainer/GridContainer/MouseSensivityContainer/HBoxContainer/SensitivitySlider")
 

@@ -13,7 +13,7 @@ var readable_name: String
 var STEP_SOUND_TIMER : Timer
 
 func _ready() -> void:
-	timer = Utils.timer_from_time(STEP_SOUND_DELAY,true,self)
+	STEP_SOUND_TIMER = Utils.timer_from_time(STEP_SOUND_DELAY,true,self)
 	super()
 	
 func _physics_process(_delta: float) -> void:
