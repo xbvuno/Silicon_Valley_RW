@@ -11,9 +11,6 @@ var sprint_already_pressed: bool = false
 
 func _physics_process(_delta: float) -> void:
 	
-	if timer.is_stopped():
-		OWNER.AUDIO_MANAGER.create_3d_audio_at_location(OWNER,SoundEffect.SOUND_EFFECT_TYPE.CHARACTER_STEP)
-		timer.start()
 	if OWNER.is_in_air():
 		SM.switch(SM.S_IN_AIR)
 		return
