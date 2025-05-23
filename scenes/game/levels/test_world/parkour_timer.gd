@@ -7,6 +7,12 @@ var resetted: bool = true
 
 var LABELS: ParkourTimerLabels
 var CHARACTER : Character
+var death_sound : AudioStreamPlayer
+func _ready() -> void:
+	death_sound = AudioStreamPlayer.new()
+	death_sound.stream = AudioStreamOggVorbis.new().load_from_file("res://scenes/game/character/weapon/temp_audio/failed_parry.ogg")
+	add_child(death_sound)
+	
 func _input(__input):
 	if not resetted or not stopped:
 		return
@@ -27,7 +33,8 @@ func reached():
 		LABELS.set_best(best_time)
 
 func reset():
-	CHARACTER.AUDIO_MANAGER.create_3d_audio_at_location(CHARACTER,SoundEffect.SOUND_EFFECT_TYPE.CHARACTER_DEATH)
+	#CHARACTER.AUDIO_MANAGER.create_3d_audio_at_location(CHARACTER,SoundEffect.SOUND_EFFECT_TYPE.CHARACTER_DEATH)
+	death_sound.play()
 	resetted = true
 	stopped = true
 	time_elapsed = 0

@@ -17,6 +17,10 @@ var SM: SM_Character
 var AIR_JUMP_COOLDOWN_TIMER: Timer
 var air_jumps: int = 0
 
+@onready var jump_sound: AudioStreamPlayer3D = $"../../../AudioSfx/JumpSound"
+@onready var air_jump_sound: AudioStreamPlayer3D = $"../../../AudioSfx/AirJumpSound"
+
+
 
 func should_considered_on_floor() -> bool:
 	return OWNER.last_frame_on_floor < MAX_FRAMES_STILL_ON_FLOOR
@@ -44,12 +48,13 @@ func do_jump(in_air: bool = false):
 		multiply = AIR_JUMP_BOOST
 		air_jumps += 1
 		AIR_JUMP_COOLDOWN_TIMER.start()
-		OWNER.AUDIO_MANAGER.create_3d_audio_at_location(OWNER,SoundEffect.SOUND_EFFECT_TYPE.CHARACTER_AIR_JUMP)
+		#OWNER.AUDIO_MANAGER.create_3d_audio_at_location(OWNER,SoundEffect.SOUND_EFFECT_TYPE.CHARACTER_AIR_JUMP)
+		air_jump_sound.play()
 	#elif not in_air or should_considered_on_floor():
 	else:
 		SM.switch(SM.S_IN_AIR)
-		OWNER.AUDIO_MANAGER.create_3d_audio_at_location(OWNER,SoundEffect.SOUND_EFFECT_TYPE.CHARACTER_JUMP)
-		
+		#OWNER.AUDIO_MANAGER.create_3d_audio_at_location(OWNER,SoundEffect.SOUND_EFFECT_TYPE.CHARACTER_JUMP)
+		jump_sound.play()
 	OWNER.velocity.y = OWNER.JUMP_VELOCITY * multiply
 	OWNER.JUMP_ANIMATION.play("jump", 0.25)
 	
