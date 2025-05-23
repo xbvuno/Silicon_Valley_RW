@@ -11,8 +11,8 @@
 [ext_resource type="Script" uid="uid://cp06fo6rkevxs" path="res://scenes/game/character/states/char_dash_state.gd" id="6_1of0f"]
 [ext_resource type="Script" uid="uid://dy2mmdalf6ngr" path="res://scenes/game/character/states/actions/char_jump_action.gd" id="7_gagoa"]
 [ext_resource type="Script" uid="uid://b7wmnyerbcl4y" path="res://scenes/game/character/states/char_sprint_state.gd" id="8_mqr5i"]
-[ext_resource type="AudioStream" uid="uid://cj8tcvywlppiu" path="res://assets/audio/sfx/character/Step.mp3" id="10_lytkp"]
-[ext_resource type="AudioStream" uid="uid://cjihkah076e6g" path="res://assets/audio/sfx/character/DashSFX.mp3" id="13_2rqis"]
+[ext_resource type="AudioStream" uid="uid://pihj7vrcfarn" path="res://assets/audio/sfx/character/Step.mp3" id="10_lytkp"]
+[ext_resource type="AudioStream" uid="uid://dcyav61nepsr6" path="res://assets/audio/sfx/character/DashSFX.mp3" id="13_2rqis"]
 [ext_resource type="Script" uid="uid://disftlo8loprj" path="res://scenes/game/character/states/char_air_state.gd" id="13_mqr5i"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kp17n"]

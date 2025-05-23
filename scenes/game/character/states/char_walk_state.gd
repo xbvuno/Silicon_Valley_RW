@@ -8,9 +8,18 @@ var OWNER: Character
 var SM: SM_Character
 var sm_name: SM_Character.States
 var readable_name: String
+var timer : Timer
 
 
 var sprint_already_pressed: bool = false
+
+func _ready() -> void:
+	timer = Timer.new()
+	timer.wait_time = STEP_SOUND_DELAY
+	timer.one_shot = true
+	timer.autostart = false
+	add_child(timer)
+	super()
 
 func _physics_process(_delta: float) -> void:
 	
