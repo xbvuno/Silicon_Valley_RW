@@ -1,31 +1,29 @@
 extends State
 
-@export var STEP_SOUND_DELAY : float = .5 
-@onready var step_sound: AudioStreamPlayer3D = $"../../AudioSfx/StepSound"
 
 ## This value will be set by the state machine
 var OWNER: Character
 var SM: SM_Character
 var sm_name: SM_Character.States
 var readable_name: String
-var timer : Timer
+
+@export var STEP_SOUND_DELAY : float = .5 
+@onready var STEP_SOUND: AudioStreamPlayer3D = $"../../AudioSfx/StepSound"
+var STEP_SOUND_TIMER : Timer
 
 
 var sprint_already_pressed: bool = false
 
 func _ready() -> void:
-	timer = Timer.new()
-	timer.wait_time = STEP_SOUND_DELAY
-	timer.one_shot = true
-	timer.autostart = false
-	add_child(timer)
+	STEP_SOUND_TIMER = Utils.timer_from_time(STEP_SOUND_DELAY, true, self)
+	STEP_SOUND_TIMER.autostart = false
 	super()
 
 func _physics_process(_delta: float) -> void:
 	
-	if timer.is_stopped():
-		step_sound.play()
-		timer.start()
+	if STEP_SOUND_TIMER.is_stopped():
+		STEP_SOUND.play()
+		STEP_SOUND_TIMER.start()
 	if OWNER.is_in_air():
 		SM.switch(SM.S_IN_AIR)
 		return
