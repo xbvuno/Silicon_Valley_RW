@@ -1,5 +1,8 @@
 extends State
 
+@export var STEP_SOUND_DELAY : float = .5 
+@onready var step_sound: AudioStreamPlayer3D = $"../../AudioSfx/StepSound"
+
 ## This value will be set by the state machine
 var OWNER: Character
 var SM: SM_Character
@@ -11,6 +14,9 @@ var sprint_already_pressed: bool = false
 
 func _physics_process(_delta: float) -> void:
 	
+	if timer.is_stopped():
+		step_sound.play()
+		timer.start()
 	if OWNER.is_in_air():
 		SM.switch(SM.S_IN_AIR)
 		return
