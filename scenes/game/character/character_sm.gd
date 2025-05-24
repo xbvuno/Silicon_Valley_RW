@@ -90,6 +90,7 @@ func switch(sm_state: States) -> void:
 	current_state = new_state_node
 	new_state_node.state_started.emit()
 
-	
+func is_current(sm_state: States) -> bool:
+	return sm_state == current_state.sm_name
 
 #endregion

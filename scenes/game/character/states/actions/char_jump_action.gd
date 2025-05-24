@@ -48,7 +48,8 @@ func do_jump(in_air: bool = false):
 		air_jumps += 1
 		AIR_JUMP_SOUND.play()
 	else:
-		SM.switch(SM.S_IN_AIR)
+		if not SM.is_current(SM.S_IN_AIR):
+			SM.switch(SM.S_IN_AIR)
 		JUMP_SOUND.play()
 		just_jumped_on_floor = true
 	JUMP_COOLDOWN_TIMER.start()

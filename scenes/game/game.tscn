@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://scenes/game/character/character.tscn" id="2_7h61r"]
 [ext_resource type="PackedScene" uid="uid://besu4igo3u6n3" path="res://assets/models/Spacciapproved.blend" id="3_4j704"]
 [ext_resource type="Script" uid="uid://dfg3bn8luv1ep" path="res://scenes/game/levels/test_world/flag_touch.gd" id="4_kp23o"]
-[ext_resource type="AudioStream" uid="uid://3syibd6xyhfw" path="res://assets/sounds/confetti-pop-sound.mp3" id="5_5jirj"]
+[ext_resource type="AudioStream" uid="uid://3syibd6xyhfw" path="res://assets/audio/sfx/confetti-pop-sound.mp3" id="5_5jirj"]
 [ext_resource type="PackedScene" uid="uid://cfy8g8m1djnb7" path="res://scenes/game/hud/hud.tscn" id="7_bdhmt"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_kp23o"]

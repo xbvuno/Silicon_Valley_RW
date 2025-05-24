@@ -10,7 +10,7 @@ var CHARACTER : Character
 var death_sound : AudioStreamPlayer
 func _ready() -> void:
 	death_sound = AudioStreamPlayer.new()
-	death_sound.stream = AudioStreamOggVorbis.new().load_from_file("res://scenes/game/character/weapon/temp_audio/failed_parry.ogg")
+	death_sound.stream = AudioStreamOggVorbis.load_from_file("res://assets/audio/sfx/weapon/temp_audio/failed_parry.ogg")
 	add_child(death_sound)
 	
 func _input(__input):
