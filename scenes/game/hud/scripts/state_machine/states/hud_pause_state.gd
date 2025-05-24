@@ -10,7 +10,7 @@ func _physics_process(_delta: float) -> void:
 	pass
 
 func _input(event: InputEvent) -> void:
-	if Input.is_action_just_pressed("ui_esc"):
+	if event.is_action_pressed("ui_esc"):
 		SM.switch(SM.States.IN_GAME)
 
 func enter_state()-> void:

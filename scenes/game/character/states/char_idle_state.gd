@@ -17,8 +17,9 @@ func _physics_process(_delta: float) -> void:
 	
 	
 func _input(event: InputEvent) -> void:
-	if not OWNER.under_low_ceiling() and event.is_action_pressed(OWNER.CONTROLS.JUMP):
+	if event.is_action_pressed(OWNER.CONTROLS.JUMP) and SM.ACTIONS[SM.A_JUMP].can_jump():
 		SM.ACTIONS[SM.A_JUMP].do_jump()
+		return
 		
 	if Input.is_action_just_pressed(OWNER.CONTROLS.CROUCH):
 		SM.switch(SM.S_CROUCH)

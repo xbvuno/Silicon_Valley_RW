@@ -1,14 +1,19 @@
-[gd_scene load_steps=29 format=3 uid="uid://cc1m2a1obsyn4"]
+[gd_scene load_steps=34 format=3 uid="uid://cc1m2a1obsyn4"]
 
 [ext_resource type="Script" uid="uid://cvqbknf1c8dgx" path="res://scenes/game/character/character.gd" id="1_0t4e8"]
 [ext_resource type="Script" uid="uid://d1nsutaoealmk" path="res://scenes/game/character/character_sm.gd" id="2_mqr5i"]
 [ext_resource type="PackedScene" uid="uid://3euw0wojttkh" path="res://scenes/game/character/weapon/current_weapon.tscn" id="2_qloyw"]
 [ext_resource type="Script" uid="uid://hnje6h8lvnkx" path="res://scenes/game/character/states/char_idle_state.gd" id="3_q5mc8"]
+[ext_resource type="AudioStream" uid="uid://dk2frq3714tb4" path="res://assets/audio/sfx/weapon/temp_audio/parry.ogg" id="4_wet2r"]
 [ext_resource type="Script" uid="uid://bqn4sdplsccut" path="res://scenes/game/character/states/char_walk_state.gd" id="4_xw4rn"]
 [ext_resource type="Script" uid="uid://wuq30fjxkek0" path="res://scenes/game/character/states/char_crouch_state.gd" id="5_1vggp"]
+[ext_resource type="AudioStream" uid="uid://bwrivraebik28" path="res://assets/audio/sfx/weapon/temp_audio/can_parry.ogg" id="5_mqr5i"]
 [ext_resource type="Script" uid="uid://cp06fo6rkevxs" path="res://scenes/game/character/states/char_dash_state.gd" id="6_1of0f"]
 [ext_resource type="Script" uid="uid://dy2mmdalf6ngr" path="res://scenes/game/character/states/actions/char_jump_action.gd" id="7_gagoa"]
 [ext_resource type="Script" uid="uid://b7wmnyerbcl4y" path="res://scenes/game/character/states/char_sprint_state.gd" id="8_mqr5i"]
+[ext_resource type="AudioStream" uid="uid://pihj7vrcfarn" path="res://assets/audio/sfx/character/Step.mp3" id="10_lytkp"]
+[ext_resource type="AudioStream" uid="uid://nk0267vv7uk6" path="res://assets/audio/sfx/character/landing.mp3" id="12_2rqis"]
+[ext_resource type="AudioStream" uid="uid://dcyav61nepsr6" path="res://assets/audio/sfx/character/DashSFX.mp3" id="13_2rqis"]
 [ext_resource type="Script" uid="uid://disftlo8loprj" path="res://scenes/game/character/states/char_air_state.gd" id="13_mqr5i"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kp17n"]
@@ -469,3 +474,25 @@ shape = SubResource("BoxShape3D_qloyw")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("SphereShape3D_k4wwl")
 target_position = Vector3(0, 0.5, 0)
+
+[node name="AudioSfx" type="Node3D" parent="."]
+
+[node name="AirJumpSound" type="AudioStreamPlayer3D" parent="AudioSfx"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+stream = ExtResource("4_wet2r")
+
+[node name="LandingSound" type="AudioStreamPlayer3D" parent="AudioSfx"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+stream = ExtResource("12_2rqis")
+
+[node name="JumpSound" type="AudioStreamPlayer3D" parent="AudioSfx"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+stream = ExtResource("5_mqr5i")
+
+[node name="DashSound" type="AudioStreamPlayer3D" parent="AudioSfx"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+stream = ExtResource("13_2rqis")
+
+[node name="StepSound" type="AudioStreamPlayer3D" parent="AudioSfx"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+stream = ExtResource("10_lytkp")

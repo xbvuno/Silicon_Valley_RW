@@ -6,10 +6,13 @@ var SM: SM_Character
 var sm_name: SM_Character.States
 var readable_name: String
 
+@onready var LANDING_SOUND: AudioStreamPlayer3D = $"../../AudioSfx/LandingSound"
+
 
 func _physics_process(_delta: float) -> void:
 	
 	if OWNER.is_on_floor():
+		LANDING_SOUND.play()
 		play_landing_animation()
 		SM.ACTIONS[SM.A_JUMP].reset()
 		SM.switch(SM.S_IDLE)

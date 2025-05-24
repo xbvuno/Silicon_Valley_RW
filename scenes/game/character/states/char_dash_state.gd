@@ -23,6 +23,8 @@ var COOLDOWN_TIMER: Timer
 
 var air_dashes: int = 0
 
+@onready var dash_sound: AudioStreamPlayer3D = $"../../AudioSfx/DashSound"
+
 func _ready() -> void:
 	super()
 	DURATION_TIMER = Utils.timer_from_time(DURATION_SEC, true, self, end_dash)
@@ -32,7 +34,7 @@ func can_dash() -> bool:
 	if not ENABLED:
 		return false
 		
-	if OWNER.is_on_floor():
+	if OWNER.is_on_floor() or OWNER.should_considered_on_floor():
 		air_dashes = 0
 	elif air_dashes >= MAX_AIR_DASHES:
 		return false
@@ -55,6 +57,8 @@ func do_dash() -> void:
 		air_dashes += 1
 	
 func enter_state():
+	#OWNER.AUDIO_MANAGER.create_3d_audio_at_location(OWNER,SoundEffect.SOUND_EFFECT_TYPE.CHARACTER_DASH)
+	dash_sound.play()
 	OWNER.use_gravity(false)
 	OWNER.use_accelleration(false)
 	do_dash()
