@@ -94,6 +94,13 @@ class_name Character
 @export var WEAPON: Node3D
 @export var DEFEND_ZONE: Area3D
 
+
+var last_time_on_floor: float = .0
+## Max time (secs) in which an air jump should considered on floor
+@export var MAX_TIME_STILL_ON_FLOOR: float = 0.2
+func should_considered_on_floor() -> bool:
+	return last_time_on_floor < MAX_TIME_STILL_ON_FLOOR
+
 #endregion
 
 #region Member Variable Initialization
@@ -120,7 +127,6 @@ func use_accelleration(value: bool):
 var mouseInput: Vector2 = Vector2.ZERO
 var input_map: Vector2 = Vector2.ZERO
 var last_direction: String = ''
-var last_frame_on_floor: int = 0
 #endregion
 
 #region Main Control Flow
@@ -169,15 +175,30 @@ func _physics_process(delta): # Most things happen here.
 	
 	handle_head_rotation()
 
+	camera_tilt()
 	# The player is not able to stand up if the ceiling is too low
 	low_ceiling = $CrouchCeilingDetection.is_colliding()
+
 
 	was_on_floor = is_on_floor() # This must always be at the end of physics_process
 	
 	if was_on_floor:
-		last_frame_on_floor = 0
+		last_time_on_floor = 0
 	else:
-		last_frame_on_floor += 1
+		last_time_on_floor += delta
+		
+func camera_tilt():
+	var target_angle :float = 0
+	
+	
+	if input_map.x >0:
+		target_angle =2*abs(input_map.x)
+		
+		#tilt a sinistra
+	if input_map.x<0:
+		target_angle =-2*abs(input_map.x)
+		#titl a destra
+	CAMERA.rotation_degrees.z = lerp(CAMERA.rotation_degrees.z,target_angle,0.2)
 
 #endregion
 

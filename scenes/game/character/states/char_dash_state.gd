@@ -34,7 +34,7 @@ func can_dash() -> bool:
 	if not ENABLED:
 		return false
 		
-	if OWNER.is_on_floor():
+	if OWNER.is_on_floor() or OWNER.should_considered_on_floor():
 		air_dashes = 0
 	elif air_dashes >= MAX_AIR_DASHES:
 		return false
