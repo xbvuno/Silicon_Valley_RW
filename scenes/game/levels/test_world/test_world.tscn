@@ -121,6 +121,8 @@ albedo_texture = ExtResource("2_wbbo5")
 size = Vector3(4, 6.76172, 4)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gomnb"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.294118)
 albedo_texture = ExtResource("3_vp0cd")
 metallic = 0.81
 metallic_specular = 0.2
@@ -365,6 +367,7 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 
 remote_path = NodePath("../AnimatableBody3D2")
 
 [node name="AnimatableBody3D2" type="AnimatableBody3D" parent="terrain/Path3D2/PathFollow3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="CSGBox3D9" type="CSGBox3D" parent="terrain/Path3D2/PathFollow3D/AnimatableBody3D2"]
 use_collision = true
@@ -392,6 +395,7 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 
 remote_path = NodePath("../AnimatableBody3D2")
 
 [node name="AnimatableBody3D2" type="AnimatableBody3D" parent="terrain/Path3D3/PathFollow3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="CSGBox3D9" type="CSGBox3D" parent="terrain/Path3D3/PathFollow3D/AnimatableBody3D2"]
 use_collision = true
@@ -473,6 +477,7 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 
 remote_path = NodePath("../AnimatableBody3D2")
 
 [node name="AnimatableBody3D2" type="AnimatableBody3D" parent="terrain/Path3D9/PathFollow3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="CSGBox3D9" type="CSGBox3D" parent="terrain/Path3D9/PathFollow3D/AnimatableBody3D2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.13086, 0)
@@ -529,6 +534,18 @@ material = SubResource("StandardMaterial3D_gomnb")
 transform = Transform3D(-0.997505, 0, 0.0705922, 0, 1, 0, -0.0705922, 0, -0.997505, 18.9343, 6.8, -10.5049)
 use_collision = true
 size = Vector3(4, 0.5, 4)
+material = SubResource("StandardMaterial3D_gomnb")
+
+[node name="CSGBox3D12" type="CSGBox3D" parent="terrain"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 15.3825, 1.95718, 17.7187)
+use_collision = true
+size = Vector3(4, 0.5, 9.50928)
+material = SubResource("StandardMaterial3D_gomnb")
+
+[node name="CSGBox3D16" type="CSGBox3D" parent="terrain"]
+transform = Transform3D(5.4634e-15, 4.37114e-08, -1, 1, -4.37114e-08, 0, -4.37114e-08, -1, -4.37114e-08, 22.2368, 1.99062, 11.2511)
+use_collision = true
+size = Vector3(4, 0.5, 9.50928)
 material = SubResource("StandardMaterial3D_gomnb")
 
 [node name="CSGBox3D13" type="CSGBox3D" parent="terrain"]

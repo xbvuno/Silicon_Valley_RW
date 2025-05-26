@@ -1,18 +1,41 @@
-[gd_scene load_steps=5 format=3 uid="uid://wnllrngtfcsq"]
+[gd_scene load_steps=15 format=3 uid="uid://wnllrngtfcsq"]
 
 [ext_resource type="Script" uid="uid://clcpynj6l5ja8" path="res://scenes/game/enemies/enemy.gd" id="1_m3nk5"]
+[ext_resource type="Texture2D" uid="uid://c2piu777bj6oy" path="res://assets/models/textures/prototype_materials/orange.png" id="2_luidu"]
+[ext_resource type="PackedScene" uid="uid://cmpsosu66jhbk" path="res://scenes/game/entities/resources/health.tscn" id="2_m83fb"]
+[ext_resource type="Script" uid="uid://rxqya8uibhc0" path="res://scenes/game/enemies/enemy_state_machine.gd" id="3_nb7yw"]
+[ext_resource type="Script" uid="uid://ch1bcualbdm5" path="res://scenes/game/enemies/enemy_roaming_state.gd" id="4_lps3g"]
+[ext_resource type="Script" uid="uid://b2ku7hcapo45r" path="res://scenes/game/enemies/enemy_following_state.gd" id="5_luidu"]
+[ext_resource type="Script" uid="uid://d0580ite7w2e0" path="res://scenes/game/enemies/enemy_attacking_state.gd" id="6_muu5b"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_egi3l"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m3nk5"]
-albedo_color = Color(0.423357, 0.562647, 0.595272, 1)
+albedo_texture = ExtResource("2_luidu")
 metallic = 1.0
+uv1_triplanar = true
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_m3nk5"]
 material = SubResource("StandardMaterial3D_m3nk5")
 
-[node name="Enemy" type="CharacterBody3D"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_muu5b"]
+albedo_color = Color(0.176419, 0.176419, 0.176419, 1)
+roughness = 0.15
+
+[sub_resource type="BoxMesh" id="BoxMesh_rhrmy"]
+material = SubResource("StandardMaterial3D_muu5b")
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_luidu"]
+radius = 5.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_muu5b"]
+radius = 10.0
+
+[node name="Enemy" type="CharacterBody3D" node_paths=PackedStringArray("occhiali", "small_area", "big_area")]
 script = ExtResource("1_m3nk5")
+occhiali = NodePath("MeshInstance3D/MeshInstance3D")
+small_area = NodePath("Areas/TriggerArea_Small")
+big_area = NodePath("Areas/TriggerArea_Big")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_egi3l")
@@ -20,6 +43,10 @@ shape = SubResource("CapsuleShape3D_egi3l")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_m3nk5")
 skeleton = NodePath("")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MeshInstance3D"]
+transform = Transform3D(0.742723, 0, 0, 0, 0.295719, 0, 0, 0, 0.647025, 0.0132549, 0.535579, -0.204111)
+mesh = SubResource("BoxMesh_rhrmy")
 
 [node name="Area3D" type="Area3D" parent="."]
 
@@ -30,4 +57,36 @@ shape = SubResource("CapsuleShape3D_egi3l")
 process_mode = 3
 one_shot = true
 
+[node name="Health" parent="." instance=ExtResource("2_m83fb")]
+
+[node name="Areas" type="Node3D" parent="."]
+
+[node name="TriggerArea_Small" type="Area3D" parent="Areas"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Areas/TriggerArea_Small"]
+shape = SubResource("CylinderShape3D_luidu")
+debug_color = Color(0.566641, 0.557419, 1.92523e-07, 0.42)
+
+[node name="TriggerArea_Big" type="Area3D" parent="Areas"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Areas/TriggerArea_Big"]
+shape = SubResource("CylinderShape3D_muu5b")
+debug_color = Color(0.904402, 0.286595, 0.283274, 0.42)
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("3_nb7yw")
+
+[node name="Roaming" type="Node" parent="StateMachine"]
+script = ExtResource("4_lps3g")
+
+[node name="Following" type="Node" parent="StateMachine"]
+script = ExtResource("5_luidu")
+
+[node name="Attacking" type="Node" parent="StateMachine"]
+script = ExtResource("6_muu5b")
+
 [connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
+[connection signal="body_entered" from="Areas/TriggerArea_Small" to="." method="_on_trigger_area_small_body_entered"]
+[connection signal="body_exited" from="Areas/TriggerArea_Small" to="." method="_on_trigger_area_small_body_exited"]
+[connection signal="body_entered" from="Areas/TriggerArea_Big" to="." method="_on_trigger_area_big_body_entered"]
+[connection signal="body_exited" from="Areas/TriggerArea_Big" to="." method="_on_trigger_area_big_body_exited"]

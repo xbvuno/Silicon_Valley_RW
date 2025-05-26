@@ -38,11 +38,16 @@ audio_listener_enable_3d = true
 size = Vector2i(960, 540)
 render_target_update_mode = 4
 
+[node name="Character" parent="SubViewportContainer/SubViewport" instance=ExtResource("2_7h61r")]
+unique_name_in_owner = true
+editor_description = ""
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
 [node name="test_world" parent="SubViewportContainer/SubViewport" instance=ExtResource("1_sul5r")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0725985, 0, 0.02948)
 
 [node name="Enemy" parent="SubViewportContainer/SubViewport/test_world" instance=ExtResource("2_5i0tg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.93415, 4.81035)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.9448, 3.93415, 17.6927)
 
 [node name="SpacciFlag" parent="SubViewportContainer/SubViewport/test_world" instance=ExtResource("3_4j704")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 27.4668, 68.9773, 14.8385)
@@ -59,11 +64,6 @@ shape = SubResource("CylinderShape3D_kp23o")
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.0574646, -0.0973663, 0.0479736)
 stream = ExtResource("5_5jirj")
 volume_db = 40.0
-
-[node name="Character" parent="SubViewportContainer/SubViewport" instance=ExtResource("2_7h61r")]
-unique_name_in_owner = true
-editor_description = ""
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="HUD" parent="." node_paths=PackedStringArray("CHARACTER") instance=ExtResource("7_bdhmt")]
 layout_mode = 1
