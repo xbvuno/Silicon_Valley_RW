@@ -18,12 +18,11 @@ class_name Enemy
 @export var SPEED : float = 7.
 
 @onready var SM: SM_Enemy = $StateMachine
-@onready var CHARACTER: Character = %Character
-@onready var C_SM: SM_Character = %Character/StateMachine
+@onready var CHARACTER: Character = Global.PLAYER
+@onready var C_SM: SM_Character = Global.PLAYER.SM
 
 
 func _ready():
-	
 	$FreezeTimer.timeout.connect(unpause)
 	AREA_SMALL.body_entered.connect(SM.STATES[SM.S_ROAMING].on_body_enter_area_small)
 	AREA_SMALL.body_exited.connect(SM.STATES[SM.S_ROAMING].on_body_exit_area_small)
@@ -74,7 +73,7 @@ func _on_area_3d_area_entered(area: Area3D) -> void:
 
 func is_player_hearble()->bool:
 	var space_state = get_world_3d().direct_space_state
-	var player_position = %Character.global_position
+	var player_position = CHARACTER.global_position
 	var query = PhysicsRayQueryParameters3D.create(global_position, player_position)
 	query.exclude = [self]
 	var result = space_state.intersect_ray(query)

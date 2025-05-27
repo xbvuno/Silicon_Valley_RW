@@ -7,19 +7,15 @@ var sm_name: SM_HUD.States
 var readable_name: String
 
 
-func _physics_process(_delta: float) -> void:
-	pass
-
-func _input(event: InputEvent) -> void:
-	pass
-
 func enter_state():
+	get_tree().paused = true
 	OWNER.MAIN_MENU.visible = true
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	if Global.GAME_MANAGER != null:
 		Global.GAME_MANAGER.change_scene("main_menu_background")
 	
 func exit_state():
+	get_tree().paused = false
 	OWNER.MAIN_MENU.visible = false
 
 

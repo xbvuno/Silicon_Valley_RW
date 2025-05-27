@@ -6,3 +6,4 @@ var scenes : Dictionary = {
 	"main_menu_background":"res://scenes/game/levels/main_menu_background/main_menu_background.tscn"
 }
 var GAME_MANAGER : GameManager
+var PLAYER: Character 

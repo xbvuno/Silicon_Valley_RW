@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://dsnd1y8haixek"]
+[gd_scene load_steps=12 format=3 uid="uid://dsnd1y8haixek"]
 
 [ext_resource type="PackedScene" uid="uid://besu4igo3u6n3" path="res://assets/models/Spacciapproved.blend" id="1_0as0f"]
 [ext_resource type="Texture2D" uid="uid://c62n3mfuh8wpy" path="res://assets/models/textures/prototype_materials/black.png" id="1_msh16"]
 [ext_resource type="Texture2D" uid="uid://beemuc5ys21gi" path="res://assets/models/textures/prototype_materials/green.png" id="2_0as0f"]
+[ext_resource type="PackedScene" uid="uid://wnllrngtfcsq" path="res://scenes/game/enemies/enemy.tscn" id="4_7l5n5"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_msh16"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -114,3 +115,6 @@ mesh = SubResource("BoxMesh_luqk5")
 [node name="Muro12" type="CSGMesh3D" parent="Muri"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.255032, 0, 9.63326)
 mesh = SubResource("BoxMesh_luqk5")
+
+[node name="Enemy" parent="." instance=ExtResource("4_7l5n5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.51497, 1.05, 14.4163)
