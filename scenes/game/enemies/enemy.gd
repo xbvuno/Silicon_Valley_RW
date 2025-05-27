@@ -2,9 +2,11 @@ extends CharacterBody3D
 class_name Enemy
 @export_group("Nodes")
 @export var occhiali : MeshInstance3D 
-
+@export var NAVIGATION_AGENT : NavigationAgent3D
+@export var AUDIO_PLAYER : AudioStreamPlayer3D
 @export var AREA_SMALL: Area3D
 @export var AREA_BIG: Area3D
+@export var FRAME_TO_UPDATE_TARGET_POSITION : int = 5
 
 @onready var COLLISION: CollisionShape3D = $CollisionShape3D
 @onready var MESH: MeshInstance3D = $MeshInstance3D
@@ -15,7 +17,7 @@ class_name Enemy
 @export var MAX_HEALTH = 20
 @onready var health = MAX_HEALTH
 
-@export var SPEED : float = 7.
+@export var SPEED : float = 5.
 
 @onready var SM: SM_Enemy = $StateMachine
 @onready var CHARACTER: Character = Global.PLAYER

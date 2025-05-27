@@ -8,13 +8,23 @@ var C_SM: SM_Character
 var sm_name: SM_Enemy.States
 var readable_name: String
 
+#@onready var timer : Timer = Utils.timer_from_time(2,false,self,(func ():OWNER.AUDIO_PLAYER.play();timer.start()).call())
+@onready var frame_counter : int =0
 func _physics_process(_delta: float) -> void:
 	look_at_player()
 	move_to_player()
-
+	
+	#if timer.is_stopped():
+		#OWNER.AUDIO_PLAYER.play()
+		#timer = Utils.timer_from_time(2,self)
+		#
+	
+	
 
 func enter_state():
 	OWNER.MESH.mesh.material.albedo_color = Color(1, 0, 0, 0)
+	OWNER.NAVIGATION_AGENT.target_position = Global.PLAYER.global_position
+	
 	
 func exit_state():
 	pass
@@ -32,7 +42,12 @@ func look_at_player():
 	
 	
 func move_to_player():
-	var player_position = OWNER.CHARACTER.global_position 
-	var direction = OWNER.global_position.direction_to(player_position) * OWNER.SPEED
-	OWNER.velocity.x = direction.x
-	OWNER.velocity.z = direction.z
+	if frame_counter == OWNER.FRAME_TO_UPDATE_TARGET_POSITION:
+		OWNER.NAVIGATION_AGENT.target_position = Global.PLAYER.global_position
+		frame_counter = 0
+	else:
+		frame_counter += 1
+	var next_position = OWNER.NAVIGATION_AGENT.get_next_path_position()
+	print(next_position)
+	var direction = (next_position - OWNER.global_position).normalized()
+	OWNER.velocity = direction * OWNER.SPEED

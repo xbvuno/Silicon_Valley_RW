@@ -42,5 +42,3 @@ func change_scene(scene_id):
 		actual_spawn_point = spawn_point.global_position
 		PLAYER.global_position = actual_spawn_point
 		#PLAYER.rotation = spawn_point.rotation
-	print("Scene ID : ",scene_id)
-	print("Actual Scene ID : ",actual_scene_id)
