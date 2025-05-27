@@ -1,0 +1,79 @@
+[gd_scene load_steps=3 format=3 uid="uid://camcenelbud00"]
+
+[ext_resource type="Script" uid="uid://17rl13lgsldf" path="res://scenes/game/hud/main_menu/main_menu.gd" id="1_oc3tv"]
+[ext_resource type="FontFile" uid="uid://bj022vx1alxl" path="res://assets/texts/fonts/SpaceMono-Regular.ttf" id="2_7s7wh"]
+
+[node name="MainMenu" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_oc3tv")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 2
+
+[node name="GridContainer2" type="GridContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="Titolo" type="Label" parent="CenterContainer/GridContainer2"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_7s7wh")
+theme_override_font_sizes/font_size = 100
+text = "Silicon Valley"
+
+[node name="Sottotitolo" type="Label" parent="CenterContainer/GridContainer2"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.791192, 0.103101, 0.190715, 1)
+theme_override_fonts/font = ExtResource("2_7s7wh")
+theme_override_font_sizes/font_size = 30
+text = "Test build"
+horizontal_alignment = 2
+
+[node name="GridContainer" type="GridContainer" parent="CenterContainer/GridContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/GridContainer2/GridContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 20
+
+[node name="TestPlatformButton" type="Button" parent="CenterContainer/GridContainer2/GridContainer/MarginContainer"]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("2_7s7wh")
+theme_override_font_sizes/font_size = 50
+text = "Test Platform"
+
+[node name="MarginContainer2" type="MarginContainer" parent="CenterContainer/GridContainer2/GridContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 20
+
+[node name="TestCombactButton" type="Button" parent="CenterContainer/GridContainer2/GridContainer/MarginContainer2"]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("2_7s7wh")
+theme_override_font_sizes/font_size = 50
+text = "Test Combact"
+
+[node name="MarginContainer3" type="MarginContainer" parent="CenterContainer/GridContainer2/GridContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 20
+
+[node name="Esci" type="Button" parent="CenterContainer/GridContainer2/GridContainer/MarginContainer3"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("2_7s7wh")
+theme_override_font_sizes/font_size = 50
+text = "Esci"
+
+[connection signal="button_up" from="CenterContainer/GridContainer2/GridContainer/MarginContainer/TestPlatformButton" to="." method="_on_test_platform_button_button_up"]
+[connection signal="button_up" from="CenterContainer/GridContainer2/GridContainer/MarginContainer2/TestCombactButton" to="." method="_on_test_combact_button_button_up"]
+[connection signal="button_up" from="CenterContainer/GridContainer2/GridContainer/MarginContainer3/Esci" to="." method="_on_esci_button_up"]

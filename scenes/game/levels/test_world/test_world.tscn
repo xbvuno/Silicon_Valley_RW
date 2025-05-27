@@ -724,3 +724,6 @@ material = SubResource("StandardMaterial3D_7j4uu")
 
 [node name="DeathBox" parent="." instance=ExtResource("3_dlfxh")]
 transform = Transform3D(4984.37, 0, 0, 0, 10, 0, 0, 0, 2991.32, 6.69445, -21.1579, 8.85582)
+
+[node name="PlayerSpawnPoint" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 3, 9)

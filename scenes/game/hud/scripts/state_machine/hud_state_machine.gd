@@ -11,30 +11,32 @@ class_name SM_HUD
 @export var OVERLAY : Control
 
 enum States {
-	IN_GAME,PAUSE
+	IN_GAME,PAUSE,MAIN_MENU
 }
 
 ## LEGGIBILITÀ: Alias per gli States, in modo da non dover chiamare ogni volta States.Papera
 const S_PAUSE: States = States.PAUSE
 const S_IN_GAME: States = States.IN_GAME
-
+const S_MAIN_MENU : States = States.MAIN_MENU
 
 
 const STATE_NAMES: Dictionary[States, String] = {
 	States.PAUSE: "Pause",
-	States.IN_GAME: "In Game"
+	States.IN_GAME: "In Game",
+	States.MAIN_MENU:"Main Menu"
 }
 
 @onready var STATES: Dictionary[States, State] = {
 	States.PAUSE:$Pause,
-	States.IN_GAME:$"In Game"
+	States.IN_GAME:$"In Game",
+	States.MAIN_MENU:$MainMenu
 }
 
 
 @onready var OWNER: Control = $".."
 
 func after_setup() -> void:
-	current_state = STATES[S_IN_GAME]
+	current_state = STATES[S_MAIN_MENU]
 	current_state.state_started.emit()
 
 const _PRINT_PREFIX = "HUD_"

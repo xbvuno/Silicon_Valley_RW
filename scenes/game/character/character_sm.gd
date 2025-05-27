@@ -130,7 +130,7 @@ func _ready() -> void:
 	after_setup()
 
 func _physics_process(delta: float) -> void:
-	print(latest_actions.map(func(exp_action): return ACTION_NAMES[ExpiringAction.action_enum(exp_action)]))
+	#print(latest_actions.map(func(exp_action): return ACTION_NAMES[ExpiringAction.action_enum(exp_action)]))
 	for exp_action in latest_actions:
 		exp_action.scroll(delta)
 	latest_actions = latest_actions.filter(ExpiringAction.action_is_valid)

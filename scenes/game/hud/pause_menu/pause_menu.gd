@@ -7,7 +7,7 @@ extends Control
 @export var STATE_MACHINE : SM_PAUSE_MENU
 @export var STATE_MACHINE_HUD : SM_HUD
 
-
+signal back_to_menu()
 
 
 # Called when the node enters the scene tree for the first time.
@@ -21,7 +21,7 @@ func _on_opzioni_pressed() -> void:
 	STATE_MACHINE.switch(STATE_MACHINE.States.SETTINGS)
 
 func _on_esci_pressed() -> void:
-	get_tree().quit()
+	back_to_menu.emit()
 
 func _on_option_menu_back_clicked() -> void:
 	STATE_MACHINE.switch(STATE_MACHINE.States.PAUSE)
