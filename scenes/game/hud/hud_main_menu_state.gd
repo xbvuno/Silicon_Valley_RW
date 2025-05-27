@@ -20,9 +20,7 @@ func enter_state():
 		Global.GAME_MANAGER.change_scene("main_menu_background")
 	
 func exit_state():
-	
 	OWNER.MAIN_MENU.visible = false
-	
 
 
 func _on_main_menu_change_scene(scene_id: String) -> void:

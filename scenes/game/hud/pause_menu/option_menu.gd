@@ -24,7 +24,7 @@ func _ready() -> void:
 func _on_h_slider_value_changed(value: float) -> void:
 	update_audio_label(value)
 	AudioServer.set_bus_volume_db(_bus, linear_to_db(value))
-	print(linear_to_db(value))
+	#print(linear_to_db(value))
 
 func update_audio_label(aux_volume):
 	AUDIO_PERCENTILE_LABEL.text= str(aux_volume*100)+"%"
