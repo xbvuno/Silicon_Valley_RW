@@ -1,7 +1,7 @@
 ## [spacci] State Machine del HUD 
 
 extends Node
-class_name SM_ENEMY
+class_name SM_Enemy
 
 enum States {
 	ROAMING,FOLLOWING,ATTACKING
@@ -41,14 +41,15 @@ signal state_changed(old_state: States, new_state: States)
 
 var current_state: State
 
-func _ready() -> void:
+func on_owner_ready():
 	for state_name: States in STATES:
 		var state_node: State = STATES[state_name]
 		state_node.OWNER = OWNER
 		state_node.SM = self
+		state_node.CHARACTER = OWNER.CHARACTER
+		state_node.C_SM = OWNER.C_SM
 		state_node.sm_name = state_name
 		state_node.readable_name = STATE_NAMES[state_name]
-		
 	after_setup()
 
 func switch(sm_state: States) -> void:
