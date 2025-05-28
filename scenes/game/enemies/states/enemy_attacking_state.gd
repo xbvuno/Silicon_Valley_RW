@@ -12,7 +12,11 @@ func _physics_process(_delta: float) -> void:
 	pass
 
 func enter_state():
-	pass
+	OWNER.WEAPON_ANIMATION.play("enemy_attack")
 	
 func exit_state():
 	pass
+
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	SM.switch(SM.States.FOLLOWING)

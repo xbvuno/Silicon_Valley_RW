@@ -7,7 +7,10 @@ class_name Enemy
 @export var AREA_SMALL: Area3D
 @export var AREA_BIG: Area3D
 @export var FRAME_TO_UPDATE_TARGET_POSITION : int = 5
-
+@export_group("Combact")
+@export var WEAPON : Node3D
+@export var WEAPON_ANIMATION : AnimationPlayer
+ 
 @onready var COLLISION: CollisionShape3D = $CollisionShape3D
 @onready var MESH: MeshInstance3D = $MeshInstance3D
 @onready var GRAVITY = ProjectSettings.get_setting("physics/3d/default_gravity")

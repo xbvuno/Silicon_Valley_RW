@@ -166,3 +166,9 @@ shadow_enabled = true
 
 [node name="Enemy" parent="." instance=ExtResource("4_7l5n5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.51497, 1.05, 14.4163)
+
+[node name="Enemy2" parent="." instance=ExtResource("4_7l5n5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.2129, 1.05, 14.4163)
+
+[node name="Enemy3" parent="." instance=ExtResource("4_7l5n5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.2143, 1.05, 25.466)

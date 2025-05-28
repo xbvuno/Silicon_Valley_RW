@@ -27,7 +27,7 @@ func enter_state():
 	
 	
 func exit_state():
-	pass
+	OWNER.velocity = Vector3.ZERO
 
 func look_at_player():
 	var player_position : Vector3 = OWNER.CHARACTER.global_position 
@@ -48,6 +48,7 @@ func move_to_player():
 	else:
 		frame_counter += 1
 	var next_position = OWNER.NAVIGATION_AGENT.get_next_path_position()
-	print(next_position)
 	var direction = (next_position - OWNER.global_position).normalized()
 	OWNER.velocity = direction * OWNER.SPEED
+	if OWNER.NAVIGATION_AGENT.distance_to_target() <= 2:
+		SM.switch(SM.States.ATTACKING)
