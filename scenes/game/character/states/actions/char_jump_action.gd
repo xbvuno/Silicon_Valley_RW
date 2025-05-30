@@ -2,6 +2,7 @@ extends Node
 
 var OWNER: Character
 var SM: SM_Character
+var sm_name: SM_Character.Actions
 
 ## Air Jump enabled.
 @export var AIR_JUMP_ENABLED: bool = true
@@ -55,6 +56,7 @@ func do_jump(in_air: bool = false):
 	JUMP_COOLDOWN_TIMER.start()
 	OWNER.velocity.y = OWNER.JUMP_VELOCITY * multiply
 	OWNER.JUMP_ANIMATION.play("jump", 0.25)
+	SM.add_action_to_latest(sm_name)
 
 func reset():
 	just_jumped_on_floor = false

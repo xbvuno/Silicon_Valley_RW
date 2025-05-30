@@ -1,45 +1,37 @@
 ## [spacci] State Machine del HUD 
 
 extends Node
-class_name SM_HUD
-
-@export_group("Hud Nodes")
-@export var HUD_MAIN_NODE : Control
-@export var RETICLE : Control
-@export var PAUSE_MENU : Control
-@export var DEBUG_MENU: Control
-@export var OVERLAY : Control
+class_name SM_Enemy
 
 enum States {
-	IN_GAME,PAUSE,MAIN_MENU
+	ROAMING,FOLLOWING,ATTACKING
 }
 
 ## LEGGIBILITÀ: Alias per gli States, in modo da non dover chiamare ogni volta States.Papera
-const S_PAUSE: States = States.PAUSE
-const S_IN_GAME: States = States.IN_GAME
-const S_MAIN_MENU : States = States.MAIN_MENU
-
+const S_ROAMING : States = States.ROAMING
+const S_FOLLOWING : States = States.FOLLOWING
+const S_ATTACKING: States = States.ATTACKING
 
 const STATE_NAMES: Dictionary[States, String] = {
-	States.PAUSE: "Pause",
-	States.IN_GAME: "In Game",
-	States.MAIN_MENU:"Main Menu"
+	States.ROAMING: "Roaming",
+	States.FOLLOWING: "Following",
+	States.ATTACKING: "Attacking"
 }
 
 @onready var STATES: Dictionary[States, State] = {
-	States.PAUSE:$Pause,
-	States.IN_GAME:$"In Game",
-	States.MAIN_MENU:$MainMenu
+	States.ROAMING:$Roaming,
+	States.FOLLOWING:$Following,
+	States.ATTACKING:$Attacking
 }
 
 
-@onready var OWNER: Control = $".."
+@onready var OWNER: Enemy = $".."
 
 func after_setup() -> void:
-	current_state = STATES[S_MAIN_MENU]
+	current_state = STATES[S_ROAMING]
 	current_state.state_started.emit()
 
-const _PRINT_PREFIX = "HUD_"
+const _PRINT_PREFIX = "ENEMY_"
 
 #region UnderTheHood
 
@@ -49,14 +41,15 @@ signal state_changed(old_state: States, new_state: States)
 
 var current_state: State
 
-func _ready() -> void:
+func on_owner_ready():
 	for state_name: States in STATES:
 		var state_node: State = STATES[state_name]
 		state_node.OWNER = OWNER
 		state_node.SM = self
+		state_node.CHARACTER = OWNER.CHARACTER
+		state_node.C_SM = OWNER.C_SM
 		state_node.sm_name = state_name
 		state_node.readable_name = STATE_NAMES[state_name]
-		
 	after_setup()
 
 func switch(sm_state: States) -> void:

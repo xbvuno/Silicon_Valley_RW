@@ -1,24 +1,20 @@
-[gd_scene load_steps=9 format=3 uid="uid://daucglrwc2ahf"]
+[gd_scene load_steps=4 format=3 uid="uid://daucglrwc2ahf"]
 
-[ext_resource type="PackedScene" uid="uid://h6vc166hsiyc" path="res://scenes/game/levels/test_world/test_world.tscn" id="1_sul5r"]
-[ext_resource type="PackedScene" uid="uid://wnllrngtfcsq" path="res://scenes/game/enemies/enemy.tscn" id="2_5i0tg"]
+[ext_resource type="Script" uid="uid://dsyiw74lyesom" path="res://scenes/game/game_manager.gd" id="1_87uf6"]
 [ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://scenes/game/character/character.tscn" id="2_7h61r"]
-[ext_resource type="PackedScene" uid="uid://besu4igo3u6n3" path="res://assets/models/Spacciapproved.blend" id="3_4j704"]
-[ext_resource type="Script" uid="uid://dfg3bn8luv1ep" path="res://scenes/game/levels/test_world/flag_touch.gd" id="4_kp23o"]
-[ext_resource type="AudioStream" uid="uid://3syibd6xyhfw" path="res://assets/audio/sfx/confetti-pop-sound.mp3" id="5_5jirj"]
 [ext_resource type="PackedScene" uid="uid://cfy8g8m1djnb7" path="res://scenes/game/hud/hud.tscn" id="7_bdhmt"]
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_kp23o"]
-height = 4.71899
-radius = 0.0869141
-
-[node name="Game" type="Control"]
+[node name="Game" type="Control" node_paths=PackedStringArray("GAME_FATHER", "HUD", "PLAYER")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_87uf6")
+GAME_FATHER = NodePath("SubViewportContainer/SubViewport")
+HUD = NodePath("HUD")
+PLAYER = NodePath("SubViewportContainer/SubViewport/Character")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 texture_filter = 1
@@ -37,28 +33,6 @@ audio_listener_enable_2d = true
 audio_listener_enable_3d = true
 size = Vector2i(960, 540)
 render_target_update_mode = 4
-
-[node name="test_world" parent="SubViewportContainer/SubViewport" instance=ExtResource("1_sul5r")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0725985, 0, 0.02948)
-
-[node name="Enemy" parent="SubViewportContainer/SubViewport/test_world" instance=ExtResource("2_5i0tg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.93415, 4.81035)
-
-[node name="SpacciFlag" parent="SubViewportContainer/SubViewport/test_world" instance=ExtResource("3_4j704")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 27.4668, 68.9773, 14.8385)
-
-[node name="FlagTouch" type="Area3D" parent="SubViewportContainer/SubViewport/test_world/SpacciFlag"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.331627, 0)
-script = ExtResource("4_kp23o")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="SubViewportContainer/SubViewport/test_world/SpacciFlag/FlagTouch"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.02787, 0)
-shape = SubResource("CylinderShape3D_kp23o")
-
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="SubViewportContainer/SubViewport/test_world/SpacciFlag/FlagTouch"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.0574646, -0.0973663, 0.0479736)
-stream = ExtResource("5_5jirj")
-volume_db = 40.0
 
 [node name="Character" parent="SubViewportContainer/SubViewport" instance=ExtResource("2_7h61r")]
 unique_name_in_owner = true

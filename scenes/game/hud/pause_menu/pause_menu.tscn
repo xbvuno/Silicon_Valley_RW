@@ -72,7 +72,7 @@ layout_mode = 2
 mouse_default_cursor_shape = 2
 theme_override_fonts/font = ExtResource("2_d1l6u")
 theme_override_font_sizes/font_size = 40
-text = "Esci"
+text = "Torna al Menu"
 
 [node name="OptionMenu" type="Control" parent="MarginContainer/PanelContainer" node_paths=PackedStringArray("AUDIO_SLIDER", "AUDIO_PERCENTILE_LABEL", "MOUSE_SENSITIVITY_LABEL", "MOUSE_SENSITIVITY_SLIDER")]
 visible = false

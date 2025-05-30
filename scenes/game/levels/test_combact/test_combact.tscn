@@ -1,0 +1,174 @@
+[gd_scene load_steps=13 format=3 uid="uid://dsnd1y8haixek"]
+
+[ext_resource type="PackedScene" uid="uid://besu4igo3u6n3" path="res://assets/models/Spacciapproved.blend" id="1_0as0f"]
+[ext_resource type="Texture2D" uid="uid://c62n3mfuh8wpy" path="res://assets/models/textures/prototype_materials/black.png" id="1_msh16"]
+[ext_resource type="Texture2D" uid="uid://beemuc5ys21gi" path="res://assets/models/textures/prototype_materials/green.png" id="2_0as0f"]
+[ext_resource type="PackedScene" uid="uid://wnllrngtfcsq" path="res://scenes/game/enemies/enemy.tscn" id="4_7l5n5"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_7l5n5"]
+vertices = PackedVector3Array(-10.25, 0.45, 1.75, -0.75, 0.45, 1.75, -0.75, 0.45, -3, -49.5, 0.45, 4, -10.5, 0.45, 4, 1, 0.45, -3.25, 0.75, 0.45, -49.5, -49.5, 0.45, -49.5, 3.75, 0.45, -3.25, 4, 0.45, -49.5, 5.25, 0.45, -1.75, 5.25, 0.45, -1.25, 7.5, 0.45, -1.25, 5.25, 0.45, -3.25, 7.75, 0.45, -0.5, 49.5, 0.45, -0.5, 49.5, 0.45, -49.5, -2, 0.45, 6, -1.75, 0.45, 6.75, -1, 0.45, 6.75, -1, 0.45, 3.75, -9, 0.45, 6.75, -8, 0.45, 6.75, -7.75, 0.45, 6, -9, 0.45, 3, 1.5, 0.45, -1, 0.75, 0.45, -1.75, 0.5, 0.45, 3.25, 1.5, 0.45, 3.5, 2.5, 0.45, 11.25, 2.75, 0.45, 12.25, 3, 0.45, 13, 2.75, 0.45, 0.25, 2.75, 0.45, 3.5, 5, 0.45, 3.5, 7.5, 0.45, 0.25, 5, 0.45, 5, 49.5, 0.45, 13, 0.5, 0.45, 5, 0.5, 0.45, 11.25, -11.75, 0.45, 11.25, -10.5, 0.45, 11.25, -12, 0.45, 12, -49.5, 0.45, 12, -2, 0.45, 7.5, -7.75, 0.45, 7.5, -5.75, 0.45, 12, -3.5, 0.45, 12, -3.25, 0.45, 11.25, -6, 0.45, 11.25, -9, 0.45, 11.25, -1, 0.45, 11.25, -12.25, 0.45, 49.5, -12, 0.45, 12.25, -49.5, 0.45, 49.5, 2.5, 0.45, 12.75, -3.25, 0.45, 12.75, -6, 0.45, 12.75, -11.75, 0.45, 12.75, 3, 0.45, 49.5, 49.5, 0.45, 49.5)
+polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(0, 4, 3), PackedInt32Array(6, 5, 2), PackedInt32Array(0, 3, 2), PackedInt32Array(2, 3, 6), PackedInt32Array(6, 3, 7), PackedInt32Array(5, 6, 8), PackedInt32Array(8, 6, 9), PackedInt32Array(12, 11, 10), PackedInt32Array(12, 10, 13), PackedInt32Array(12, 15, 14), PackedInt32Array(12, 13, 15), PackedInt32Array(15, 13, 16), PackedInt32Array(16, 13, 9), PackedInt32Array(13, 8, 9), PackedInt32Array(18, 17, 19), PackedInt32Array(19, 17, 20), PackedInt32Array(22, 21, 23), PackedInt32Array(23, 21, 24), PackedInt32Array(28, 27, 25), PackedInt32Array(25, 27, 26), PackedInt32Array(28, 20, 27), PackedInt32Array(27, 20, 24), PackedInt32Array(11, 25, 10), PackedInt32Array(10, 25, 26), PackedInt32Array(17, 23, 20), PackedInt32Array(20, 23, 24), PackedInt32Array(31, 30, 29), PackedInt32Array(33, 32, 34), PackedInt32Array(34, 32, 35), PackedInt32Array(29, 36, 31), PackedInt32Array(31, 36, 35), PackedInt32Array(31, 35, 37), PackedInt32Array(37, 35, 15), PackedInt32Array(36, 34, 35), PackedInt32Array(39, 38, 29), PackedInt32Array(29, 38, 36), PackedInt32Array(35, 14, 15), PackedInt32Array(4, 41, 40), PackedInt32Array(40, 42, 4), PackedInt32Array(4, 42, 43), PackedInt32Array(4, 43, 3), PackedInt32Array(44, 18, 19), PackedInt32Array(21, 22, 45), PackedInt32Array(46, 49, 47), PackedInt32Array(47, 49, 48), PackedInt32Array(21, 45, 50), PackedInt32Array(50, 45, 49), PackedInt32Array(19, 51, 44), PackedInt32Array(44, 51, 48), PackedInt32Array(48, 49, 44), PackedInt32Array(44, 49, 45), PackedInt32Array(53, 52, 42), PackedInt32Array(42, 52, 54), PackedInt32Array(42, 54, 43), PackedInt32Array(55, 30, 31), PackedInt32Array(47, 56, 46), PackedInt32Array(46, 56, 57), PackedInt32Array(52, 53, 58), PackedInt32Array(56, 55, 31), PackedInt32Array(57, 56, 31), PackedInt32Array(57, 31, 58), PackedInt32Array(58, 31, 59), PackedInt32Array(58, 59, 52), PackedInt32Array(31, 37, 59), PackedInt32Array(59, 37, 60)]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7l5n5"]
+albedo_texture = ExtResource("1_msh16")
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_g6t0t"]
+material = SubResource("StandardMaterial3D_7l5n5")
+size = Vector3(100, 0.1, 100)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iu2mg"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.466667)
+albedo_texture = ExtResource("2_0as0f")
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_luqk5"]
+material = SubResource("StandardMaterial3D_iu2mg")
+size = Vector3(0.2, 2, 5)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_msh16"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_0as0f"]
+sky_material = SubResource("ProceduralSkyMaterial_msh16")
+
+[sub_resource type="Environment" id="Environment_7l5n5"]
+background_mode = 2
+sky = SubResource("Sky_0as0f")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="TestCombact" type="Node3D"]
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 2.94194, 0, 0, 0, 1, 0, 0, 0)
+navigation_mesh = SubResource("NavigationMesh_7l5n5")
+
+[node name="Pavimento" type="CSGMesh3D" parent="NavigationRegion3D"]
+use_collision = true
+mesh = SubResource("BoxMesh_g6t0t")
+
+[node name="Muri2" type="Node3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 0.339912, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="NavigationRegion3D/Muri2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2.40645, 0.962156, -2.40662)
+
+[node name="Muro" type="CSGMesh3D" parent="NavigationRegion3D/Muri2/NavigationObstacle3D"]
+use_collision = true
+mesh = SubResource("BoxMesh_luqk5")
+
+[node name="NavigationObstacle3D3" type="NavigationObstacle3D" parent="NavigationRegion3D/Muri2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 4.52045, 0.962156, -0.459076)
+
+[node name="Muro2" type="CSGMesh3D" parent="NavigationRegion3D/Muri2/NavigationObstacle3D3"]
+use_collision = true
+mesh = SubResource("BoxMesh_luqk5")
+
+[node name="NavigationObstacle3D4" type="NavigationObstacle3D" parent="NavigationRegion3D/Muri2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2.42078, 0.962156, 2.38733)
+
+[node name="Muro4" type="CSGMesh3D" parent="NavigationRegion3D/Muri2/NavigationObstacle3D4"]
+use_collision = true
+mesh = SubResource("BoxMesh_luqk5")
+
+[node name="NavigationObstacle3D15" type="NavigationObstacle3D" parent="NavigationRegion3D/Muri2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -7.33125, 0.962156, 2.38733)
+
+[node name="Muro8" type="CSGMesh3D" parent="NavigationRegion3D/Muri2/NavigationObstacle3D15"]
+use_collision = true
+mesh = SubResource("BoxMesh_luqk5")
+
+[node name="NavigationObstacle3D14" type="NavigationObstacle3D" parent="NavigationRegion3D/Muri2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2.12348, 0.962156, 4.33487)
+
+[node name="Muro5" type="CSGMesh3D" parent="NavigationRegion3D/Muri2/NavigationObstacle3D14"]
+use_collision = true
+mesh = SubResource("BoxMesh_luqk5")
+
+[node name="NavigationObstacle3D5" type="NavigationObstacle3D" parent="NavigationRegion3D/Muri2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.12348, 0.962156, 1.95454)
+
+[node name="Muro3" type="CSGMesh3D" parent="NavigationRegion3D/Muri2/NavigationObstacle3D5"]
+use_collision = true
+mesh = SubResource("BoxMesh_luqk5")
+
+[node name="NavigationObstacle3D13" type="NavigationObstacle3D" parent="NavigationRegion3D/Muri2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.256849, 0.962156, 6.76514)
+
+[node name="Muro6" type="CSGMesh3D" parent="NavigationRegion3D/Muri2/NavigationObstacle3D13"]
+use_collision = true
+mesh = SubResource("BoxMesh_luqk5")
+
+[node name="NavigationObstacle3D12" type="NavigationObstacle3D" parent="NavigationRegion3D/Muri2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.70976, 0.962156, 4.77974)
+
+[node name="Muro7" type="CSGMesh3D" parent="NavigationRegion3D/Muri2/NavigationObstacle3D12"]
+use_collision = true
+mesh = SubResource("BoxMesh_luqk5")
+
+[node name="NavigationObstacle3D11" type="NavigationObstacle3D" parent="NavigationRegion3D/Muri2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.70976, 0.962156, 9.64027)
+
+[node name="Muro9" type="CSGMesh3D" parent="NavigationRegion3D/Muri2/NavigationObstacle3D11"]
+use_collision = true
+mesh = SubResource("BoxMesh_luqk5")
+
+[node name="NavigationObstacle3D10" type="NavigationObstacle3D" parent="NavigationRegion3D/Muri2"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8.93934, 0.962156, 12.0206)
+
+[node name="Muro10" type="CSGMesh3D" parent="NavigationRegion3D/Muri2/NavigationObstacle3D10"]
+use_collision = true
+mesh = SubResource("BoxMesh_luqk5")
+
+[node name="NavigationObstacle3D9" type="NavigationObstacle3D" parent="NavigationRegion3D/Muri2"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -4.96391, 0.962156, 6.73367)
+
+[node name="Muro13" type="CSGMesh3D" parent="NavigationRegion3D/Muri2/NavigationObstacle3D9"]
+use_collision = true
+mesh = SubResource("BoxMesh_luqk5")
+
+[node name="NavigationObstacle3D7" type="NavigationObstacle3D" parent="NavigationRegion3D/Muri2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.255033, 0.962156, 9.62362)
+
+[node name="Muro14" type="CSGMesh3D" parent="NavigationRegion3D/Muri2/NavigationObstacle3D7"]
+use_collision = true
+mesh = SubResource("BoxMesh_luqk5")
+
+[node name="NavigationObstacle3D2" type="NavigationObstacle3D" parent="NavigationRegion3D/Muri2"]
+
+[node name="Muro0" type="CSGMesh3D" parent="NavigationRegion3D/Muri2/NavigationObstacle3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.91094, 0)
+use_collision = true
+mesh = SubResource("BoxMesh_luqk5")
+
+[node name="NavigationObstacle3D8" type="NavigationObstacle3D" parent="NavigationRegion3D/Muri2"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.291652, 0.962156, 12.0206)
+
+[node name="Muro11" type="CSGMesh3D" parent="NavigationRegion3D/Muri2/NavigationObstacle3D8"]
+use_collision = true
+mesh = SubResource("BoxMesh_luqk5")
+
+[node name="PlayerSpawnPoint" type="Node3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 7.58669, 1.11416, -3.18065)
+
+[node name="Spacciapproved" parent="PlayerSpawnPoint" instance=ExtResource("1_0as0f")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, -1.08291, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_7l5n5")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Enemy" parent="." instance=ExtResource("4_7l5n5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.51497, 1.05, 14.4163)
+
+[node name="Enemy2" parent="." instance=ExtResource("4_7l5n5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.2129, 1.05, 14.4163)
+
+[node name="Enemy3" parent="." instance=ExtResource("4_7l5n5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.2143, 1.05, 25.466)

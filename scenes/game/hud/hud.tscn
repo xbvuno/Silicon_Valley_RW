@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cfy8g8m1djnb7"]
+[gd_scene load_steps=14 format=3 uid="uid://cfy8g8m1djnb7"]
 
 [ext_resource type="Script" uid="uid://c3r3kse25qh2v" path="res://scenes/game/hud.gd" id="1_v52nr"]
 [ext_resource type="PackedScene" uid="uid://cjgyp6y6m3ui6" path="res://scenes/game/hud/reticle/reticle.tscn" id="2_qrmls"]
@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://eomrg3xc2jq4" path="res://scenes/game/hud/debug/debug_menu.tscn" id="7_53x7q"]
 [ext_resource type="Script" uid="uid://d4khii2xiicy7" path="res://scenes/game/parkour_timer_labels.gd" id="8_bg2e1"]
 [ext_resource type="Script" uid="uid://64e87l5s6mby" path="res://scenes/game/hud/scripts/state_machine/hud_state_machine.gd" id="9_lsn3o"]
+[ext_resource type="PackedScene" uid="uid://camcenelbud00" path="res://scenes/game/hud/main_menu/main_menu.tscn" id="10_lnl2y"]
+[ext_resource type="Script" uid="uid://cb250qmvu3ym6" path="res://scenes/game/hud/hud_main_menu_state.gd" id="10_xskmx"]
 [ext_resource type="Script" uid="uid://sj4d7vsxad6p" path="res://scenes/game/hud/scripts/state_machine/states/hud_pause_state.gd" id="11_pq3fl"]
 [ext_resource type="Script" uid="uid://bb4ecabk07lm4" path="res://scenes/game/hud/scripts/state_machine/states/hud_ingame_state.gd" id="13_igqww"]
 
@@ -21,7 +23,7 @@ func _ready():
 	text = text.replace(\"__version__\", ProjectSettings.get_setting(\"application/config/version\"))
 "
 
-[node name="HUD" type="Control"]
+[node name="HUD" type="Control" node_paths=PackedStringArray("MAIN_MENU", "PAUSE_MENU")]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 15
@@ -31,6 +33,8 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_v52nr")
+MAIN_MENU = NodePath("HudStateMachine/MainMenu/MainMenu")
+PAUSE_MENU = NodePath("HudStateMachine/Pause/PauseMenu")
 
 [node name="HudStateMachine" type="Node" parent="." node_paths=PackedStringArray("HUD_MAIN_NODE", "RETICLE", "PAUSE_MENU", "DEBUG_MENU", "OVERLAY")]
 script = ExtResource("9_lsn3o")
@@ -40,13 +44,20 @@ PAUSE_MENU = NodePath("Pause/PauseMenu")
 DEBUG_MENU = NodePath("In Game/DebugMenu")
 OVERLAY = NodePath("In Game/Overlay")
 
+[node name="MainMenu" type="Node" parent="HudStateMachine"]
+script = ExtResource("10_xskmx")
+
+[node name="MainMenu" parent="HudStateMachine/MainMenu" instance=ExtResource("10_lnl2y")]
+
 [node name="In Game" type="Node" parent="HudStateMachine"]
 script = ExtResource("13_igqww")
 
 [node name="Reticle" parent="HudStateMachine/In Game" node_paths=PackedStringArray("HUD") instance=ExtResource("2_qrmls")]
+visible = false
 HUD = NodePath("../../..")
 
 [node name="Overlay" type="Control" parent="HudStateMachine/In Game"]
+visible = false
 layout_mode = 3
 anchors_preset = 1
 anchor_left = 1.0
@@ -119,11 +130,16 @@ label_settings = SubResource("LabelSettings_2a8rs")
 horizontal_alignment = 2
 
 [node name="DebugMenu" parent="HudStateMachine/In Game" node_paths=PackedStringArray("HUD") instance=ExtResource("7_53x7q")]
+visible = false
 HUD = NodePath("../../..")
 
 [node name="Pause" type="Node" parent="HudStateMachine"]
 script = ExtResource("11_pq3fl")
 
 [node name="PauseMenu" parent="HudStateMachine/Pause" node_paths=PackedStringArray("HUD", "STATE_MACHINE_HUD") instance=ExtResource("5_xskmx")]
+visible = false
 HUD = NodePath("../../..")
 STATE_MACHINE_HUD = NodePath("../..")
+
+[connection signal="change_scene" from="HudStateMachine/MainMenu/MainMenu" to="HudStateMachine/MainMenu" method="_on_main_menu_change_scene"]
+[connection signal="back_to_menu" from="HudStateMachine/Pause/PauseMenu" to="." method="_on_pause_menu_back_to_menu"]

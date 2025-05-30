@@ -23,6 +23,7 @@ config/icon="uid://dp67j1c606660"
 Utils="*res://scripts/globals/utils.gd"
 Settings="*res://scripts/globals/settings.gd"
 ParkourTimer="*res://scenes/game/levels/test_world/parkour_timer.gd"
+Global="*res://scripts/globals/global.gd"
 
 [display]
 

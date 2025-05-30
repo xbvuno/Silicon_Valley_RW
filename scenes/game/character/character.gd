@@ -264,7 +264,7 @@ func _unhandled_input(event: InputEvent):
 		mouseInput.y += event.relative.y
 	if event is InputEventKey and event.pressed and not event.echo:
 		if event.keycode == KEY_F2:
-			global_position = Vector3.ZERO
+			global_position = Global.GAME_MANAGER.actual_spawn_point
 			ParkourTimer.reset()
 
 #endregion
