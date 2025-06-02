@@ -10,7 +10,7 @@ extends Control
 @onready var SETTINGS_PAUSE_MENU: Control = $HudStateMachine/Pause/PauseMenu/MarginContainer/PanelContainer/OptionMenu
 @onready var DEBUG_MENU : Control = $"HudStateMachine/In Game/DebugMenu"
 @onready var RETICLE : Control = $"HudStateMachine/In Game/Reticle"
-
+@onready var HEALTH_BAR : Control = $"HudStateMachine/In Game/HealthBar"
 @onready var SM : SM_HUD = $HudStateMachine
 
 signal change_scene(scene_id : String)
@@ -25,3 +25,4 @@ func _on_pause_menu_riprendi() -> void:
 
 func _on_pause_menu_back_to_menu() -> void:
 	SM.switch(SM.States.MAIN_MENU)
+

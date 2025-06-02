@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://wnllrngtfcsq"]
+[gd_scene load_steps=24 format=3 uid="uid://wnllrngtfcsq"]
 
 [ext_resource type="Script" uid="uid://clcpynj6l5ja8" path="res://scenes/game/enemies/enemy.gd" id="1_m3nk5"]
 [ext_resource type="Texture2D" uid="uid://c2piu777bj6oy" path="res://assets/models/textures/prototype_materials/orange.png" id="2_luidu"]
@@ -8,6 +8,8 @@
 [ext_resource type="Script" uid="uid://b2ku7hcapo45r" path="res://scenes/game/enemies/states/enemy_following_state.gd" id="5_luidu"]
 [ext_resource type="Script" uid="uid://d0580ite7w2e0" path="res://scenes/game/enemies/states/enemy_attacking_state.gd" id="6_muu5b"]
 [ext_resource type="AudioStream" uid="uid://c4ecwh6oni7ay" path="res://assets/audio/sfx/enemy/Zombie_idle3.ogg" id="8_muu5b"]
+[ext_resource type="PackedScene" uid="uid://c780ctxbai23e" path="res://scenes/game/entities/resources/attack.tscn" id="9_rhrmy"]
+[ext_resource type="Script" uid="uid://bdfvrrmblwjjv" path="res://scenes/game/enemies/weapon.gd" id="9_u1vld"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_egi3l"]
 
@@ -45,6 +47,45 @@ height = 1.0
 [sub_resource type="BoxShape3D" id="BoxShape3D_muu5b"]
 size = Vector3(0.4, 0.4, 0.4)
 
+[sub_resource type="Animation" id="Animation_0yp3x"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Spranga:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.783844, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Spranga:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:can_damage")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
 [sub_resource type="Animation" id="Animation_8sppt"]
 resource_name = "enemy_attack"
 length = 3.0
@@ -75,53 +116,14 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Spranga/AttackArea:monitoring")
+tracks/2/path = NodePath(".:can_damage")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 1.01, 1.55),
+"times": PackedFloat32Array(0, 1.03333, 2.36667),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [false, true, false]
-}
-
-[sub_resource type="Animation" id="Animation_0yp3x"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Spranga:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0.783844, 0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Spranga:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 0, 0)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Spranga/AttackArea:monitoring")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_lcibx"]
@@ -202,7 +204,10 @@ script = ExtResource("6_muu5b")
 stream = ExtResource("8_muu5b")
 bus = &"Sfx"
 
-[node name="Weapon" type="Node3D" parent="."]
+[node name="Weapon" type="Node3D" parent="." node_paths=PackedStringArray("area", "attack_component")]
+script = ExtResource("9_u1vld")
+area = NodePath("Spranga/AttackArea")
+attack_component = NodePath("Attack")
 
 [node name="Spranga" type="MeshInstance3D" parent="Weapon"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.783844, 0, 0)
@@ -210,7 +215,6 @@ mesh = SubResource("CylinderMesh_u1vld")
 
 [node name="AttackArea" type="Area3D" parent="Weapon/Spranga"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.377823, 0)
-monitoring = false
 monitorable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Weapon/Spranga/AttackArea"]
@@ -221,5 +225,9 @@ libraries = {
 &"": SubResource("AnimationLibrary_lcibx")
 }
 
+[node name="Attack" parent="Weapon" instance=ExtResource("9_rhrmy")]
+
 [connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
+[connection signal="body_entered" from="Weapon/Spranga/AttackArea" to="Weapon" method="_on_attack_area_body_entered"]
+[connection signal="body_exited" from="Weapon/Spranga/AttackArea" to="Weapon" method="_on_attack_area_body_exited"]
 [connection signal="animation_finished" from="Weapon/AnimationPlayer" to="StateMachine/Attacking" method="_on_animation_player_animation_finished"]

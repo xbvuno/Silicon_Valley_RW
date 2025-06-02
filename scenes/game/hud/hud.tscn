@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cfy8g8m1djnb7"]
+[gd_scene load_steps=15 format=3 uid="uid://cfy8g8m1djnb7"]
 
 [ext_resource type="Script" uid="uid://c3r3kse25qh2v" path="res://scenes/game/hud.gd" id="1_v52nr"]
 [ext_resource type="PackedScene" uid="uid://cjgyp6y6m3ui6" path="res://scenes/game/hud/reticle/reticle.tscn" id="2_qrmls"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://eomrg3xc2jq4" path="res://scenes/game/hud/debug/debug_menu.tscn" id="7_53x7q"]
 [ext_resource type="Script" uid="uid://d4khii2xiicy7" path="res://scenes/game/parkour_timer_labels.gd" id="8_bg2e1"]
 [ext_resource type="Script" uid="uid://64e87l5s6mby" path="res://scenes/game/hud/scripts/state_machine/hud_state_machine.gd" id="9_lsn3o"]
+[ext_resource type="Script" uid="uid://c1061f2sj06gg" path="res://scenes/game/hud/health_bar.gd" id="10_0gdx8"]
 [ext_resource type="PackedScene" uid="uid://camcenelbud00" path="res://scenes/game/hud/main_menu/main_menu.tscn" id="10_lnl2y"]
 [ext_resource type="Script" uid="uid://cb250qmvu3ym6" path="res://scenes/game/hud/hud_main_menu_state.gd" id="10_xskmx"]
 [ext_resource type="Script" uid="uid://sj4d7vsxad6p" path="res://scenes/game/hud/scripts/state_machine/states/hud_pause_state.gd" id="11_pq3fl"]
@@ -132,6 +133,36 @@ horizontal_alignment = 2
 [node name="DebugMenu" parent="HudStateMachine/In Game" node_paths=PackedStringArray("HUD") instance=ExtResource("7_53x7q")]
 visible = false
 HUD = NodePath("../../..")
+
+[node name="HealthBar" type="Control" parent="HudStateMachine/In Game" node_paths=PackedStringArray("PROGRESS_BAR", "HUD")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+script = ExtResource("10_0gdx8")
+PROGRESS_BAR = NodePath("MarginContainer/ProgressBar")
+HUD = NodePath("../../..")
+
+[node name="MarginContainer" type="MarginContainer" parent="HudStateMachine/In Game/HealthBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="HudStateMachine/In Game/HealthBar/MarginContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+size_flags_vertical = 8
+mouse_filter = 2
+show_percentage = false
 
 [node name="Pause" type="Node" parent="HudStateMachine"]
 script = ExtResource("11_pq3fl")

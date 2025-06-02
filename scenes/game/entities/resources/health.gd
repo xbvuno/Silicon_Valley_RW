@@ -1,10 +1,12 @@
 extends Node
 class_name HealthComponent
 @export_group("Parameters")
-@export var BASE_HEALTH : float = 99999999.0
+@export var max_health : float = 100
 
 
-@onready var max_health : float = 100
+const BASE_HEALTH : float = 99999999.0
+
+
 @onready var health : float = max_health
 signal damage_taken(should_died:bool)
 signal healed()
