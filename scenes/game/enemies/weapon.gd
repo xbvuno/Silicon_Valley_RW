@@ -4,6 +4,7 @@ extends Node3D
 @export var attack_component : AttackComponent
 
 @export var can_damage : bool = false
+@export var can_be_parried : bool = false
 
 func _on_attack_area_body_entered(body: Node3D) -> void:
 	if body.is_in_group("player") and can_damage:

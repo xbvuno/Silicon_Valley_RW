@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://wnllrngtfcsq"]
+[gd_scene load_steps=28 format=3 uid="uid://wnllrngtfcsq"]
 
 [ext_resource type="Script" uid="uid://clcpynj6l5ja8" path="res://scenes/game/enemies/enemy.gd" id="1_m3nk5"]
 [ext_resource type="Texture2D" uid="uid://c2piu777bj6oy" path="res://assets/models/textures/prototype_materials/orange.png" id="2_luidu"]
@@ -45,7 +45,7 @@ bottom_radius = 0.1
 height = 1.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_muu5b"]
-size = Vector3(0.4, 0.4, 0.4)
+size = Vector3(0.191553, 1.03799, 0.209131)
 
 [sub_resource type="Animation" id="Animation_0yp3x"]
 length = 0.001
@@ -80,6 +80,18 @@ tracks/2/path = NodePath(".:can_damage")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:can_be_parried")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -125,6 +137,18 @@ tracks/2/keys = {
 "update": 1,
 "values": [false, true, false]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:can_be_parried")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1.03027, 1.21295),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_lcibx"]
 _data = {
@@ -132,7 +156,27 @@ _data = {
 &"enemy_attack": SubResource("Animation_8sppt")
 }
 
-[node name="Enemy" type="CharacterBody3D" node_paths=PackedStringArray("occhiali", "NAVIGATION_AGENT", "AUDIO_PLAYER", "AREA_SMALL", "AREA_BIG", "WEAPON", "WEAPON_ANIMATION")]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_u1vld"]
+lifetime_randomness = 0.18
+particle_flag_align_y = true
+direction = Vector3(0, 1, 0)
+initial_velocity_min = 2.0
+initial_velocity_max = 5.0
+collision_mode = 1
+collision_friction = 0.15
+collision_bounce = 0.67
+
+[sub_resource type="TextMesh" id="TextMesh_u1vld"]
+text = "PARRY"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u1vld"]
+albedo_color = Color(0.900072, 0, 0.178315, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_8sppt"]
+material = SubResource("StandardMaterial3D_u1vld")
+size = Vector3(0.1, 0.1, 0.1)
+
+[node name="Enemy" type="CharacterBody3D" node_paths=PackedStringArray("occhiali", "NAVIGATION_AGENT", "AUDIO_PLAYER", "AREA_SMALL", "AREA_BIG", "WEAPON", "WEAPON_ANIMATION", "BLOOD_PARTICLES", "PARRY_PARTICLES") groups=["enemy"]]
 script = ExtResource("1_m3nk5")
 occhiali = NodePath("MeshInstance3D/MeshInstance3D")
 NAVIGATION_AGENT = NodePath("NavigationAgent3D")
@@ -141,6 +185,8 @@ AREA_SMALL = NodePath("Areas/TriggerAreaSmall")
 AREA_BIG = NodePath("Areas/TriggerAreaBig")
 WEAPON = NodePath("Weapon")
 WEAPON_ANIMATION = NodePath("Weapon/AnimationPlayer")
+BLOOD_PARTICLES = NodePath("Particles/BloodParticles")
+PARRY_PARTICLES = NodePath("Particles/ParryParticles")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_egi3l")
@@ -215,9 +261,11 @@ mesh = SubResource("CylinderMesh_u1vld")
 
 [node name="AttackArea" type="Area3D" parent="Weapon/Spranga"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.377823, 0)
+collision_layer = 513
 monitorable = false
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Weapon/Spranga/AttackArea"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Weapon/Spranga/AttackArea" groups=["parriable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0103272, -0.365772, 0.00349122)
 shape = SubResource("BoxShape3D_muu5b")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Weapon"]
@@ -226,6 +274,25 @@ libraries = {
 }
 
 [node name="Attack" parent="Weapon" instance=ExtResource("9_rhrmy")]
+
+[node name="Particles" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.651936, 0)
+
+[node name="ParryParticles" type="GPUParticles3D" parent="Particles"]
+emitting = false
+amount = 50
+one_shot = true
+process_material = SubResource("ParticleProcessMaterial_u1vld")
+draw_pass_1 = SubResource("TextMesh_u1vld")
+
+[node name="BloodParticles" type="GPUParticles3D" parent="Particles"]
+emitting = false
+amount = 100
+lifetime = 0.5
+one_shot = true
+randomness = 0.42
+process_material = SubResource("ParticleProcessMaterial_u1vld")
+draw_pass_1 = SubResource("BoxMesh_8sppt")
 
 [connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
 [connection signal="body_entered" from="Weapon/Spranga/AttackArea" to="Weapon" method="_on_attack_area_body_entered"]

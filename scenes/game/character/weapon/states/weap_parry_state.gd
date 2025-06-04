@@ -39,6 +39,7 @@ func to_idle():
 	SM.switch(SM.S_IDLE)
 
 func enter_state():
+	OWNER.parry()
 	OWNER.ANIM_PLAYER.play('defend')
 	$"../../Audio/Defend".play()
 	PARRY_TIMER.start()

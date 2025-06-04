@@ -8,6 +8,8 @@ var readable_name: String
 
 
 func enter_state():
+	if OWNER.RETICLE != null:
+		OWNER.RETICLE.visible = false
 	get_tree().paused = true
 	OWNER.MAIN_MENU.visible = true
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE

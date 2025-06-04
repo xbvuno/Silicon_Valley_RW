@@ -18,5 +18,6 @@ func to_idle():
 	SM.switch(SM.S_IDLE)
 
 func enter_state():
+	OWNER.attack()
 	OWNER.ANIM_PLAYER.play("attack")
 	$"../../Audio/Attack".play()

@@ -46,7 +46,9 @@ glow_enabled = true
 transform = Transform3D(1, 0, 0, 0, 2.94194, 0, 0, 0, 1, 0, 0, 0)
 navigation_mesh = SubResource("NavigationMesh_7l5n5")
 
-[node name="Pavimento" type="CSGMesh3D" parent="NavigationRegion3D"]
+[node name="GPUParticlesCollisionBox3D" type="GPUParticlesCollisionBox3D" parent="NavigationRegion3D"]
+
+[node name="Pavimento" type="CSGMesh3D" parent="NavigationRegion3D/GPUParticlesCollisionBox3D"]
 use_collision = true
 mesh = SubResource("BoxMesh_g6t0t")
 

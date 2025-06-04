@@ -1,8 +1,9 @@
-[gd_scene load_steps=17 format=3 uid="uid://3euw0wojttkh"]
+[gd_scene load_steps=18 format=3 uid="uid://3euw0wojttkh"]
 
 [ext_resource type="Script" uid="uid://chfykahwcqmi7" path="res://scenes/game/character/weapon/current_weapon.gd" id="1_howxv"]
 [ext_resource type="PackedScene" uid="uid://xmmdx0i06cco" path="res://assets/models/handbrake0.blend" id="1_wwl6m"]
 [ext_resource type="Script" uid="uid://bm6svjcbhc4h3" path="res://scenes/game/character/weapon/weapon_sm.gd" id="2_pe1gy"]
+[ext_resource type="PackedScene" uid="uid://c780ctxbai23e" path="res://scenes/game/entities/resources/attack.tscn" id="2_raxhb"]
 [ext_resource type="AudioStream" uid="uid://c4j2jngbex7tu" path="res://assets/audio/sfx/weapon/temp_audio/failed_parry.ogg" id="3_62pn2"]
 [ext_resource type="Script" uid="uid://dplx757crvnms" path="res://scenes/game/character/weapon/states/weap_idle_state.gd" id="3_lyaey"]
 [ext_resource type="Script" uid="uid://vxf7q722x2ng" path="res://scenes/game/character/weapon/states/weap_attack_state.gd" id="4_dbady"]
@@ -123,6 +124,8 @@ size = Vector3(0.0706787, 0.969238, 0.169403)
 
 [node name="CurrentWeapon" type="Node3D"]
 script = ExtResource("1_howxv")
+
+[node name="Attack" parent="." instance=ExtResource("2_raxhb")]
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource("2_pe1gy")

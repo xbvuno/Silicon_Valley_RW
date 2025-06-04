@@ -26,3 +26,16 @@ func timer_from_time(
 	if add_child_to != null:
 		add_child_to.add_child(timer)
 	return timer
+
+func get_body_in_front_of_camera(camera: Camera3D,space_state:PhysicsDirectSpaceState3D, max_distance := 1000.0, collision_mask:int=4294967295) -> CollisionObject3D:
+	var from := camera.global_transform.origin
+	var to := from + (-camera.global_transform.basis.z) * max_distance
+
+	# var space_state := get_world_3d().direct_space_state
+	var query := PhysicsRayQueryParameters3D.create(from, to)
+
+	var result :Dictionary = space_state.intersect_ray(query)
+	if result.has("collider"):
+		return result["collider"] as CollisionObject3D
+
+	return null

@@ -25,4 +25,3 @@ func _on_pause_menu_riprendi() -> void:
 
 func _on_pause_menu_back_to_menu() -> void:
 	SM.switch(SM.States.MAIN_MENU)
-

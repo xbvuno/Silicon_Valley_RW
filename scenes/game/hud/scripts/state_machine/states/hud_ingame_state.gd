@@ -17,5 +17,6 @@ func _input(event: InputEvent) -> void:
 func enter_state():
 	SM.DEBUG_MENU.visible = Settings.debug_mode
 	SM.PAUSE_MENU.visible = false
+	SM.RETICLE.visible = true
 func exit_state():
 	SM.PAUSE_MENU.visible = true
