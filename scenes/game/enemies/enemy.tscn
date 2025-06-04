@@ -200,6 +200,7 @@ transform = Transform3D(0.742723, 0, 0, 0, 0.295719, 0, 0, 0, 0.647025, 0.013254
 mesh = SubResource("BoxMesh_rhrmy")
 
 [node name="Area3D" type="Area3D" parent="."]
+collision_mask = 513
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("CapsuleShape3D_egi3l")
