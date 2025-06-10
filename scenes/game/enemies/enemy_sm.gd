@@ -4,24 +4,27 @@ extends Node
 class_name SM_Enemy
 
 enum States {
-	ROAMING,FOLLOWING,ATTACKING
+	ROAMING,FOLLOWING,ATTACKING,STUNNED
 }
 
 ## LEGGIBILITÀ: Alias per gli States, in modo da non dover chiamare ogni volta States.Papera
 const S_ROAMING : States = States.ROAMING
 const S_FOLLOWING : States = States.FOLLOWING
 const S_ATTACKING: States = States.ATTACKING
+const S_STUNNED : States = States.STUNNED
 
 const STATE_NAMES: Dictionary[States, String] = {
 	States.ROAMING: "Roaming",
 	States.FOLLOWING: "Following",
-	States.ATTACKING: "Attacking"
+	States.ATTACKING: "Attacking",
+	States.STUNNED:"Stunned"
 }
 
 @onready var STATES: Dictionary[States, State] = {
 	States.ROAMING:$Roaming,
 	States.FOLLOWING:$Following,
-	States.ATTACKING:$Attacking
+	States.ATTACKING:$Attacking,
+	States.STUNNED:$Stunned
 }
 
 

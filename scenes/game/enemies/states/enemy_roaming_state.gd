@@ -21,7 +21,7 @@ func _physics_process(_delta: float) -> void:
 
 
 func enter_state():
-	pass
+	OWNER.MESH.mesh.material.albedo_color = Color(0, 256, 0, 0)
 	
 func exit_state():
 	pass

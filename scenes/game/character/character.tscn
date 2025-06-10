@@ -470,6 +470,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.555606, -0.396442, -0.77657
 CHARACTER = NodePath("../..")
 
 [node name="DefendZone" type="Area3D" parent="Head"]
+monitoring = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Head/DefendZone"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.32621e-08, -0.300537, -0.573492)
@@ -503,3 +504,5 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 
 stream = ExtResource("10_lytkp")
 
 [node name="Health" parent="." instance=ExtResource("17_5eq6p")]
+
+[connection signal="ready" from="." to="Head/CurrentWeapon" method="_on_character_ready"]

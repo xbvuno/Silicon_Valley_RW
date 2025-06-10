@@ -12,6 +12,8 @@ class_name Enemy
 @export var WEAPON_ANIMATION : AnimationPlayer
 @export var BLOOD_PARTICLES: GPUParticles3D
 @export var PARRY_PARTICLES : GPUParticles3D
+@export var STUNNED_TIME : float = 2.0
+
 @onready var COLLISION: CollisionShape3D = $CollisionShape3D
 @onready var MESH: MeshInstance3D = $MeshInstance3D
 @onready var GRAVITY = ProjectSettings.get_setting("physics/3d/default_gravity")

@@ -24,13 +24,14 @@ enum Actions {
 const STATE_NAMES: Dictionary[States, String] = {
 	States.IDLE: "Idle",
 	States.ATTACK: "Attacking",
-	States.PARRY: "Parrying",
+	States.PARRY: "Parrying"
+
 }
 
 @onready var STATES: Dictionary[States, State] = {
 	States.IDLE: $"Idle",
 	States.ATTACK: $"Attacking",
-	States.PARRY: $"Parrying",
+	States.PARRY: $"Parrying"
 }
 
 @onready var ACTIONS: Dictionary = {
@@ -67,7 +68,7 @@ func _ready() -> void:
 		action_node.OWNER = OWNER
 		action_node.SM = self
 		
-	after_setup()
+	#after_setup()
 
 func switch(sm_state: States) -> void:
 	if sm_state == current_state.sm_name:

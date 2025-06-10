@@ -30,6 +30,8 @@ func _ready():
 	super()
 	PARRY_TIMER = Utils.timer_from_time(PARRY_SEC, true, self, to_idle)
 	PARRY_COOLDOWN_TIMER = Utils.timer_from_time(PARRY_COOLDOWN_SEC, true, self, on_parry_enabled)
+	
+
 
 func can():
 	return OWNER.CHARACTER.SM.current_state.sm_name not in blocked_by and PARRY_COOLDOWN_TIMER.is_stopped()
@@ -39,7 +41,23 @@ func to_idle():
 	SM.switch(SM.S_IDLE)
 
 func enter_state():
-	OWNER.parry()
+	CHARACTER.DEFEND_ZONE.monitoring = true
 	OWNER.ANIM_PLAYER.play('defend')
 	$"../../Audio/Defend".play()
 	PARRY_TIMER.start()
+	#check_parry()
+
+func exit_state():
+	CHARACTER.DEFEND_ZONE.monitoring = false
+
+
+func check_parry(body=null):
+	var areas = CHARACTER.DEFEND_ZONE.get_overlapping_areas()
+	#print(areas)
+	for area in areas :
+		if area.get_parent() is Weapon:
+			var weapon : Weapon = area.get_parent()
+			if weapon.can_be_parried:
+				weapon.got_parried()
+			else:
+				print("parry sbagliato")
