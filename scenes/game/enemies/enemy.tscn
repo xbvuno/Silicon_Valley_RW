@@ -201,26 +201,27 @@ albedo_color = Color(0.900072, 0, 0.178315, 1)
 material = SubResource("StandardMaterial3D_u1vld")
 size = Vector3(0.1, 0.1, 0.1)
 
-[node name="Enemy" type="CharacterBody3D" node_paths=PackedStringArray("occhiali", "NAVIGATION_AGENT", "AUDIO_PLAYER", "AREA_SMALL", "AREA_BIG", "WEAPON", "WEAPON_ANIMATION", "BLOOD_PARTICLES", "PARRY_PARTICLES") groups=["enemy"]]
+[node name="Enemy" type="CharacterBody3D" node_paths=PackedStringArray("NAVIGATION_AGENT", "AUDIO_PLAYER", "AREA_SMALL", "AREA_BIG", "MESH", "WEAPON", "WEAPON_ANIMATION", "BLOOD_PARTICLES", "PARRY_PARTICLES", "FREEZE_TIMER") groups=["enemy"]]
 script = ExtResource("1_m3nk5")
-occhiali = NodePath("MeshInstance3D/MeshInstance3D")
 NAVIGATION_AGENT = NodePath("NavigationAgent3D")
 AUDIO_PLAYER = NodePath("AudioStreamPlayer3D")
 AREA_SMALL = NodePath("Areas/TriggerAreaSmall")
 AREA_BIG = NodePath("Areas/TriggerAreaBig")
+MESH = NodePath("Capsula")
 WEAPON = NodePath("Weapon")
 WEAPON_ANIMATION = NodePath("Weapon/AnimationPlayer")
 BLOOD_PARTICLES = NodePath("Particles/BloodParticles")
 PARRY_PARTICLES = NodePath("Particles/ParryParticles")
+FREEZE_TIMER = NodePath("FreezeTimer")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionForCharacterController" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_egi3l")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="Capsula" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_m3nk5")
 skeleton = NodePath("")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="MeshInstance3D"]
+[node name="Occhiali" type="MeshInstance3D" parent="Capsula"]
 transform = Transform3D(0.742723, 0, 0, 0, 0.295719, 0, 0, 0, 0.647025, 0.0132549, 0.535579, -0.204111)
 mesh = SubResource("BoxMesh_rhrmy")
 

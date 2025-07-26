@@ -1,12 +1,15 @@
 extends CharacterBody3D
 class_name Enemy
+
 @export_group("Nodes")
-@export var occhiali : MeshInstance3D 
+@export var GLASSES : MeshInstance3D 
 @export var NAVIGATION_AGENT : NavigationAgent3D
 @export var AUDIO_PLAYER : AudioStreamPlayer3D
 @export var AREA_SMALL: Area3D
 @export var AREA_BIG: Area3D
 @export var FRAME_TO_UPDATE_TARGET_POSITION : int = 5
+@export var MESH: MeshInstance3D
+
 @export_group("Combact")
 @export var WEAPON : Node3D
 @export var WEAPON_ANIMATION : AnimationPlayer
@@ -14,8 +17,12 @@ class_name Enemy
 @export var PARRY_PARTICLES : GPUParticles3D
 @export var STUNNED_TIME : float = 2.0
 
+
+@export_group("Timer")
+@export var FREEZE_TIMER : Timer
+
+
 @onready var COLLISION: CollisionShape3D = $CollisionShape3D
-@onready var MESH: MeshInstance3D = $MeshInstance3D
 @onready var GRAVITY = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 
@@ -28,7 +35,7 @@ class_name Enemy
 @onready var HEALTH_COMPONENT : HealthComponent = $Health
 
 func _ready():
-	$FreezeTimer.timeout.connect(unpause)
+	FREEZE_TIMER.timeout.connect(unpause)
 	AREA_SMALL.body_entered.connect(SM.STATES[SM.S_ROAMING].on_body_enter_area_small)
 	AREA_SMALL.body_exited.connect(SM.STATES[SM.S_ROAMING].on_body_exit_area_small)
 	
@@ -42,20 +49,17 @@ func _ready():
 
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
-		velocity.y -= GRAVITY * delta
+		velocity.y -= GRAVITY * delta		#applicazione della gravità
 	move_and_slide()
 	
 
 func pause():
 	process_mode = Node.PROCESS_MODE_DISABLED
-	$MeshInstance3D.mesh.material.albedo_color = Color(1, 0, 0, 1)
-	
+	MESH.mesh.material.albedo_color = Color(1, 0, 0, 1)
+
 func unpause():
 	process_mode = Node.PROCESS_MODE_INHERIT
-	$MeshInstance3D.mesh.material.albedo_color = Color(0, 1, 0, 1)
-
-
-
+	MESH.mesh.material.albedo_color = Color(0, 1, 0, 1)
 
 
 func is_player_hearble()->bool:
