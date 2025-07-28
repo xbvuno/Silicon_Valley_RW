@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://wnllrngtfcsq"]
+[gd_scene load_steps=22 format=3 uid="uid://wnllrngtfcsq"]
 
 [ext_resource type="Script" uid="uid://clcpynj6l5ja8" path="res://scenes/game/enemies/enemy.gd" id="1_m3nk5"]
 [ext_resource type="Texture2D" uid="uid://c2piu777bj6oy" path="res://assets/models/textures/prototype_materials/orange.png" id="2_luidu"]
@@ -7,10 +7,7 @@
 [ext_resource type="Script" uid="uid://ch1bcualbdm5" path="res://scenes/game/enemies/states/enemy_roaming_state.gd" id="4_lps3g"]
 [ext_resource type="Script" uid="uid://b2ku7hcapo45r" path="res://scenes/game/enemies/states/enemy_following_state.gd" id="5_luidu"]
 [ext_resource type="Script" uid="uid://d0580ite7w2e0" path="res://scenes/game/enemies/states/enemy_attacking_state.gd" id="6_muu5b"]
-[ext_resource type="Script" uid="uid://cr4ebj5qkha6f" path="res://scenes/game/enemies/states/enemy_stunned_state.gd" id="8_8sppt"]
 [ext_resource type="AudioStream" uid="uid://c4ecwh6oni7ay" path="res://assets/audio/sfx/enemy/Zombie_idle3.ogg" id="8_muu5b"]
-[ext_resource type="PackedScene" uid="uid://c780ctxbai23e" path="res://scenes/game/entities/resources/attack.tscn" id="9_rhrmy"]
-[ext_resource type="Script" uid="uid://bdfvrrmblwjjv" path="res://scenes/game/enemies/weapon.gd" id="9_u1vld"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_egi3l"]
 
@@ -25,6 +22,123 @@ material = SubResource("StandardMaterial3D_m3nk5")
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_muu5b"]
 albedo_color = Color(0.176419, 0.176419, 0.176419, 1)
 roughness = 0.15
+
+[sub_resource type="BoxMesh" id="BoxMesh_rhrmy"]
+material = SubResource("StandardMaterial3D_muu5b")
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_luidu"]
+radius = 5.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_muu5b"]
+radius = 10.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rhrmy"]
+albedo_color = Color(0.158472, 0.158472, 0.158472, 1)
+roughness = 0.2
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_u1vld"]
+material = SubResource("StandardMaterial3D_rhrmy")
+top_radius = 0.1
+bottom_radius = 0.1
+height = 1.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_muu5b"]
+size = Vector3(0.4, 0.4, 0.4)
+
+[sub_resource type="Animation" id="Animation_8sppt"]
+resource_name = "enemy_attack"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Spranga:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.81, 1, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0.783844, 0, 0), Vector3(0.783844, 0, 0), Vector3(0.783844, 0, -0.722644), Vector3(0.783844, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Spranga:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.81, 1, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(-0.785398, 0, 0), Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Spranga/AttackArea:monitoring")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1.01, 1.55),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+
+[sub_resource type="Animation" id="Animation_0yp3x"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Spranga:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.783844, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Spranga:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Spranga/AttackArea:monitoring")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lcibx"]
+_data = {
+&"RESET": SubResource("Animation_0yp3x"),
+&"enemy_attack": SubResource("Animation_8sppt")
+}
+
+[node name="Enemy" type="CharacterBody3D" node_paths=PackedStringArray("occhiali", "NAVIGATION_AGENT", "AUDIO_PLAYER", "AREA_SMALL", "AREA_BIG", "WEAPON", "WEAPON_ANIMATION")]
+script = ExtResource("1_m3nk5")
+occhiali = NodePath("MeshInstance3D/MeshInstance3D")
+NAVIGATION_AGENT = NodePath("NavigationAgent3D")
+AUDIO_PLAYER = NodePath("AudioStreamPlayer3D")
+AREA_SMALL = NodePath("Areas/TriggerAreaSmall")
+AREA_BIG = NodePath("Areas/TriggerAreaBig")
+WEAPON = NodePath("Weapon")
+WEAPON_ANIMATION = NodePath("Weapon/AnimationPlayer")
 
 [sub_resource type="BoxMesh" id="BoxMesh_rhrmy"]
 material = SubResource("StandardMaterial3D_muu5b")
@@ -221,7 +335,7 @@ shape = SubResource("CapsuleShape3D_egi3l")
 mesh = SubResource("CapsuleMesh_m3nk5")
 skeleton = NodePath("")
 
-[node name="Occhiali" type="MeshInstance3D" parent="Capsula"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MeshInstance3D"]
 transform = Transform3D(0.742723, 0, 0, 0, 0.295719, 0, 0, 0, 0.647025, 0.0132549, 0.535579, -0.204111)
 mesh = SubResource("BoxMesh_rhrmy")
 
@@ -271,41 +385,24 @@ process_priority = 1
 process_physics_priority = 1
 script = ExtResource("6_muu5b")
 
-[node name="Stunned" type="Node" parent="StateMachine"]
-script = ExtResource("8_8sppt")
-
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("8_muu5b")
 bus = &"Sfx"
 
-[node name="Weapon" type="Node3D" parent="." node_paths=PackedStringArray("OWNER", "ATTACK_ANIMATION", "MESH", "area", "attack_component", "DEBUG_SPHERE")]
-script = ExtResource("9_u1vld")
-OWNER = NodePath("..")
-ATTACK_ANIMATION = NodePath("AnimationPlayer")
-MESH = NodePath("Spranga")
-area = NodePath("AttackArea")
-attack_component = NodePath("Attack")
-DEBUG_SPHERE = NodePath("Spranga/CSGSphere3D")
+[node name="Weapon" type="Node3D" parent="."]
 
 [node name="Spranga" type="MeshInstance3D" parent="Weapon"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.783844, 0, 0)
 mesh = SubResource("CylinderMesh_u1vld")
 
-[node name="RemoteTransform3D" type="RemoteTransform3D" parent="Weapon/Spranga"]
-remote_path = NodePath("../../AttackArea")
+[node name="AttackArea" type="Area3D" parent="Weapon/Spranga"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.377823, 0)
+monitoring = false
+monitorable = false
 
-[node name="CSGSphere3D" type="CSGSphere3D" parent="Weapon/Spranga"]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.393962, 0)
-visible = false
-
-[node name="AttackArea" type="Area3D" parent="Weapon"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.783844, 0, 0)
-collision_layer = 513
-collision_mask = 513
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Weapon/AttackArea" groups=["parriable"]]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Weapon/Spranga/AttackArea"]
 shape = SubResource("BoxShape3D_muu5b")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Weapon"]
@@ -313,28 +410,5 @@ libraries = {
 &"": SubResource("AnimationLibrary_lcibx")
 }
 
-[node name="Attack" parent="Weapon" instance=ExtResource("9_rhrmy")]
-
-[node name="Particles" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.651936, 0)
-
-[node name="ParryParticles" type="GPUParticles3D" parent="Particles"]
-emitting = false
-amount = 50
-one_shot = true
-process_material = SubResource("ParticleProcessMaterial_u1vld")
-draw_pass_1 = SubResource("TextMesh_u1vld")
-
-[node name="BloodParticles" type="GPUParticles3D" parent="Particles"]
-emitting = false
-amount = 100
-lifetime = 0.5
-one_shot = true
-randomness = 0.42
-process_material = SubResource("ParticleProcessMaterial_u1vld")
-draw_pass_1 = SubResource("BoxMesh_8sppt")
-
 [connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
-[connection signal="body_entered" from="Weapon/AttackArea" to="Weapon" method="_on_attack_area_body_entered"]
-[connection signal="body_exited" from="Weapon/AttackArea" to="Weapon" method="_on_attack_area_body_exited"]
 [connection signal="animation_finished" from="Weapon/AnimationPlayer" to="StateMachine/Attacking" method="_on_animation_player_animation_finished"]
