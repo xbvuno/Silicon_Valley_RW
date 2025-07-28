@@ -29,6 +29,7 @@ func enter_state():
 func exit_state():
 	OWNER.velocity = Vector3.ZERO
 
+## Ruota il nemico per far si che guardi sempre il player
 func look_at_player():
 	var player_position : Vector3 = OWNER.CHARACTER.global_position 
 	var current_position = OWNER.global_transform.origin
@@ -40,7 +41,7 @@ func look_at_player():
 		OWNER.rotation.x = 0
 		OWNER.rotation.z = 0
 	
-	
+#### Tramite navigation agent calcola il path migliore per raggiungere il player ogni FRAME_TO_UPDATE_TARGET_POSITION
 func move_to_player():
 	if frame_counter == OWNER.FRAME_TO_UPDATE_TARGET_POSITION:
 		OWNER.NAVIGATION_AGENT.target_position = Global.PLAYER.global_position

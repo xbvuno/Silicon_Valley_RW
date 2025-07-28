@@ -65,3 +65,4 @@ func on_body_enter_area_big(body: Node3D):
 func on_body_exit_area_big(body: Node3D):
 	if body.is_in_group("player"):
 		is_char_in_area_big = false
+#endregion
