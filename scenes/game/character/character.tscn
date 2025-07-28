@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://cc1m2a1obsyn4"]
+[gd_scene load_steps=35 format=3 uid="uid://cc1m2a1obsyn4"]
 
 [ext_resource type="Script" uid="uid://cvqbknf1c8dgx" path="res://scenes/game/character/character.gd" id="1_0t4e8"]
 [ext_resource type="Script" uid="uid://d1nsutaoealmk" path="res://scenes/game/character/character_sm.gd" id="2_mqr5i"]

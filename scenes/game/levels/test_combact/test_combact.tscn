@@ -46,9 +46,7 @@ glow_enabled = true
 transform = Transform3D(1, 0, 0, 0, 2.94194, 0, 0, 0, 1, 0, 0, 0)
 navigation_mesh = SubResource("NavigationMesh_7l5n5")
 
-[node name="GPUParticlesCollisionBox3D" type="GPUParticlesCollisionBox3D" parent="NavigationRegion3D"]
-
-[node name="Pavimento" type="CSGMesh3D" parent="NavigationRegion3D/GPUParticlesCollisionBox3D"]
+[node name="Pavimento" type="CSGMesh3D" parent="NavigationRegion3D"]
 use_collision = true
 mesh = SubResource("BoxMesh_g6t0t")
 
@@ -167,7 +165,7 @@ transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -
 shadow_enabled = true
 
 [node name="Enemy" parent="." instance=ExtResource("4_7l5n5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0506, 1.05, 12.719)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.51497, 1.05, 14.4163)
 
 [node name="Enemy2" parent="." instance=ExtResource("4_7l5n5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.2129, 1.05, 14.4163)

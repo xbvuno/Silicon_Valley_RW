@@ -8,8 +8,6 @@ var C_SM: SM_Character
 var sm_name: SM_Enemy.States
 var readable_name: String
 
-
-
 func _physics_process(_delta: float) -> void:
 	pass
 
@@ -20,8 +18,5 @@ func exit_state():
 	pass
 
 
-
-
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
-	if anim_name != "RESET":
-		SM.switch(SM.States.FOLLOWING) 
+	SM.switch(SM.States.FOLLOWING)
